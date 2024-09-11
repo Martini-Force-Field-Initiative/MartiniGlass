@@ -7,7 +7,7 @@ Martini representation of the protein, showing all bonds.](image.png "Visualisin
 
 Scripts to aid the visualisation of coarse-grained Martini trajectories.
 
-Martini_vis uses [vermouth](https://github.com/marrink-lab/vermouth-martinize) to stably rewrite your input topology files as ones that can be used for visualisation in VMD.
+MartiniGlass uses [vermouth](https://github.com/marrink-lab/vermouth-martinize) to stably rewrite your input topology files as ones that can be used for visualisation in VMD.
 
 Previously, `cg_bonds-vX.tcl` was able to read in Martini system topology information and draw it directly in VMD.
 However, many Martini models now make extensive use of interaction types like virtual sites, which can't be handled
