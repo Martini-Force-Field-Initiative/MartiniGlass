@@ -18,8 +18,8 @@
 
 import argparse
 from argparse import ArgumentDefaultsHelpFormatter
-from martini_vis import system_reading, index_writing, molecule_editor, topol_writing
-from martini_vis import DATA_PATH
+from martiniglass import system_reading, index_writing, molecule_editor, topol_writing
+from martiniglass import DATA_PATH
 import os
 from pathlib import Path
 import shutil

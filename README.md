@@ -1,4 +1,4 @@
-# martini_vis
+# MartiniGlass
 ![Martinizing a protein (Ubiquitin, PBD: 1UBQ) and visualising its elastic network.
 left to right: atomistic representation of the protein. 
 Martini representation of the protein overlaid on the atomistic one, showing the direct backbone and side chain.
@@ -32,21 +32,21 @@ If you find an error, please open an issue so it can be fixed!
 
 ```commandline
 python3 -m venv venv && source venv/bin/activate # Not required, but often convenient.
-pip install git+https://github.com/csbrasnett/martini_vis
+pip install git+https://github.com/csbrasnett/MartiniGlass
 ```
 
 ### From repository source 
 
 ```commandline
-git clone https://github.com/csbrasnett/martini_vis
-cd martini_vis
+git clone https://github.com/Martini-Force-Field-Initiative/MartiniGlass.git
+cd MartiniGlass
 python3 -m venv venv && source venv/bin/activate
 pip install .
 ```
 
 ## Usage
 
-1) Run e.g. `martini_vis -p topol.top`. This will produce:
+1) Run e.g. `MartiniGlass -p topol.top`. This will produce:
    1) Edited *_vis.itp files for all the molecules in your system described in the input .top file.  
       * NB. by default, virtual sites will be rewritten as "real", with bonds between the sites and their constructing atoms. 
       To stop this, use the `-vs` flag.
@@ -56,7 +56,7 @@ pip install .
    no further interaction with `trjconv` is required. 
       * NB. if you use this option, then `vis.top` will not contain an entry for the waters in your system at all.
 2) Load your simulation into vmd:
-   * To get ready access to `cg_bonds-v6.tcl` and `vis.vmd`, add the `-vf` flag to `martini_vis` and have these files written to the current directory.
+   * To get ready access to `cg_bonds-v6.tcl` and `vis.vmd`, add the `-vf` flag to `MartiniGlass` and have these files written to the current directory.
    * `vmd frame.gro trajectory.xtc -e vis.vmd` will load your new topologies automatically, assuming `cg_bonds-v6.tcl` exists in some form in the directory you're looking at.
    Otherwise you'll have to interact with VMD directly: 
       1) load your system: `vmd frame.gro trajectory.xtc`
@@ -64,7 +64,7 @@ pip install .
       3) load your visualisable topologies: `cg_bonds -top vis.top`
 3) Visualise your simulation with bonds in Martini!
 
-## Notes on using `martini_vis`
+## Notes on using `MartiniGlass`
 
 ### Input
 We assume the input topology looks like something as follows:
@@ -89,7 +89,7 @@ CL               10
 
 ### Output
 
-Running `martini_vis -p topol.top -f frame.gro` on the above system, together with a .gro file that you want an index file for
+Running `MartiniGlass -p topol.top -f frame.gro` on the above system, together with a .gro file that you want an index file for
 will produce the following output:
 
 ```
@@ -129,7 +129,7 @@ elastic network bonds for beta sheets are identified by their distance parameter
 field. I haven't extensively checked this degeneracy assumption, so if it breaks for you, please let me know.
 
 One other complication with looking at elastic networks is that VMD can't handle atoms with more than 12 bonds attached.
-`martini_vis` handles this by inspecting the elastic network and - if any such atoms are found - removing these
+`MartiniGlass` handles this by inspecting the elastic network and - if any such atoms are found - removing these
 "excessive" bonds. This means that while you'll be able to look at your protein with its network in VMD, the network you
 see won't contain all the elastic network bonds that were applied during your simulation. The bonds that were removed
 get written to a separate text file for noting in case they're of interest to you.
@@ -139,7 +139,7 @@ get written to a separate text file for noting in case they're of interest to yo
 So in summary, there's no straightforward way to visualise your elastic network like I show in the
 picture at the top. However, should you still want it, here's a hack:
 
-1) run `martini_vis` with `-el` and `-ef` for your system
+1) run `MartiniGlass` with `-el` and `-ef` for your system
 2) load your system in vmd as described above to see the direct bonded network of your system
 3) load your system a second time into vmd
 4) run `cg_bonds -top en.top` on your new molecule, to now see the elastic network.

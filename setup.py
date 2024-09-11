@@ -15,6 +15,6 @@
 from setuptools import setup
 
 setup(
-    scripts=['bin/martini_vis'],
+    scripts=['bin/martiniglass'],
     pbr=True,
 )
