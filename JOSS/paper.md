@@ -178,6 +178,8 @@ read into other visualisation software such as pymol or ngl viewer [@schrodinger
 # Acknowledgements
 
 We thank the fellow members of the Marrink group for testing earlier versions of MartiniGlass, and their 
-suggestions and comments during development.
+suggestions and comments during development. The work presented in this article is supported by the Novo 
+Nordisk Foundation grant NNF20OC0063808, ‘BOUNDLESS’.
+
 
 # References
