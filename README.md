@@ -18,30 +18,11 @@ Thanks to [Jan Stevens](https://github.com/jan-stevens) for `vis.vmd`
 
 If the solution here isn't working for you, please open an issue!
 
-## Disclaimers
-
-This code's mainly been tested on relatively simple systems.
-It hasn't been tested extensively for larger/more complex systems with 
-big mixtures of lipids and proteins, so if you're looking at something big, it's likely there'll be an error.
-
-If you find an error, please open an issue so it can be fixed!
-
 ## Installation
-
-### Installation with _pip_
 
 ```commandline
 python3 -m venv venv && source venv/bin/activate # Not required, but often convenient.
-pip install git+https://github.com/csbrasnett/MartiniGlass
-```
-
-### From repository source 
-
-```commandline
-git clone https://github.com/Martini-Force-Field-Initiative/MartiniGlass.git
-cd MartiniGlass
-python3 -m venv venv && source venv/bin/activate
-pip install .
+pip install martiniglass
 ```
 
 ## Usage
@@ -159,6 +140,14 @@ By default, it's assumed the file will be called `go_nbparams.itp` as per the
 latest version of martinize2, where the Gō parameters are calculated internally.
 If you're using a different version of the Gō model where this file is called something
 different, you can specify that with the `-gf` flag
+
+## Disclaimers
+
+This code's mainly been tested on relatively simple systems.
+It hasn't been tested extensively for larger/more complex systems with 
+big mixtures of lipids and proteins, so if you're looking at something big, it's likely there'll be an error.
+
+If you find an error, please open an issue so it can be fixed!
 
 ## FAQs
 
