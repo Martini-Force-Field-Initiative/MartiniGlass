@@ -20,7 +20,7 @@ bibliography: paper.bib
 
 ---
 
-# Introduction
+# Statement of need
 
 Coarse-grained molecular dynamics simulations have significant advantages over higher resolution ones 
 in accessing timescales and processes that are otherwise difficult to reach 
@@ -159,7 +159,7 @@ molecular motors together with a lipid bilayer of several different lipid types.
 | Process Gō networks in proteins, as defined in nonbond.itp into separate visualisation topologies                                     | `MartiniGlass -p topol.top -go -gf nonbond.itp`                                         |
 | Write out visualisation associated files (cg_bonds-v6.tcl, vis.vmd) in the current directory                                        | `MartiniGlass -p topol.top -vf`                                         |
 
-# Conclusions
+# Summary
 
 Here, we have presented an overview of a new tool, MartiniGlass, which makes it possible to better visualise
 coarse-grained molecules from the Martini forcefield, and their simulations. A selection of how MartiniGlass
