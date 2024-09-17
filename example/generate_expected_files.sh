@@ -26,4 +26,4 @@ martinize2 -f 1UBQ_clean.pdb -o topol.top -x 1UBQ_cg.pdb -dssp /usr/local/bin/mk
 
 gmx editconf -f 1UBQ_cg.pdb -c -d 5 -bt dodecahedron -o newbox.gro
 
-martini_vis -p topol.top -el -ef 700 -vf
+martiniglass -p topol.top -el -ef 700 -vf
