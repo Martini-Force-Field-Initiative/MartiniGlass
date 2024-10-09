@@ -17,4 +17,4 @@ from setuptools import setup
 setup(
     scripts=['bin/martiniglass'],
     pbr=True,
-)
+    )
