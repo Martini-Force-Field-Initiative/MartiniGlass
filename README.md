@@ -8,6 +8,8 @@ Martini representation of the protein, showing all bonds.](image.png "Visualisin
 Scripts to aid the visualisation of coarse-grained Martini trajectories.
 
 MartiniGlass uses [vermouth](https://github.com/marrink-lab/vermouth-martinize) to stably rewrite your input topology files as ones that can be used for visualisation in VMD.
+Although the examples here show proteins, and the program has a particular focus on being able to visualise protein secondary/tertiary structure networks, MartiniGlass can in fact 
+be used to reconstruct bonded networks of **any** Martini molecule!
 
 Previously, `cg_bonds-vX.tcl` was able to read in Martini system topology information and draw it directly in VMD.
 However, many Martini models now make extensive use of interaction types like virtual sites, which can't be handled
