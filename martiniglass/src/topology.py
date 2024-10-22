@@ -1,4 +1,4 @@
-# Copyright 2020 University of Groningen
+# Copyright 2024 University of Groningen
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -47,7 +47,6 @@ def input_topol_reader(file):
 
     if len(go) > 0:
         topol_lines['go'] = go
-
     return topol_lines
 
 
@@ -87,7 +86,7 @@ def topol_writing(topol_lines, written_mols, ext='vis', w_include=None):
         try:
             original_mols.remove('W')
         except ValueError:
-            print('No water to remove!')
+            # print('No water to remove!')
             pass
     for i in topol_lines['molecules']:
         if any(mol in i['name'] for mol in original_mols):

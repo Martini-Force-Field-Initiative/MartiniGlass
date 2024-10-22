@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Copyright 2020 University of Groningen
+# Copyright 2024 University of Groningen
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 
 import argparse
 from argparse import ArgumentDefaultsHelpFormatter
-from martiniglass import system_reading, index_writing, molecule_editor, topol_writing
+from martiniglass import system_reading, index_writing, molecule_editor, topol_writing, cylinders
 from martiniglass import DATA_PATH
 import os
 from pathlib import Path
@@ -51,17 +51,23 @@ def main():
                         help="Write out associated vmd files (cg_bonds, vis.vmd) in the present directory")
     parser.add_argument("-ext", default=False, action="store_true",
                         help="Write system bonds to text files instead of topology files. Useful for non-VMD visualisation.")
+    parser.add_argument("-cyl", default=False, action="store_true",
+                        help="Write a tcl script to write out all network bonds for static images")
 
     args = parser.parse_args()
 
+    if (args.cyl) and (args.system is None):
+        raise ValueError("If you want a cylinder drawing tcl file"
+                         " you must also give the coordinate file")
+
     ff, topol_lines, system_defines = system_reading(args.topology)
 
-    written_mols = molecule_editor(ff, topol_lines, system_defines,
-                                   virtual_sites=args.virtual_sites,
-                                   ext=args.ext,
-                                   elastic=args.elastic,
-                                   elastic_force=args.en_force,
-                                   go=args.go)
+    written_mols, mol_bonds, mol_lens = molecule_editor(ff, topol_lines, system_defines,
+                                                        virtual_sites=args.virtual_sites,
+                                                        ext=args.ext,
+                                                        elastic=args.elastic,
+                                                        elastic_force=args.en_force,
+                                                        go=args.go)
 
     if args.elastic:
         topol_writing(topol_lines, written_mols, 'en', w_include=args.system)
@@ -71,6 +77,8 @@ def main():
 
     if args.system is not None:
         index_writing(args.system)
+        if args.cyl:
+            cylinders(args.system, topol_lines, mol_bonds, mol_lens)
 
     if args.vf:
         for file in os.listdir(DATA_PATH):

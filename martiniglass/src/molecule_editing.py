@@ -1,4 +1,4 @@
-# Copyright 2020 University of Groningen
+# Copyright 2024 University of Groningen
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@ import copy
 from os.path import isfile
 from vermouth.gmx import write_molecule_itp
 from .network_writer import network_writer
-# from .go_writer import go_writer
-
 
 def molecule_editor(ff, topol_lines, system_defines,
                     virtual_sites=True, ext=False,
@@ -28,7 +26,10 @@ def molecule_editor(ff, topol_lines, system_defines,
             'virtual_sites2', 'virtual_sites3']
     print("Writing visualisable topology files")
 
+
     written_mols = []
+    mol_bonds = {}
+    mol_lens = {}
 
     for molname, block in ff.blocks.items():
         # write vis topols for molecules we're actually interested in
@@ -37,6 +38,7 @@ def molecule_editor(ff, topol_lines, system_defines,
         except AssertionError:
             continue
 
+        bonds_list = []
         # delete the interactions which are not bonds
         for interaction_type in list(block.interactions):
             if interaction_type not in keep:
@@ -45,7 +47,6 @@ def molecule_editor(ff, topol_lines, system_defines,
         for bond in block.interactions['bonds']:
             bond.meta.clear()
         if elastic:
-            en_bonds = []
             for bond in list(block.interactions['bonds']):
                 # this should introduce actual parameters into the block if the bonds have been given by
                 # a #define statement elsewhere
@@ -63,13 +64,15 @@ def molecule_editor(ff, topol_lines, system_defines,
                     cond1 = abs(float(bond.parameters[1]) - 0.970) < 0.1  # long beta elastic
                     cond2 = abs(float(bond.parameters[1]) - 0.640) < 0.1  # short beta elastic
                     if any([cond0, cond1, cond2]):
-                        en_bonds.append(bond)
+                        # en_bonds.append(bond)
+                        bonds_list.append([bond.atoms[0], bond.atoms[1],
+                                         bond.parameters[0], bond.parameters[1], bond.parameters[2]])
                         block.remove_interaction('bonds', bond.atoms)
                 except IndexError:
                     print(bond.parameters)
                     pass
             ff_en_copy = copy.deepcopy(ff)
-            en_written = network_writer(ff_en_copy, molname, en_bonds, ext, 'en')
+            en_written = network_writer(ff_en_copy, molname, bonds_list, ext, 'en')
             written_mols.append(en_written)
 
         # this should then keep any constraints which don't have IFDEF statements
@@ -128,7 +131,7 @@ def molecule_editor(ff, topol_lines, system_defines,
             nb_lines = [line.split(';')[0].split(' ') for line in nb_lines if '[' not in line]
             # TODO this causes problems when we're not actually in the correct block that's
             # associated with the go model! ignore the exception for now.
-            bonds_list = []
+            # bonds_list = []
             try:
                 for i in nb_lines:
                     try:
@@ -160,4 +163,7 @@ def molecule_editor(ff, topol_lines, system_defines,
             write_molecule_itp(mol_out, outfile=fout, header=header)
             written_mols.append(fout.name)
 
-    return written_mols
+        mol_bonds[molname] = bonds_list
+        mol_lens[molname] = len(block.nodes)
+
+    return written_mols, mol_bonds, mol_lens
