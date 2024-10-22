@@ -15,8 +15,8 @@
 import copy
 from os.path import isfile
 from vermouth.gmx import write_molecule_itp
-from .elastic_writer import en_writer
-from .go_writer import go_writer
+from .network_writer import network_writer
+# from .go_writer import go_writer
 
 
 def molecule_editor(ff, topol_lines, system_defines,
@@ -69,7 +69,7 @@ def molecule_editor(ff, topol_lines, system_defines,
                     print(bond.parameters)
                     pass
             ff_en_copy = copy.deepcopy(ff)
-            en_written = en_writer(ff_en_copy, molname, en_bonds, ext)
+            en_written = network_writer(ff_en_copy, molname, en_bonds, ext, 'en')
             written_mols.append(en_written)
 
         # this should then keep any constraints which don't have IFDEF statements
@@ -140,7 +140,7 @@ def molecule_editor(ff, topol_lines, system_defines,
             except KeyError:
                 pass
             ff_go_copy = copy.deepcopy(ff)
-            go_written = go_writer(ff_go_copy, molname, bonds_list, ext)
+            go_written = network_writer(ff_go_copy, molname, bonds_list, ext, "go")
             written_mols.append(go_written)
 
         # write out the molecule with an amended name

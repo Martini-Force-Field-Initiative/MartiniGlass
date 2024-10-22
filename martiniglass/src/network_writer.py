@@ -15,7 +15,7 @@
 from vermouth.gmx import write_molecule_itp
 import networkx as nx
 
-def en_writer(ff, molname, en_bonds, ext):
+def network_writer(ff, molname, bonds, ext, network_type):
     """
     write an elastic network only topology for a particular molecule
 
@@ -25,8 +25,10 @@ def en_writer(ff, molname, en_bonds, ext):
         vermouth force field containing the input system
     molname: str
         name of the molecule to separate out
-    en_bonds: list
-        list of elastic network bonds to write out
+    bonds: list
+        list of elastic/Go network bonds to write out
+    network_type: str
+        should be either "Go" or "elastic" to denote the name of the network
 
     Returns
     -------
@@ -38,10 +40,13 @@ def en_writer(ff, molname, en_bonds, ext):
 
     # add the elastic network bonds back in
     edges = []
-    for bond in en_bonds:
-        edges.append(bond.atoms)
-        ff.blocks[molname].add_interaction('bonds', bond.atoms, bond.parameters)
-
+    for bond in bonds:
+        if network_type == 'en':
+            edges.append(bond.atoms)
+            ff.blocks[molname].add_interaction('bonds', bond.atoms, bond.parameters)
+        elif network_type == 'go':
+            edges.append([bond[0], bond[1]])
+            ff.blocks[molname].add_interaction('bonds', [bond[0], bond[1]], list(bond[2:]))
     # make a graph, look at the degrees of the nodes
     graph = nx.Graph()
     graph.add_nodes_from(ff.blocks[molname].nodes)
@@ -50,7 +55,7 @@ def en_writer(ff, molname, en_bonds, ext):
     # handle the points where more EN bonds have been written than VMD can handle (12)
     if any([i > 12 for i in [graph.degree[node] for node in graph.nodes]]):
 
-        print(f"There are atoms in {molname} which have > 12 elastic network bonds."
+        print(f"There are atoms in {molname} which have > 12 {network_type} network bonds."
               " Some will be removed and recorded for posterity")
 
         over_limit_ind = []
@@ -104,7 +109,7 @@ def en_writer(ff, molname, en_bonds, ext):
                     target -= 1
                 except nx.exception.NetworkXError:
                     if print_err:
-                        print('Something went wrong while removing excess elastic network bonds.'
+                        print(f'Something went wrong while removing excess {network_type} network bonds.'
                               ' This is a placeholder statement while things are fixed.')
                     print_err = False
                     pass
@@ -114,12 +119,12 @@ def en_writer(ff, molname, en_bonds, ext):
         except AssertionError:
             print("Couldn't remove all bonds necessary, probably can't network in VMD")
 
-        with open(molname + '_surplus_en.txt', 'w') as extra_en:
-            extra_en.write(f'Elastic network bonds removed from {molname}_en.itp\n')
+        with open(molname + f'_surplus_{network_type}.txt', 'w') as extra_en:
+            extra_en.write(f'{network_type} network bonds removed from {molname}_{network_type}.itp\n')
             extra_en.write('This is for noting in visualisation, not for simulation\n\n')
-            extra_en.write(f'These bonds will be missing if you load {molname}_en.itp in vmd\n')
+            extra_en.write(f'These bonds will be missing if you load {molname}_{network_type}.itp in vmd\n')
             extra_en.write("having been present in your simulation. If you're inspecting your\n")
-            extra_en.write('elastic network because you suspect some error because of it, bear this in mind.\n')
+            extra_en.write(f'{network_type} network because you suspect some error because of it, bear this in mind.\n')
 
             extra_en.write('   i    j func b0 kb\n')
 
@@ -130,17 +135,17 @@ def en_writer(ff, molname, en_bonds, ext):
 
     # write the file out
     mol_out = ff.blocks[molname].to_molecule()
-    mol_out.meta['moltype'] = molname + '_en'
+    mol_out.meta['moltype'] = molname + f'_{network_type}'
 
     if ext:
 
         ext_bonds_list = [i.atoms for i in mol_out.interactions['bonds']]
         stout = ''.join([f'{i[0]}\t{i[1]}\n' for i in ext_bonds_list])
-        with open(f'{molname}_elastic_bonds.txt', 'w') as bonds_list_out:
+        with open(f'{molname}_{network_type}_bonds.txt', 'w') as bonds_list_out:
             bonds_list_out.write(stout)
 
-    header = [f'Elastic network topology for {molname}', 'NOT FOR SIMULATIONS']
+    header = [f'{network_type} network topology for {molname}', 'NOT FOR SIMULATIONS']
 
-    with open(molname + '_en.itp', 'w') as fout:
+    with open(molname + f'_{network_type}.itp', 'w') as fout:
         write_molecule_itp(mol_out, outfile=fout, header=header)
         return fout.name
