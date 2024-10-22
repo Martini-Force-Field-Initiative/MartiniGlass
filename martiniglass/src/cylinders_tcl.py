@@ -92,5 +92,5 @@ def file_write(coord_file, topology_contents, bonds_dictionary, mol_lens):
     {cylinders}
     """)
 
-    with open('test.tcl', 'w') as f:
+    with open('network_cylinders.tcl', 'w') as f:
         f.write(textwrap.dedent(msg.format(cylinders=cylinder_string)))
