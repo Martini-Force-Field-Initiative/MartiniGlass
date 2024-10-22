@@ -63,15 +63,13 @@ def file_write(coord_file, topology_contents, bonds_dictionary, mol_lens):
 
         #this is the starting indices of each molecule in the system
         start_indices = np.arange(start, start+(int(n_mols) * int(mol_lens[mol])), int(mol_lens[mol]))
-        start+=int(n_mols) * int(mol_lens[mol])
+        start += int(n_mols) * int(mol_lens[mol])
 
         for bond in bonds_dictionary[mol]:
 
             starts = np.array(start_indices+bond[0])
             ends = np.array(start_indices+bond[1])
             coord_pairs = np.stack([[i,j] for i,j in zip(coords[starts], coords[ends])])
-
-            counter+=1
 
             for position in coord_pairs:
                 #need the conversion here to make it back into gromacs for some reason
@@ -82,14 +80,15 @@ def file_write(coord_file, topology_contents, bonds_dictionary, mol_lens):
 
     msg=textwrap.dedent(
     """
-    # Colour of the cylinder
+    # Colour of the cylinder. 16 is black.
     set colorID 16
 
-    # Cylinder radius (for thickness of licorice bond)
+    # Cylinder radius 
     set radius 0.3
-
-    # Draw a cylinder between P1 and P2 (licorice bond)
+    
     graphics 0 color $colorID"
+
+    # Draw a cylinder between the points listed
     {cylinders}
     """)
 
