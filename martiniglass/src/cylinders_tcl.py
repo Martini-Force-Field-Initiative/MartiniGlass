@@ -71,13 +71,14 @@ def file_write(coord_file, topology_contents, bonds_dictionary, mol_lens):
             ends = np.array(start_indices+bond[1])
             coord_pairs = np.stack([[i,j] for i,j in zip(coords[starts], coords[ends])])
 
+            counter+=1
+
             for position in coord_pairs:
                 #need the conversion here to make it back into gromacs for some reason
                 pos0_str = ' '.join([f'{j*10:.3f}' for j in position[0]])
                 pos1_str = ' '.join([f'{j*10:.3f}' for j in position[1]])
 
                 cylinder_string+=(f'\ngraphics 0 cylinder "{pos0_str}" "{pos1_str}" radius $radius resolution 50')
-
 
     msg=textwrap.dedent(
     """

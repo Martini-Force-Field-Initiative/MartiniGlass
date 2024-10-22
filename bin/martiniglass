@@ -56,6 +56,10 @@ def main():
 
     args = parser.parse_args()
 
+    if (args.cyl) and (args.system is None):
+        raise ValueError("If you want a cylinder drawing tcl file"
+                         " you must also give the coordinate file")
+
     ff, topol_lines, system_defines = system_reading(args.topology)
 
     written_mols, mol_bonds, mol_lens = molecule_editor(ff, topol_lines, system_defines,
