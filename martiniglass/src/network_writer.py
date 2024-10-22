@@ -1,4 +1,4 @@
-# Copyright 2020 University of Groningen
+# Copyright 2024 University of Groningen
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -41,12 +41,8 @@ def network_writer(ff, molname, bonds, ext, network_type):
     # add the elastic network bonds back in
     edges = []
     for bond in bonds:
-        if network_type == 'en':
-            edges.append(bond.atoms)
-            ff.blocks[molname].add_interaction('bonds', bond.atoms, bond.parameters)
-        elif network_type == 'go':
-            edges.append([bond[0], bond[1]])
-            ff.blocks[molname].add_interaction('bonds', [bond[0], bond[1]], list(bond[2:]))
+        edges.append([bond[0], bond[1]])
+        ff.blocks[molname].add_interaction('bonds', [bond[0], bond[1]], list(bond[2:]))
     # make a graph, look at the degrees of the nodes
     graph = nx.Graph()
     graph.add_nodes_from(ff.blocks[molname].nodes)
