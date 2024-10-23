@@ -15,6 +15,7 @@
 from vermouth.gmx import write_molecule_itp
 import networkx as nx
 
+
 def network_writer(ff, molname, bonds, ext, network_type):
     """
     write an elastic network only topology for a particular molecule
@@ -34,100 +35,48 @@ def network_writer(ff, molname, bonds, ext, network_type):
     -------
     None
     """
-    # remove all interactions from the molecule
+    graph = nx.Graph()
+    graph.add_nodes_from(ff.blocks[molname].nodes)
+    graph.add_edges_from(bonds)
+
+    removed = []
+
+    '''
+    for each node in the graph, check its degree
+    if its degree is > 12, remove the 'excess' number of edges from
+    that node
+    '''
+    for node in graph.nodes:
+        degree = graph.degree[node]
+        to_remove = degree - 12
+        if to_remove > 0:
+            removal_list = list(graph.edges(node))[:to_remove]
+            removed.append([sorted(i) for i in removal_list])
+            graph.remove_edges_from(removal_list)
+
+    all_removed = sorted([i for j in removed for i in j])
+
+    assert max([graph.degree[node] for node in graph.nodes]) < 13
+
     for interaction_type in list(ff.blocks[molname].interactions):
         del ff.blocks[molname].interactions[interaction_type]
 
-    # add the elastic network bonds back in
-    edges = []
-    for bond in bonds:
-        edges.append([bond[0], bond[1]])
-        ff.blocks[molname].add_interaction('bonds', [bond[0], bond[1]], list(bond[2:]))
-    # make a graph, look at the degrees of the nodes
-    graph = nx.Graph()
-    graph.add_nodes_from(ff.blocks[molname].nodes)
-    graph.add_edges_from(edges)
-    degrees = [graph.degree[node] for node in graph.nodes]
-    # handle the points where more EN bonds have been written than VMD can handle (12)
-    if any([i > 12 for i in [graph.degree[node] for node in graph.nodes]]):
+    for bond in graph.edges:
+        ff.blocks[molname].add_interaction('bonds', [bond[0], bond[1]], ['1', '1', '1000'])
 
-        print(f"There are atoms in {molname} which have > 12 {network_type} network bonds."
-              " Some will be removed and recorded for posterity")
-
-        over_limit_ind = []
-        over_limit_num = []
-        for i, j in enumerate(degrees):
-            if j > 12:
-                over_limit_ind.append(i)
-                over_limit_num.append(j-12)
-
-        l0 = []
-        l1 = []
-        l2 = []
-        for interaction in ff.blocks[molname].interactions['bonds']:
-            cond0 = (interaction.atoms[0] in over_limit_ind)
-            cond1 = (interaction.atoms[1] in over_limit_ind)
-            if cond0 and not cond1:
-                l0.append([interaction, interaction.atoms[0]])
-            elif cond1 and not cond0:
-                l1.append([interaction, interaction.atoms[1]])
-            elif cond0 and cond1:
-                l2.append([interaction, interaction.atoms[0], interaction.atoms[1]])
-        all_interactions = [i[0] for i in l0]+[i[0] for i in l1]+[i[0] for i in l2]+[i[0] for i in l2]
-        all_indices = [i[1] for i in l0]+[i[1] for i in l1]+[i[1] for i in l2]+[i[2] for i in l2]
-        sorted_indices_interactions = [list(x) for x in sorted(zip(all_indices, all_interactions),
-                                                               key=lambda pair: pair[0])]
-
-        # make sure we have a consistent set of indices to remove edges from
-        s0 = set([x[0] for x in sorted_indices_interactions])
-        s1 = set(over_limit_ind)
-
-        assert s0.difference(s1) == s1.difference(s0)
-
-        removed = []
-        sorted_atoms = [x[0] for x in sorted_indices_interactions]
-        sorted_interactions = [x[1] for x in sorted_indices_interactions]
-        print_err = True
-        for index, value in enumerate(over_limit_ind):
-            inds = [i for i, x in enumerate(sorted_atoms) if x == value]
-            r_inds = iter(range(len(inds)))
-            target = over_limit_num[index]
-            target_interactions = [sorted_interactions[i] for i in inds]
-
-            while target > 0:
-                try:
-                    i = next(r_inds)
-                    removed.append(target_interactions[i])
-                    graph.remove_edge(target_interactions[i].atoms[0],
-                                      target_interactions[i].atoms[1]
-                                      )
-                    ff.blocks[molname].remove_interaction('bonds', target_interactions[i].atoms)
-                    target -= 1
-                except nx.exception.NetworkXError:
-                    if print_err:
-                        print(f'Something went wrong while removing excess {network_type} network bonds.'
-                              ' This is a placeholder statement while things are fixed.')
-                    print_err = False
-                    pass
-
-        try:
-            assert not any([i > 12 for i in [graph.degree[node] for node in graph.nodes]])
-        except AssertionError:
-            print("Couldn't remove all bonds necessary, probably can't network in VMD")
-
+    if len(all_removed) > 0:
         with open(molname + f'_surplus_{network_type}.txt', 'w') as extra_en:
-            extra_en.write(f'{network_type} network bonds removed from {molname}_{network_type}.itp\n')
-            extra_en.write('This is for noting in visualisation, not for simulation\n\n')
-            extra_en.write(f'These bonds will be missing if you load {molname}_{network_type}.itp in vmd\n')
-            extra_en.write("having been present in your simulation. If you're inspecting your\n")
-            extra_en.write(f'{network_type} network because you suspect some error because of it, bear this in mind.\n')
+            extra_en.writelines(f"{network_type} network bonds removed from {molname}_{network_type}.itp\n"
+                                "This is for noting in visualisation, not for simulation\n\n"
+                                f"These bonds will be missing if you load {molname}_{network_type}.itp in vmd\n"
+                                "having been present in your simulation. If you're inspecting your\n"
+                                f"{network_type} network because you suspect some simulation error"
+                                f"as a result of how it was constructed, bear this in mind.\n")
 
-            extra_en.write('   i    j func b0 kb\n')
+            extra_en.write('     i      j func b0 kb\n')
 
-            for i in removed:
-                extra_en.writelines(f'{i.atoms[0]:4d} {i.atoms[1]:4d} ' +
-                                    f'{i.parameters[0]:1s} {i.parameters[1]:5s} {i.parameters[2]:5s}' +
-                                    '\n')
+            for i in all_removed:
+                extra_en.writelines(f'{i[0]:6d}\t{i[1]:6d}\n')
 
     # write the file out
     mol_out = ff.blocks[molname].to_molecule()
@@ -144,4 +93,5 @@ def network_writer(ff, molname, bonds, ext, network_type):
 
     with open(molname + f'_{network_type}.itp', 'w') as fout:
         write_molecule_itp(mol_out, outfile=fout, header=header)
-        return fout.name
+
+    return fout.name
