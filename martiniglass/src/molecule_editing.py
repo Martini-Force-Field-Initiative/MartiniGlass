@@ -17,6 +17,7 @@ from os.path import isfile
 from vermouth.gmx import write_molecule_itp
 from .network_writer import network_writer
 
+
 def molecule_editor(ff, topol_lines, system_defines,
                     virtual_sites=True, ext=False,
                     elastic=False, elastic_force=700,
@@ -25,7 +26,6 @@ def molecule_editor(ff, topol_lines, system_defines,
     keep = ['bonds', 'constraints', 'pairs', 'virtual_sitesn',
             'virtual_sites2', 'virtual_sites3']
     print("Writing visualisable topology files")
-
 
     written_mols = []
     mol_bonds = {}
@@ -50,11 +50,13 @@ def molecule_editor(ff, topol_lines, system_defines,
             for bond in list(block.interactions['bonds']):
                 # this should introduce actual parameters into the block if the bonds have been given by
                 # a #define statement elsewhere
-                if len(bond.parameters) == 1:
+                if len(bond.parameters) < 3:
                     atoms = bond.atoms
-                    paras = bond.parameters[0]
+                    # paras = bond.parameters[0]
                     block.remove_interaction('bonds', bond.atoms)
-                    block.add_interaction('bonds', atoms, system_defines[paras])
+                    # TODO strictly the interaction here should be system_defines[paras], but can't work it out
+                    block.add_interaction('bonds', atoms, ['1', '1', '1000'],
+                                          meta={"comment": "external bond definition"})
                     continue
 
                 # TODO monitor these conditions for future force fields
@@ -64,9 +66,7 @@ def molecule_editor(ff, topol_lines, system_defines,
                     cond1 = abs(float(bond.parameters[1]) - 0.970) < 0.1  # long beta elastic
                     cond2 = abs(float(bond.parameters[1]) - 0.640) < 0.1  # short beta elastic
                     if any([cond0, cond1, cond2]):
-                        # en_bonds.append(bond)
-                        bonds_list.append([bond.atoms[0], bond.atoms[1],
-                                         bond.parameters[0], bond.parameters[1], bond.parameters[2]])
+                        bonds_list.append([bond.atoms[0], bond.atoms[1]])
                         block.remove_interaction('bonds', bond.atoms)
                 except IndexError:
                     print(bond.parameters)
@@ -112,7 +112,7 @@ def molecule_editor(ff, topol_lines, system_defines,
                         for constructor in constructors:
                             # completely arbitrary parameters, the bond just needs to exist
                             block.add_interaction('bonds', [site, constructor],
-                                                  ['1', '1', '1000'])
+                                                  ['1', '1', '1000'], meta={"comment": "bonded virtual site"})
             if block.interactions[vs_type]:
                 del block.interactions[vs_type]
 
@@ -131,13 +131,12 @@ def molecule_editor(ff, topol_lines, system_defines,
             nb_lines = [line.split(';')[0].split(' ') for line in nb_lines if '[' not in line]
             # TODO this causes problems when we're not actually in the correct block that's
             # associated with the go model! ignore the exception for now.
-            # bonds_list = []
             try:
                 for i in nb_lines:
                     try:
                         assert i[0] in go_dict
                         assert i[1] in go_dict
-                        bonds_list.append([go_dict[i[0]], go_dict[i[1]], '1', i[3], '1000'])
+                        bonds_list.append([go_dict[i[0]], go_dict[i[1]]])  # , '1', i[3], '1000'])
                     except AssertionError:
                         pass
             except KeyError:
