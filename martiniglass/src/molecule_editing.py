@@ -69,7 +69,7 @@ def molecule_editor(ff, topol_lines, system_defines,
                         bonds_list.append([bond.atoms[0], bond.atoms[1]])
                         block.remove_interaction('bonds', bond.atoms)
                 except IndexError:
-                    print(bond.parameters)
+                    # print(bond.parameters)
                     pass
             ff_en_copy = copy.deepcopy(ff)
             en_written = network_writer(ff_en_copy, molname, bonds_list, ext, 'en')
