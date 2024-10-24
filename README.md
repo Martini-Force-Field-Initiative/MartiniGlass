@@ -1,11 +1,9 @@
-# MartiniGlass
+# MartiniGlass: seeing your martini is believing
 ![Martinizing a protein (Ubiquitin, PBD: 1UBQ) and visualising its elastic network.
 left to right: atomistic representation of the protein. 
 Martini representation of the protein overlaid on the atomistic one, showing the direct backbone and side chain.
 Martini representation of the protein overlaid on the atomistic one, showing all bonds, with the elastic network in black.
 Martini representation of the protein, showing all bonds.](image.png "Visualising elastic networks")
-
-Scripts to aid the visualisation of coarse-grained Martini trajectories.
 
 MartiniGlass uses [vermouth](https://github.com/marrink-lab/vermouth-martinize) to stably rewrite your input topology files as ones that can be used for visualisation in VMD.
 Although the examples here show proteins, and the program has a particular focus on being able to visualise protein secondary/tertiary structure networks, MartiniGlass can in fact 
