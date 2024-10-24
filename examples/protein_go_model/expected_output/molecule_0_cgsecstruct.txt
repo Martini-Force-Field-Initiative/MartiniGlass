@@ -1,0 +1,11 @@
+suggested commands for viewing you molecule with cg_secondary_structure.tcl:
+cg_helix {{22 34} {37 40} {56 59}} -hlxcolor "purple" -hlxfilled yes -hlxrad 3 -hlxmethod cylinder -hlxmat "AOChalky" -hlxres 50
+cg_sheet {{1 7} {11 16} {40 45} {65 71}} -shtfilled "yes" -shtmat "AOChalky" -shtres 50 -shtcolor "red" -shtmethod flatarrow -shtarrwidth 5 -shtheadsize 10 -shtarrthick 3 -shtsides "sharp"
+
+Additionally, use the following command to remove the BB string from your molecule:
+name BB and not ((resid > 22 and resid < 34) or (resid > 37 and resid < 40) or (resid > 56 and resid < 59) or (resid > 1 and resid < 7) or (resid > 11 and resid < 16) or (resid > 40 and resid < 45) or (resid > 65 and resid < 71))
+These commands will have to be modified to specify molid if you have multiple proteins in your system
+
+Alternatively use the following to just colour the backbone:
+helices: name BB and ((resid > 22 and resid < 34) or (resid > 37 and resid < 40) or (resid > 56 and resid < 59))
+sheets: name BB and ((resid > 1 and resid < 7) or (resid > 11 and resid < 16) or (resid > 40 and resid < 45) or (resid > 65 and resid < 71))
