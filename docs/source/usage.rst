@@ -12,9 +12,13 @@ To use MartiniGlass, first install it using pip:
 
     (.venv) $ pip install martiniglass
 
+.. _getting_started:
 
 Getting started
 ---------------
+
+Using MartiniGlass
+^^^^^^^^^^^^^^^^^^
 
 As a starter, all MartiniGlass requires to process your system is a gromacs topology file in the
 ``.top`` format.
@@ -27,5 +31,8 @@ For example:
 
 Note that martiniglass expects that the file provided includes the system's molecules
 in a series of include topology (``.itp``) files, rather than storing the ``[ moleculetype ]`` directives
-of the system in the ``.top`` file directly.
+of the system in the ``.top`` file directly. Further information about the format of the input file is
+described in :ref:`inputfile`.
+
+
 
