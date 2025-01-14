@@ -1,5 +1,6 @@
 sphinx
 sphinxcontrib-apidoc
+sphinx-rtd-theme
 pbr
 setuptools >= 30.3.0
 
