@@ -34,6 +34,6 @@ Contents
 
     usage
     file_formats
-    advanced_opetions
+    advanced_options
     troubleshooting
     tutorials/index
