@@ -19,8 +19,9 @@ visualise additional aspects of their systems that are common in Martini models,
 network bonds that are necessary for retaining secondary and tertiary structure at coarse grained
 resolution.
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+The :doc:`usage` section provides basic information about the package.
+There are details about how to :ref:`installation` the project, and a basic example of
+how to get started with MartiniGlass.
 
 .. note::
 
@@ -33,4 +34,6 @@ Contents
 
     usage
     file_formats
+    advanced_opetions
+    troubleshooting
     tutorials/index
