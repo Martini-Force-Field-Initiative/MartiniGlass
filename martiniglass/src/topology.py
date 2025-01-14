@@ -41,6 +41,11 @@ def input_topol_reader(file):
                 sys = True
             if sys:
                 system.append(line)
+            if 'moleculetype' in line:
+                msg = ("Your topology file contains [ moleculetype ] directives, which this file parser "
+                       "cannot process. Please split your system into multiple itp files.")
+                raise IOError(msg)
+
     topol_lines = {'core_itps': inclusions,
                    'system': system,
                    'molecules': molecules}
