@@ -34,5 +34,46 @@ in a series of include topology (``.itp``) files, rather than storing the ``[ mo
 of the system in the ``.top`` file directly. Further information about the format of the input file is
 described in :ref:`inputfile`.
 
+If your system requires no further description in MartiniGlass, you should expect the following outputs:
+
+1)  A series of ``.itp`` files corresponding to the molecules listed in the ``[ molecules ]``
+    directive of your input system topology (above called ``topol.top``). The files will retain
+    their original name appended by ``_vis``.
+2)  A file called ``vis.top``, corresponding to the input ``topol.top``, which now includes the new
+    set of ``.itp`` files.
+
+Visualising your system
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Once MartiniGlass has processed your system, you should be ready to load it into VMD.
+Load your structure and trajectory as with any other:
+
+.. code-block:: console
+
+    $ vmd frame.gro trajectory.xtc
+
+Once VMD has loaded your system, you can begin to improve your visualisation using the files generated
+by MartiniGlass. Firstly, open the Tk console in VMD from the menu: Extensions -> Tk console.
+
+Once the vmd console is open, a tcl script called ``cg_bonds-v6.tcl`` is required.. This script
+is packaged with MartiniGlass and is available `here <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/blob/main/martiniglass/data/cg_bonds-v6.tcl>`_.
+Load the script in the VMD Tk console using:
+
+.. code-block::
+
+    % source cg_bonds-v6.tcl
+
+With the extra commands and routines available in ``cg_bonds``, the topology processed by MartiniGlass
+can be loaded, and continuous molecules are now possible:
+
+.. code-block::
+
+    % cg_bonds -top vis.top
+
+Now the visualisable system topology is loaded into VMD, molecules can be viewed as before using standard
+VMD selections, and the licorice or CPK drawing methods may be used.
+
+
+
 
 

@@ -33,3 +33,4 @@ Contents
 
     usage
     file_formats
+    tutorials/index
