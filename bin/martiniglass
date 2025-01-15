@@ -18,7 +18,7 @@
 
 import argparse
 from argparse import ArgumentDefaultsHelpFormatter
-from martiniglass import system_reading, index_writing, molecule_editor, topol_writing, cylinders
+from martiniglass import system_reading, index_writing, molecule_editor, topol_writing, cylinders, output_file_append
 from martiniglass import DATA_PATH
 import os
 from pathlib import Path
@@ -32,6 +32,9 @@ def main():
                         help=("Gromacs .gro file for which to write a non-water index file. "
                               "Equivalent to an index group of !W in gmx make_ndx. "
                               "Giving this option will automatically exclude W from your output vis.top")
+                        )
+    parser.add_argument("-traj", dest="trajectory", type=Path,
+                        help=("Gromacs trajectory file to add to the visualisation state file.")
                         )
     parser.add_argument("-vs", default=True, action="store_false", dest='virtual_sites',
                         help=("Don't write bonds between virtual sites and their constructing atoms. "
@@ -85,6 +88,10 @@ def main():
             if os.path.isfile(os.path.join(DATA_PATH, file)):
                 shutil.copy(os.path.join(DATA_PATH, file),
                             os.path.join(os.getcwd(), file))
+        if args.elastic:
+            output_file_append(args.system, args.trajectory, elastic=True)
+        if args.go:
+            output_file_append(args.system, args.trajectory, go=True)
 
     print('All done!')
 
