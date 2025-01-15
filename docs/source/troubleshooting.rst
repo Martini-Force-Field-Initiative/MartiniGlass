@@ -5,16 +5,17 @@ Troubleshooting
 The bonds are going everywhere
 ------------------------------
 
-This probably means that the molecules in your system are not pbc complete. If you do some trajectory
-processing as described above then hopefully it'll look better
+This probably means that the molecules in your system are not pbc complete. If you process your
+trajectory using ``gmx trjconv`` including the ``-pbc`` flag, then that should solve the issue.
 
 
 I did trajectory processing but my molecule doesn't look whole?
 ---------------------------------------------------------------
 
-In this case, I would guess you have some kind of multimer in your system. Add fake bonds to the
-topology for processing, then it can be recognised as such by gromacs.
-
+If a molecule still doesn't appear whole after trajectory processing, then it is likely not
+connected in the way that is expected. This is an issue when, for example, using Go Martini with a
+multimeric protein, where the quaternary structure of the protein is retained with the Go network.
+Gromacs doesn't consider such a system as "bonded", so further processing may be required.
 
 My system loads but I get an error!
 -----------------------------------

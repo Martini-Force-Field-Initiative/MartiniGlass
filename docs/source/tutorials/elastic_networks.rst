@@ -25,3 +25,5 @@ So in summary, there's no straightforward way to visualise your elastic network 
 picture at the top. However, should you still want it, here's a hack:
 
 * run MartiniGlass -p topol.top -el -ef 500 -vf (replacing -ef 500 with whatever your system requires)
+
+
