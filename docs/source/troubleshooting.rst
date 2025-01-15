@@ -1,9 +1,22 @@
 Troubleshooting
 ===============
 
+The bonds stopped loading
+-------------------------
 
-The bonds are going everywhere
-------------------------------
+If you have an error message along the lines of:
+
+.. code-block::
+
+    atomsel: setbonds: too many bonds in bondlist: 2 6 27 29 31 33 35 133 135 138 140 142 144 5
+    Maximum of 12 bonds
+
+Then it is likely that the system was not processed by MartiniGlass correctly. For example, the
+``-el`` flag was not included to properly process the elastic network, or the force constant
+defined by ``-ef`` was not the correct one for the system.
+
+The bonds are going everywhere across periodic boundaries
+---------------------------------------------------------
 
 This probably means that the molecules in your system are not pbc complete. If you process your
 trajectory using ``gmx trjconv`` including the ``-pbc`` flag, then that should solve the issue.

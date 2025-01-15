@@ -64,7 +64,7 @@ the use of the ``-vf`` (Visualisation Files) flag:
 
 * ``vis.vmd``: VMD visualisation state file
 * ``cg_bonds-v6.tcl``: vmd commands to draw bonds between atoms
-* ``eigen.py``: auxillary python script required by ``cg_bonds-v6.tcl``
+* ``eigen.py``: auxiliary python script required by ``cg_bonds-v6.tcl``
 
 Step 3: Loading your system in VMD
 ----------------------------------

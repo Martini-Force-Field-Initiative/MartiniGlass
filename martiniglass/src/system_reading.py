@@ -62,7 +62,7 @@ def secondary_structure_parsing(lines, molname):
 
     if len(helices) > 2 or len(sheets) > 2:
         with open(f'{molname}_cgsecstruct.txt', 'w') as f:
-            f.write("suggested commands for viewing you molecule with cg_secondary_structure.tcl:\n")
+            f.write("suggested commands for viewing you molecule with cg_bonds-v6.tcl:\n")
             f.write(f'cg_helix {output_str(helices)} -hlxcolor "purple" -hlxfilled yes -hlxrad 3 -hlxmethod cylinder -hlxmat "AOChalky" -hlxres 50\n')
             f.write(f'cg_sheet {output_str(sheets)} -shtfilled "yes" -shtmat "AOChalky" -shtres 50 -shtcolor "red" -shtmethod flatarrow -shtarrwidth 5 -shtheadsize 10 -shtarrthick 3 -shtsides "sharp"\n')
             f.write('\nAdditionally, use the following command to remove the BB string from your molecule:\n')

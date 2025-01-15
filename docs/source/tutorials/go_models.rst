@@ -147,7 +147,7 @@ the second loading of a frame and trajectory into VMD:
     mol new frame.gro type gro first 0 last -1 step 1
     mol addfile trajectory.xtc type xtc first 0 last -1 step 1 waitfor all molid 1
 
-    cg_bonds -top en.top
+    cg_bonds -top go.top
     mol modstyle 0 1 Bonds 0.300000 52.000000
     mol modcolor 0 1 ColorID 16
     mol modmaterial 0 1 AOChalky
