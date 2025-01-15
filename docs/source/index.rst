@@ -16,12 +16,12 @@ input files for VMD. The files prepared enable VMD to draw bonds between coarse 
 and show continuous molecules, rather than leaving users to render complex systems are a series
 of overlapping spheres to try to render a similar effect. Furthermore, MartiniGlass helps users
 visualise additional aspects of their systems that are common in Martini models, such as elastic
-network bonds that are necessary for retaining secondary and tertiary structure at coarse grained
+network bonds necessary for retaining secondary and tertiary structure at coarse grained
 resolution.
 
 The :doc:`usage` section provides basic information about the package.
-There are details about how to :ref:`installation` the project, and a basic example of
-how to get started with MartiniGlass.
+There are details about how to :ref:`install` MartiniGlass, and a basic example of
+how to get started.
 
 .. note::
 
@@ -35,5 +35,5 @@ Contents
     usage
     file_formats
     advanced_options
-    troubleshooting
     tutorials/index
+    troubleshooting
