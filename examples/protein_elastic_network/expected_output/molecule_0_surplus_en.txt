@@ -5,7 +5,4 @@ These bonds will be missing if you load molecule_0_en.itp in vmd
 having been present in your simulation. If you're inspecting your
 elastic network because you suspect some error because of it, bear this in mind.
    i    j func b0 kb
-   4   27 1 0.65838 700.0
-  10   22 1 0.66279 700.0
-  12   19 1 0.80847 700.0
- 116  122 1 0.50145 700.0
+  37   116

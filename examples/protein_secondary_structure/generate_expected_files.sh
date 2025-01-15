@@ -20,13 +20,9 @@ wget https://files.rcsb.org/download/1ubq.pdb
 
 grep "^ATOM" 1ubq.pdb > 1UBQ_clean.pdb
 
-###
-### Here need to upload file to Go server and obtain contact map
-###
-
-martinize2 -f 1UBQ_clean.pdb -o topol.top -x 1UBQ_cg.pdb -go contact_map.out
+martinize2 -f 1UBQ_clean.pdb -x cg.pdb -o topol.top -elastic -dssp
 
 wget https://github.com/marrink-lab/martini-forcefields/blob/main/martini_forcefields/regular/v3.0.0/gmx_files/martini_v3.0.0.itp
 mv martini_v3.0.0.itp martini.itp
 
-martiniglass -p topol.top -go -gf go_nbparams.itp
+martiniglass -p topol.top -el -ef 700

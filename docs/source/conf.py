@@ -18,6 +18,10 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.autosectionlabel',
     'sphinxcontrib.apidoc',
+
+    'sphinx.ext.duration',
+    'sphinx.ext.doctest',
+    'sphinx.ext.autosummary',
 ]
 
 intersphinx_mapping = {
