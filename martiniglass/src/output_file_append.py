@@ -17,30 +17,31 @@ from os import remove
 
 def output_file_append(frame, trajectory, go=False, elastic=False):
 
-    if go:
-        extra_top = "go.top"
+    if isinstance(frame, Path):
+        if go:
+            extra_top = "go.top"
 
-    if elastic:
-        extra_top = "en.top"
+        if elastic:
+            extra_top = "en.top"
 
-    with open("vis.vmd") as f:
-        lines = f.readlines()
+        with open("vis.vmd") as f:
+            lines = f.readlines()
 
-    if isinstance(trajectory, Path):
-        trajectory_line = f"mol addfile {trajectory} type xtc first 0 last -1 step 1 waitfor all molid 1\n"
-    else:
-        trajectory_line = " \n"
+        if isinstance(trajectory, Path):
+            trajectory_line = f"mol addfile {trajectory} type xtc first 0 last -1 step 1 waitfor all molid 1\n"
+        else:
+            trajectory_line = " \n"
 
-    extra = (f"mol new {frame} type gro first 0 last -1 step 1\n"
-             f"{trajectory_line}"
-             f"cg_bonds -top {extra_top}\n"
-             "mol modstyle 0 1 Bonds 0.300000 52.000000\n"
-             "mol modcolor 0 1 ColorID 16\n"
-             "mol modmaterial 0 1 AOChalky\n")
+        extra = (f"mol new {frame} type gro first 0 last -1 step 1\n"
+                 f"{trajectory_line}"
+                 f"cg_bonds -top {extra_top}\n"
+                 "mol modstyle 0 1 Bonds 0.300000 52.000000\n"
+                 "mol modcolor 0 1 ColorID 16\n"
+                 "mol modmaterial 0 1 AOChalky\n")
 
-    lines_out = lines + [extra]
+        lines_out = lines + [extra]
 
-    remove("vis.vmd")
+        remove("vis.vmd")
 
-    with open("vis.vmd", "w") as fout:
-        fout.writelines(lines_out)
+        with open("vis.vmd", "w") as fout:
+            fout.writelines(lines_out)
