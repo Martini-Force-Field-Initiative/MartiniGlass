@@ -9,4 +9,4 @@ they are followed in order.
     go_models
     multiple_go
     cylinders
-    secondary structure
+    secondary_structure
