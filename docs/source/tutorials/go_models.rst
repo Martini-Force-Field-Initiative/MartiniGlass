@@ -135,4 +135,43 @@ auxiliary visualisation file to see the entire network.
 
 
 
+Addendum: Loading everything in one go
+--------------------------------------
+
+The above sequence of commands requires several steps of interaction with VMD to visualise a complete
+system. To automate this sequence, several lines can be added to the ``vis.vmd`` file to automate
+the second loading of a frame and trajectory into VMD:
+
+.. code-block::
+
+    mol new frame.gro type gro first 0 last -1 step 1
+    mol addfile trajectory.xtc type xtc first 0 last -1 step 1 waitfor all molid 1
+
+    cg_bonds -top en.top
+    mol modstyle 0 1 Bonds 0.300000 52.000000
+    mol modcolor 0 1 ColorID 16
+    mol modmaterial 0 1 AOChalky
+
+
+These lines are automatically added with the appropriate file names when the structure (and optionally,
+trajectory) are provided to MartiniGlass:
+
+.. code-block::
+
+    martiniglass -p topol.top -f frame.gro -vf -go -gf go_nbparams.itp
+
+If only the frame is given, then the line to load the trajectory will be skipped. The trajectory
+may be added using the ``-traj`` flag of MartiniGlass.
+
+Subsequently the system can be loaded into VMD as before:
+
+.. code-block::
+
+    $ vmd frame.gro -e vis.vmd
+
+This command will load the given structure file twice, and apply the two visualisation topologies
+(``vis.top`` and ``go.top`` respectively) to the two systems in VMD.
+
+
+
 

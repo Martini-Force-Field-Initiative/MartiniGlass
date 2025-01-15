@@ -55,7 +55,7 @@ Load your structure and trajectory as with any other:
 Once VMD has loaded your system, you can begin to improve your visualisation using the files generated
 by MartiniGlass. Firstly, open the Tk console in VMD from the menu: Extensions -> Tk console.
 
-Once the vmd console is open, a tcl script called ``cg_bonds-v6.tcl`` is required.. This script
+Once the VMD console is open, a tcl script called ``cg_bonds-v6.tcl`` is required to load your topology. This script
 is packaged with MartiniGlass and is available `here <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/blob/main/martiniglass/data/cg_bonds-v6.tcl>`_.
 Load the script in the VMD Tk console using:
 
@@ -79,7 +79,8 @@ What next?
 ^^^^^^^^^^
 
 This section is a basic guide to how MartiniGlass may be used in conjunction with VMD to better visualise
-your Martini system.
+your Martini system. Almost certainly, systems naively processed by MartiniGlass in this way will not load
+as intended into VMD.
 
 MartiniGlass has several further options to help better process your input topology for the best visualisation
 of your system. These are described in :doc:`Advanced options <advanced_options>`. There are further tutorials

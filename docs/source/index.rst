@@ -32,7 +32,7 @@ Contents
 
 .. toctree::
 
-    usage
+    introduction
     file_formats
     advanced_options
     tutorials/index

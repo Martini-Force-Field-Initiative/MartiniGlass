@@ -120,10 +120,58 @@ will write an index file, ``index.ndx`` for ``frame.gro`` that has a single inde
 the indices of water beads, in addition to the usual processed topology output of MartiniGlass.
 
 
+.. _state_files:
+
 Writing VMD state input files
 -----------------------------
 
 The core functionality of MartiniGlass ensures that your system's topology files are readable by
 VMD. To finish loading a system into VMD - as described in :doc:`Usage <usage>` - several further
-scripts are required.
+scripts are required. These scripts are distributed as part of MartiniGlass, and stored in the
+`data <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/martiniglass/data>`_
+folder of the repository.
+
+For convenience, they can also be written into a folder when MartiniGlass is called with the
+``-vf`` (Visualisation Files) flag. For example:
+
+.. code-block::
+
+    $ martiniglass -p topol.top -vf
+
+will write the three files locally, in addition to performing the usual processing. The three files are:
+
+* ``cg_bonds-v6.tcl``: A tcl script containing commands for vmd to write bonds between atoms in a system
+* ``eigen.py``: An auxiliary script to help ``cg_bonds-v6.tcl`` visualise secondary structure
+* ``vis.vmd``: A VMD visualiation state file
+
+NB, longer term users of the Martini force field may be familiar with previous iterations of the
+``cg_bonds-vX.tcl`` script. The latest version has been optimised in its functionality to work best in
+conjunction with MartiniGlass.
+
+As described in the :doc:`introduction <introduction>`, the principal script required by VMD to draw
+bonds is ``cg_bonds-v6.tcl``. The ``cg_bonds`` program, once sourced in vmd, contains a number of
+additional functions to actually draw bonds between atoms. For the purposes of MartiniGlass, the
+one function that is required is simply ``-top``:
+
+.. code-block::
+
+    % cg_bonds -top vis.top
+
+Calling the ``cg_bonds -top`` program will read your topology complete with the visualisable topology
+files, and draw the bonds described in your system.
+
+The Python script ``eigen.py`` is only required for illustrating secondary structure. For more information,
+see the tutorial on :doc:`drawing secondary structure <tutorials:secondary_structure>`.
+
+As a shortcut to the routine described, the visualisation state script, ``vis.vmd`` automatically loads both
+the ``cg_bonds`` program into VMD, and reads in the visualisation topology using the above command. It further
+contains a number of default representations for a wide range of common components of Martini systems, such as
+proteins, lipids, and nucleic acids. To take advantage of the provided readily visualisable state, VMD can
+be opened from the command line using the following:
+
+.. code-block::
+
+    $ vmd frame.gro -e vis.vmd
+
+
 
