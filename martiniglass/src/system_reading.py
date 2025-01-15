@@ -113,7 +113,7 @@ def system_reading(topology):
     # for each molecule in the system, read in the itp
     d = {}
     for i, j in enumerate(topol_lines['core_itps']):
-        with open(j) as f:
+        with open(j, encoding="utf-8") as f:
             d[i] = f.readlines()
 
     # read the molecules into the forcefield
