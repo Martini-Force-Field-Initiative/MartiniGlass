@@ -20,7 +20,7 @@ network bonds necessary for retaining secondary and tertiary structure at coarse
 resolution.
 
 The :doc:`usage` section provides basic information about the package.
-There are details about how to :ref:`install` MartiniGlass, and a basic example of
+There are details about how to :ref:`install <install>` MartiniGlass, and a basic example of
 how to get started.
 
 .. note::

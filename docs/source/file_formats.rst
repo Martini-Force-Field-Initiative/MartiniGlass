@@ -111,7 +111,7 @@ Auxillary files
 ^^^^^^^^^^^^^^^
 
 MartiniGlass may write several more files with the ``-vf`` (Visualisation Files) flag. These are described
-further in the :ref:`state_files` section of the :doc:`Advanced Options <advanced_options>` page.
+further in the :ref:`state files <state_files>` section of the :doc:`Advanced Options <advanced_options>` page.
 
 
 
