@@ -83,4 +83,4 @@ your Martini system.
 
 MartiniGlass has several further options to help better process your input topology for the best visualisation
 of your system. These are described in :doc:`Advanced options <advanced_options>`. There are further tutorials
-available in the :doc:`Tutorials folder <tutorials/index>`.
+available on the :doc:`Tutorials page <tutorials/index>`.
