@@ -59,6 +59,9 @@ relatively common occurance. Therefore, when MartiniGlass discovers beads with >
 they are edited such that some are removed so dynamic visualisation is possible.
 This problem is discussed further in :doc:`cylinders`.
 
+Alongside these file, several files have been written to enable the topology to be loaded into VMD through
+the use of the ``-vf`` (Visualisation Files) flag:
+
 * ``vis.vmd``: VMD visualisation state file
 * ``cg_bonds-v6.tcl``: vmd commands to draw bonds between atoms
 * ``eigen.py``: auxillary python script required by ``cg_bonds-v6.tcl``
