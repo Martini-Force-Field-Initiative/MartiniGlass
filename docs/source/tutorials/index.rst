@@ -5,6 +5,8 @@ These are step by step tutorials to follow to use MartiniGlass practically. It i
 they are followed in order.
 
 .. toctree::
+    :maxdepth: 1
+
     elastic_networks
     go_models
     multiple_go
