@@ -128,13 +128,13 @@ the second loading of a frame and trajectory into VMD:
 
 .. code-block::
 
-    mol new frame.gro type gro first 0 last -1 step 1
-    mol addfile trajectory.xtc type xtc first 0 last -1 step 1 waitfor all molid 1
+    % mol new frame.gro type gro first 0 last -1 step 1
+    % mol addfile trajectory.xtc type xtc first 0 last -1 step 1 waitfor all molid 1
 
-    cg_bonds -top en.top
-    mol modstyle 0 1 Bonds 0.300000 52.000000
-    mol modcolor 0 1 ColorID 16
-    mol modmaterial 0 1 AOChalky
+    % cg_bonds -top en.top
+    % mol modstyle 0 1 Bonds 0.300000 52.000000
+    % mol modcolor 0 1 ColorID 16
+    % mol modmaterial 0 1 AOChalky
 
 
 These lines are automatically added with the appropriate file names when the structure (and optionally,
@@ -142,7 +142,7 @@ trajectory) are provided to MartiniGlass:
 
 .. code-block::
 
-    martiniglass -p topol.top -f frame.gro -vf -en -ef 700
+    $ martiniglass -p topol.top -f frame.gro -vf -en -ef 700
 
 If only the frame is given, then the line to load the trajectory will be skipped. The trajectory
 may be added using the ``-traj`` flag of MartiniGlass.

@@ -82,6 +82,7 @@ Step 3a: Loading the initial system
 To fully view an elastic network in VMD using the files provided, the system needs to be loaded twice in VMD.
 
 1. Load the system in VMD from the command line using the visualisation state file provided:
+
 .. code-block::
 
     $ vmd 1UBQ_cg.pdb -e vis.vmd
@@ -144,13 +145,13 @@ the second loading of a frame and trajectory into VMD:
 
 .. code-block::
 
-    mol new frame.gro type gro first 0 last -1 step 1
-    mol addfile trajectory.xtc type xtc first 0 last -1 step 1 waitfor all molid 1
+    % mol new frame.gro type gro first 0 last -1 step 1
+    % mol addfile trajectory.xtc type xtc first 0 last -1 step 1 waitfor all molid 1
 
-    cg_bonds -top go.top
-    mol modstyle 0 1 Bonds 0.300000 52.000000
-    mol modcolor 0 1 ColorID 16
-    mol modmaterial 0 1 AOChalky
+    % cg_bonds -top go.top
+    % mol modstyle 0 1 Bonds 0.300000 52.000000
+    % mol modcolor 0 1 ColorID 16
+    % mol modmaterial 0 1 AOChalky
 
 
 These lines are automatically added with the appropriate file names when the structure (and optionally,
@@ -158,7 +159,7 @@ trajectory) are provided to MartiniGlass:
 
 .. code-block::
 
-    martiniglass -p topol.top -f frame.gro -vf -go -gf go_nbparams.itp
+    $ martiniglass -p topol.top -f frame.gro -vf -go -gf go_nbparams.itp
 
 If only the frame is given, then the line to load the trajectory will be skipped. The trajectory
 may be added using the ``-traj`` flag of MartiniGlass.

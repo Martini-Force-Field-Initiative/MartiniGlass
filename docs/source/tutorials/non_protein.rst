@@ -7,7 +7,9 @@ The selection of output files for this tutorial is available from the
 
 Most of the functionality of MartiniGlass is focused on proteins to enable visualisation of
 secondary and tertiary structure elements. However, the program enables rapid generation of
-robust topology files for visualisation for *any* Martini system.
+robust topology files for visualisation for *any* Martini system. This first tutorial shows
+both how simple MartiniGlass commands can be used to rapidly generate visualisable topology
+files, and the diversity of systems to which it can be applied.
 
 This is best demonstrated by the protein-less system in the
 `non protein <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/non_protein>`_
@@ -25,12 +27,12 @@ Note the ``-f`` flag requires the ``.gro`` file associated with the system.
 
 .. code-block::
 
-    martiniglass -p system.top -f mixed.gro -vf
+    $ martiniglass -p system.top -f mixed.gro -vf
 
 
 This generates a number of files as outputs:
 
-* ``..._vis.itp``: the direct bonded topology of the protein
+* ``..._vis.itp``: the direct bonded topology of all of the molecules to be visualised.
 * ``vis.top``: a topology file for the direct bonded networks of the system
 * ``index.ndx``: a Gromacs index file for the system containing one index group for lipids, molecular motors, and ions. (I.E. everything that's not water)
 
@@ -58,6 +60,22 @@ is ready to be loaded into VMD:
 Which will load the system along with the default visualisations provided. The motors are not
 included in the default visualisations, but a representation of ``resname MOTO`` will visualise them.
 In the figure below, the lipids have also been coloured by their resname.
+
+Note! If by accident the file loaded into vmd is the original ``mixed.gro`` as:
+
+.. code-block::
+
+    $ vmd mixed.gro -e vis.vmd
+
+then the following error should be expected:
+
+.. code-block::
+
+    atomsel : setbonds: Need one bondlist for each selected atom
+
+This error arises because the ``vis.top`` file, loaded into VMD by ``vis.vmd``
+does *not* contain an entry for the water molecules in the system.
+
 
 .. image::
     https://github.com/user-attachments/assets/c5966478-1c7c-4abc-9ca6-32018a89de27
