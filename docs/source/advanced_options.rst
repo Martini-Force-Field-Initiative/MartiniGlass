@@ -200,7 +200,5 @@ The system is in fact loaded twice, with the standard visualisation topologies a
 and the protein structure topologies applied to the second system. The separation of the topologies in
 this way allows for fine tuning of the visualisation of each component.
 
-This option is also explained in the tutorials for both the `Go model <tutorials/go_models>`_
-and `elastic networks <tutorials/elastic_networks>`_.
-
-
+This option is also explained in the tutorials for both the :doc:`Go model <tutorials/go_models>`
+and :doc:`elastic networks <tutorials/elastic_networks>`.
