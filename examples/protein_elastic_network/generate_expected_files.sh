@@ -15,9 +15,11 @@ set -e
 
 grep "^ATOM" 1ubq.pdb > 1UBQ_clean.pdb
 
-martinize2 -f 1UBQ_clean.pdb -o topol.top -x 1UBQ_cg.pdb -elastic -ef 700
+martinize2 -f 1UBQ_clean.pdb -o topol.top -x 1UBQ_cg.pdb -elastic
 
-martiniglass -p topol.top -el -ef 700 -vf -f 1UBQ_cg.pdb
+gmx editconf -f 1UBQ_cg.pdb -c -d 2 -o out.gro
+
+martiniglass -p topol.top -el -vf -f out.gro
 
 vmd 1UBQ_cg.pdb -e vis.vmd
 

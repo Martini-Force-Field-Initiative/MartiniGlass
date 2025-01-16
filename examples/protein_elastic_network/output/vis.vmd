@@ -5,8 +5,6 @@
 source cg_bonds-v6.tcl
 cg_bonds -top vis.top
 
-source cg_secondary_structure.tcl
-
 pbc box -style tubes -width 0.6 -color black -resolution 42 -material AOChalky
 
 set viewplist {}
@@ -726,3 +724,9 @@ vmdrestoremycolors
 label textsize 1.0
 axes location off
 rotate y by 90
+mol new out.gro type gro first 0 last -1 step 1
+ 
+cg_bonds -top en.top
+mol modstyle 0 1 Bonds 0.300000 52.000000
+mol modcolor 0 1 ColorID 16
+mol modmaterial 0 1 AOChalky

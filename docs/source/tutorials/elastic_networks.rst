@@ -71,6 +71,7 @@ Step 3a: Loading the initial system
 To fully view an elastic network in VMD using the files provided, the system needs to be loaded twice in VMD.
 
 1. Load the system in VMD from the command line using the visualisation state file provided:
+
 .. code-block::
 
     $ vmd 1UBQ_cg.pdb -e vis.vmd

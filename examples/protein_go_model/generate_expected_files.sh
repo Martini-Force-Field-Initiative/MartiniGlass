@@ -14,12 +14,13 @@
 
 set -e
 
-source /your/martini_vis/venv/bin/activate
 
 grep "^ATOM" 1ubq.pdb > 1UBQ_clean.pdb
 
 martinize2 -f 1UBQ_clean.pdb -o topol.top -x 1UBQ_cg.pdb -go contact_map.out
 
-martiniglass -p topol.top -go -gf go_nbparams.itp -f 1UBQ_cg.pdb
+gmx editconf -f 1UBQ_cg.pdb -c -d 2 -o out.gro
+
+martiniglass -p topol.top -go -gf go_nbparams.itp -f out.gro
 
 vmd 1UBQ_cg.pdb -e vis.vmd

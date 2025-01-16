@@ -1,8 +1,8 @@
-Elastic network bonds removed from molecule_0_en.itp
+en network bonds removed from molecule_0_en.itp
 This is for noting in visualisation, not for simulation
 
 These bonds will be missing if you load molecule_0_en.itp in vmd
 having been present in your simulation. If you're inspecting your
-elastic network because you suspect some error because of it, bear this in mind.
-   i    j func b0 kb
-  37   116
+en network because you suspect some simulation erroras a result of how it was constructed, bear this in mind.
+     i      j func b0 kb
+    37	   116
