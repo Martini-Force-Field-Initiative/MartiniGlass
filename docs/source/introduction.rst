@@ -42,6 +42,8 @@ If your system requires no further description in MartiniGlass, you should expec
 2)  A file called ``vis.top``, corresponding to the input ``topol.top``, which now includes the new
     set of ``.itp`` files.
 
+.. _system_vis:
+
 Visualising your system
 ^^^^^^^^^^^^^^^^^^^^^^^
 

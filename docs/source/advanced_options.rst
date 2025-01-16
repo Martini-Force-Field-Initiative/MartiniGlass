@@ -120,6 +120,9 @@ the indices of water beads, in addition to the usual processed topology output o
 Writing VMD state input files
 -----------------------------
 
+Basic file output
+^^^^^^^^^^^^^^^^^
+
 The core functionality of MartiniGlass ensures that your system's topology files are readable by
 VMD. To finish loading a system into VMD - as described in :doc:`introduction <introduction>` - several further
 scripts are required. These scripts are distributed as part of MartiniGlass, and stored in the
@@ -144,9 +147,9 @@ NB, longer term users of the Martini force field may be familiar with previous i
 conjunction with MartiniGlass.
 
 As described in the :doc:`introduction <introduction>`, the principal script required by VMD to draw
-bonds is ``cg_bonds-v6.tcl``. The ``cg_bonds`` program, once sourced in vmd, contains a number of
-additional functions to actually draw bonds between atoms. For the purposes of MartiniGlass, the
-one function that is required is simply ``-top``:
+bonds is ``cg_bonds-v6.tcl``. The ``cg_bonds`` program, once sourced in vmd (see :ref:`<system_vis>`),
+contains a number of additional functions to actually draw bonds between atoms. For the purposes of
+MartiniGlass, the one function that is required is simply ``-top``:
 
 .. code-block::
 
@@ -168,5 +171,36 @@ be opened from the command line using the following:
 
     $ vmd frame.gro -e vis.vmd
 
+Additional code for ``vis.vmd``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If the ``-vf`` argument is given in conjunction with:
+
+* an argument for protein structure, I.E. ``-go`` or ``-el``
+
+**and**
+
+* a structure file with ``-f`` and optionally, a trajectory file with ``-traj``
+
+For example:
+
+.. code-block::
+
+    $ martiniglass -p topol.top -f frame.gro -traj.xtc -vf -el
+
+then several extra lines of code will be appended to the ``vis.vmd`` file written out by MartiniGlass.
+The additional lines are designed to facilitate a more streamlined approach towards visualising
+protein secondary structure. In short, when the system is subsequently loaded into VMD with, for example:
+
+.. code-block::
+
+    $ vmd frame.gro trajectory.xtc -e vis.vmd
+
+The system is in fact loaded twice, with the standard visualisation topologies applied to the first system,
+and the protein structure topologies applied to the second system. The separation of the topologies in
+this way allows for fine tuning of the visualisation of each component.
+
+This option is also explained in the tutorials for both the `Go model <tutorials/go_models>`_
+and `elastic networks <tutorials/elastic_networks>`_.
 
 

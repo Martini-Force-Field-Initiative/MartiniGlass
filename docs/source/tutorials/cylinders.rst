@@ -36,7 +36,7 @@ network analysis and cylinder generation file:
 
     $ martiniglass -p topol.top -f frame.gro -el -ef 700 -cyl
 
-Alongside the usual files written as before in the :docs:`elastic network tutorial <elastic_networks>`,
+Alongside the usual files written as before in the :doc:`elastic network tutorial <elastic_networks>`,
 one further file is written, ``network_cylinders.tcl``.
 
 Step 2: Loading the system into VMD

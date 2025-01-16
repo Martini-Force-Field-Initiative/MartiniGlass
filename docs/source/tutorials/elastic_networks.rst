@@ -142,7 +142,7 @@ trajectory) are provided to MartiniGlass:
 
 .. code-block::
 
-    $ martiniglass -p topol.top -f frame.gro -vf -en -ef 700
+    $ martiniglass -p topol.top -f frame.gro -traj trajectory.xtc -vf -en
 
 If only the frame is given, then the line to load the trajectory will be skipped. The trajectory
 may be added using the ``-traj`` flag of MartiniGlass.
@@ -151,9 +151,11 @@ Subsequently the system can be loaded into VMD as before:
 
 .. code-block::
 
-    $ vmd frame.gro -e vis.vmd
+    $ vmd frame.gro trajectory.xtc -e vis.vmd
 
-This command will load the given structure file twice, and apply the two visualisation topologies
-(``vis.top`` and ``en.top`` respectively) to the two systems in VMD.
+This command will load the given structure and trajectory files twice, and apply the two
+visualisation topologies (``vis.top`` and ``en.top`` respectively) to the two systems in VMD. If
+the trajectory file is provided, the elastic bonds will be shown dynamically, changing in length
+as they do throughout the simulation.
 
 
