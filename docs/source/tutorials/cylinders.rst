@@ -11,7 +11,7 @@ into vmd, an error message along these lines will be raised:
     Maximum of 12 bonds
 
 This error arises because VMD has a limit of showing 12 bonds on a single atom. As described in the
-:docs:`elastic network tutorial <elastic_networks>`, the elastic network processor edits the network
+:doc:`elastic network tutorial <elastic_networks>`, the elastic network processor edits the network
 to ensure that no atoms have more than 12 bonds, and writes them out as a separate file for noting.
 
 To overcome this limitation in VMD, MartiniGlass can process static structures and topologies together
@@ -22,7 +22,7 @@ Step 1: Running MartiniGlass
 ----------------------------
 
 For this tutorial we will use the same ``1UBQ_cg.pdb`` input file and topology as in the
-:docs:`elastic network tutorial <elastic_networks>`. First the pdb file needs to be converted to the
+:doc:`elastic network tutorial <elastic_networks>`. First the pdb file needs to be converted to the
 ``.gro`` format (for example using ``gmx editconf``:
 
 .. code-block::
