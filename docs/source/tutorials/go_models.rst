@@ -112,7 +112,7 @@ Next, the system must be loaded a second time. Open the *Molecule File Browser* 
 
 The system should now appear twice in the VMD main menu. With the system loaded a second time, the
 elastic network topology can be loaded onto it. Open the Tk console from the VMD menu
-(Extensions -> Tk Console), and load the topology using the ``cg_bonds`` programe:
+(Extensions -> Tk Console), and load the topology using the ``cg_bonds`` program:
 
 .. code-block::
 

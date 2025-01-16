@@ -143,6 +143,7 @@ selections that can then be uniquely coloured to indicate secondary structure. S
 representations in the Graphics menu of VMD:
 
 .. code-block::
+
     name BB and ((resid > 22 and resid < 34) or (resid > 37 and resid < 40) or (resid > 56 and resid < 59))
     name BB and ((resid > 1 and resid < 7) or (resid > 11 and resid < 16) or (resid > 40 and resid < 45) or (resid > 65 and resid < 71))
 

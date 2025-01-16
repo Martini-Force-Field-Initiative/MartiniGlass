@@ -1,0 +1,7 @@
+#include "/your/working/directory/molecule_0_en.itp"
+#include "/your/working/directory/molecule_0_vis.itp"
+[ system ]
+Title of the system
+
+[ molecules ]
+molecule_0_vis	1

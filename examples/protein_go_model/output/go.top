@@ -1,0 +1,7 @@
+#include "/grain/chris/visualisation/MartiniGlass/examples/protein_go_model/expected_output/molecule_0_go.itp"
+#include "/grain/chris/visualisation/MartiniGlass/examples/protein_go_model/expected_output/molecule_0_vis.itp"
+[ system ]
+Title of the system
+
+[ molecules ]
+molecule_0_go	1
