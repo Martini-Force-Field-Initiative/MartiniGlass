@@ -1,0 +1,23 @@
+#include "lipids.itp"
+#include "martini_v2.0_ions.itp" 
+#include "mol.itp"
+
+[ system ]
+; name
+INSANE! Membrane UpperLeaflet>DOPG:DOPC:DOPE:POPC=1:1:1:1 LowerLeaflet>POPC:DOPC:DOPG:DOPE=1:1:1:1
+
+
+[ molecules ]
+; name  number
+DOPG            42
+DOPC            42
+DOPE            42
+POPC            42
+POPC            42
+DOPC            42
+DOPG            42
+DOPE            42
+W             4443
+NA+             91
+CL-              7
+MOTO 5

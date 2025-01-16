@@ -12,3 +12,4 @@ they are followed in order.
     multiple_go
     cylinders
     secondary_structure
+    non_protein

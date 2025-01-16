@@ -1,0 +1,24 @@
+#include "/grain/chris/visualisation/vis_tests/molecular_motor/temp/DOPC_vis.itp"
+#include "/grain/chris/visualisation/vis_tests/molecular_motor/temp/DOPE_vis.itp"
+#include "/grain/chris/visualisation/vis_tests/molecular_motor/temp/DOPG_vis.itp"
+#include "/grain/chris/visualisation/vis_tests/molecular_motor/temp/POPC_vis.itp"
+#include "/grain/chris/visualisation/vis_tests/molecular_motor/temp/NA+_vis.itp"
+#include "/grain/chris/visualisation/vis_tests/molecular_motor/temp/CL-_vis.itp"
+#include "/grain/chris/visualisation/vis_tests/molecular_motor/temp/MOTO_vis.itp"
+[ system ]
+; name
+INSANE! Membrane UpperLeaflet>DOPG:DOPC:DOPE:POPC=1:1:1:1 LowerLeaflet>POPC:DOPC:DOPG:DOPE=1:1:1:1
+
+
+[ molecules ]
+DOPG_vis	42
+DOPC_vis	42
+DOPE_vis	42
+POPC_vis	42
+POPC_vis	42
+DOPC_vis	42
+DOPG_vis	42
+DOPE_vis	42
+NA+_vis	91
+CL-_vis	7
+MOTO_vis	5
