@@ -43,9 +43,9 @@ def main():
     parser.add_argument("-el", default=False, action="store_true", dest='elastic',
                         help="Write elastic network of input proteins to separate files"
                         )
-    parser.add_argument("-ef", default=700, dest='en_force', type=float,
-                        help="Force constant used for elastic network. Default = 700, standard for Martini 3."
-                        )
+    # parser.add_argument("-ef", default=700, dest='en_force', type=float,
+    #                     help="Force constant used for elastic network. Default = 700, standard for Martini 3."
+    #                     )
     parser.add_argument("-go", default=False, action="store_true",
                         help="Go network options")
     parser.add_argument("-gf", type=Path, dest='go_path',
@@ -65,11 +65,10 @@ def main():
 
     ff, topol_lines, system_defines = system_reading(args.topology)
 
-    written_mols, mol_bonds, mol_lens = molecule_editor(ff, topol_lines, system_defines,
+    written_mols, mol_bonds, mol_lens = molecule_editor(ff, topol_lines,
                                                         virtual_sites=args.virtual_sites,
                                                         ext=args.ext,
                                                         elastic=args.elastic,
-                                                        elastic_force=args.en_force,
                                                         go=args.go)
 
     if args.elastic:

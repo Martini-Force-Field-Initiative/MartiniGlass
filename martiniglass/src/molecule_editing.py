@@ -16,11 +16,11 @@ import copy
 from os.path import isfile
 from vermouth.gmx import write_molecule_itp
 from .network_writer import network_writer
+from vermouth.graph_utils import make_residue_graph
 
-
-def molecule_editor(ff, topol_lines, system_defines,
+def molecule_editor(ff, topol_lines,
                     virtual_sites=True, ext=False,
-                    elastic=False, elastic_force=700,
+                    elastic=False,
                     go=False, go_path='', go_file=''):
     # iterate over the molecules to make visualisation topologies
     keep = ['bonds', 'constraints', 'pairs', 'virtual_sitesn',
@@ -43,10 +43,18 @@ def molecule_editor(ff, topol_lines, system_defines,
         for interaction_type in list(block.interactions):
             if interaction_type not in keep:
                 del block.interactions[interaction_type]
+
         # remove meta (i.e. the #IFDEF FLEXIBLE) from the bonds
         for bond in block.interactions['bonds']:
             bond.meta.clear()
         if elastic:
+
+            res_graph = make_residue_graph(block)
+            res_dict = {}
+            for node in res_graph.nodes:
+                for bead in res_graph.nodes[node]['graph'].nodes:
+                    res_dict[bead] = node
+
             for bond in list(block.interactions['bonds']):
                 # this should introduce actual parameters into the block if the bonds have been given by
                 # a #define statement elsewhere
@@ -54,23 +62,18 @@ def molecule_editor(ff, topol_lines, system_defines,
                     atoms = bond.atoms
                     # paras = bond.parameters[0]
                     block.remove_interaction('bonds', bond.atoms)
-                    # TODO strictly the interaction here should be system_defines[paras], but can't work it out
+                    # strictly the interaction here should be system_defines[paras], but it doesn't matter
                     block.add_interaction('bonds', atoms, ['1', '1', '1000'],
                                           meta={"comment": "external bond definition"})
                     continue
 
-                # TODO monitor these conditions for future force fields
-                # these conditions are taken from the martini3001 forcefield, may cause upset in future
-                try:
-                    cond0 = abs(float(bond.parameters[2]) - elastic_force) < 0.1  # elastic network proper
-                    cond1 = abs(float(bond.parameters[1]) - 0.970) < 0.1  # long beta elastic
-                    cond2 = abs(float(bond.parameters[1]) - 0.640) < 0.1  # short beta elastic
-                    if any([cond0, cond1, cond2]):
+                else:
+                    at1 = bond.atoms[0]
+                    at2 = bond.atoms[1]
+                    if abs(res_dict[at1] - res_dict[at2]) > 1:
                         bonds_list.append([bond.atoms[0], bond.atoms[1]])
                         block.remove_interaction('bonds', bond.atoms)
-                except IndexError:
-                    # print(bond.parameters)
-                    pass
+
             ff_en_copy = copy.deepcopy(ff)
             en_written = network_writer(ff_en_copy, molname, bonds_list, ext, 'en')
             written_mols.append(en_written)

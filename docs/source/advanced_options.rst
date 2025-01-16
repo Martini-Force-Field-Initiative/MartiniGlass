@@ -126,7 +126,7 @@ Writing VMD state input files
 -----------------------------
 
 The core functionality of MartiniGlass ensures that your system's topology files are readable by
-VMD. To finish loading a system into VMD - as described in :doc:`Usage <usage>` - several further
+VMD. To finish loading a system into VMD - as described in :doc:`introduction <introduction>` - several further
 scripts are required. These scripts are distributed as part of MartiniGlass, and stored in the
 `data <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/martiniglass/data>`_
 folder of the repository.
