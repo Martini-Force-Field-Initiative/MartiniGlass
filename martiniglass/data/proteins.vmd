@@ -1,6 +1,6 @@
 #!/usr/local/bin/vmd
 # VMD script written by save_state $Revision: 1.48 $
-# VMD version: 1.9.4a55
+# VMD version: 1.9.4a57
 
 source cg_bonds-v6.tcl
 cg_bonds -top vis.top
@@ -13,7 +13,7 @@ proc vmdrestoremymaterials {} {
   set mlist { Opaque Transparent BrushedMetal Diffuse Ghost Glass1 Glass2 Glass3 Glossy HardPlastic MetallicPastel Steel Translucent Edgy EdgyShiny EdgyGlass Goodsell AOShiny AOChalky AOEdgy BlownGlass GlassBubble RTChrome }
   set mymlist [material list]
   foreach mat $mlist {
-    if { [lsearch $mymlist $mat] == -1 } {
+    if { [lsearch $mymlist $mat] == -1 } { 
       material add $mat
     }
   }
@@ -284,7 +284,7 @@ display eyesep       0.065000
 display focallength  2.000000
 display height       6.000000
 display distance     -2.000000
-display projection   orthographic
+display projection   Orthographic
 display nearclip set 0.500000
 display farclip  set 10.000000
 display depthcue   off
@@ -303,9 +303,9 @@ display dof_fnumber 64.000000
 display dof_focaldist 0.700000
 
 mol delrep 0 top
-mol representation Licorice 2.600000 50.000000 50.000000
-mol color ColorID 11
-mol selection {name NC3 PO42 PO41 P04 COO ROH}
+mol representation CPK 1.700000 0.400000 52.000000 52.000000
+mol color ColorID 9
+mol selection {name BB}
 mol material AOChalky
 mol addrep top
 mol selupdate 0 top 0
@@ -337,9 +337,9 @@ mol clipplane center 5 0 top {0.0 0.0 0.0}
 mol clipplane color  5 0 top {0.5 0.5 0.5 }
 mol clipplane normal 5 0 top {0.0 0.0 1.0}
 mol clipplane status 5 0 top {0}
-mol representation Licorice 2.600000 50.000000 50.000000
-mol color ColorID 12
-mol selection {resname CHOL}
+mol representation CPK 2.900000 0.700000 52.000000 1.000000
+mol color ColorID 9
+mol selection {name BB and not resname GLY}
 mol material AOChalky
 mol addrep top
 mol selupdate 1 top 0
@@ -371,9 +371,9 @@ mol clipplane center 5 1 top {0.0 0.0 0.0}
 mol clipplane color  5 1 top {0.5 0.5 0.5 }
 mol clipplane normal 5 1 top {0.0 0.0 1.0}
 mol clipplane status 5 1 top {0}
-mol representation Licorice 2.500000 50.000000 50.000000
-mol color ColorID 22
-mol selection {name "BB*" and not name DA DT DG DC}
+mol representation CPK 1.700000 0.300000 52.000000 12.000000
+mol color ColorID 15
+mol selection {name SC1 and (resname ALA CYS SER HIS HIE HSE HSD HID HSP HIP TYR TRP)}
 mol material AOChalky
 mol addrep top
 mol selupdate 2 top 0
@@ -405,9 +405,9 @@ mol clipplane center 5 2 top {0.0 0.0 0.0}
 mol clipplane color  5 2 top {0.5 0.5 0.5 }
 mol clipplane normal 5 2 top {0.0 0.0 1.0}
 mol clipplane status 5 2 top {0}
-mol representation Licorice 2.500000 50.000000 50.000000
-mol color ColorID 17
-mol selection {resname DA DT DG DC and name BB1 BB2 BB3}
+mol representation CPK 1.900000 0.300000 52.000000 12.000000
+mol color ColorID 15
+mol selection {name SC1 and (resname VAL LEU ILE PRO ASN GLN ASP ASPP THR LYS LSN LYN ARG PHE)}
 mol material AOChalky
 mol addrep top
 mol selupdate 3 top 0
@@ -439,9 +439,9 @@ mol clipplane center 5 3 top {0.0 0.0 0.0}
 mol clipplane color  5 3 top {0.5 0.5 0.5 }
 mol clipplane normal 5 3 top {0.0 0.0 1.0}
 mol clipplane status 5 3 top {0}
-mol representation Licorice 2.500000 50.000000 50.000000
-mol color ColorID 3
-mol selection {resname DA DT DG DC and name SC1 SC2 SC3 SC4}
+mol representation CPK 2.400000 0.300000 52.000000 12.000000
+mol color ColorID 15
+mol selection {name SC1 and (resname MET HYP ASN GLU GLUP GLH)}
 mol material AOChalky
 mol addrep top
 mol selupdate 4 top 0
@@ -473,9 +473,9 @@ mol clipplane center 5 4 top {0.0 0.0 0.0}
 mol clipplane color  5 4 top {0.5 0.5 0.5 }
 mol clipplane normal 5 4 top {0.0 0.0 1.0}
 mol clipplane status 5 4 top {0}
-mol representation Licorice 2.400000 50.000000 50.000000
-mol color ColorID 19
-mol selection {resname POPC DPPC}
+mol representation CPK 1.900000 0.300000 52.000000 12.000000
+mol color ColorID 15
+mol selection {name SC2 and (resname LYS LSN LYN ARG)}
 mol material AOChalky
 mol addrep top
 mol selupdate 5 top 0
@@ -507,6 +507,177 @@ mol clipplane center 5 5 top {0.0 0.0 0.0}
 mol clipplane color  5 5 top {0.5 0.5 0.5 }
 mol clipplane normal 5 5 top {0.0 0.0 1.0}
 mol clipplane status 5 5 top {0}
+mol representation CPK 1.700000 0.300000 52.000000 12.000000
+mol color ColorID 15
+mol selection {name SC2 and (resname HIS HIE HSE HSD HID HSP HIP PHE TYR TRP)}
+mol material AOChalky
+mol addrep top
+mol selupdate 6 top 0
+mol colupdate 6 top 0
+mol scaleminmax top 6 0.000000 0.000000
+mol smoothrep top 6 0
+mol drawframes top 6 {now}
+mol clipplane center 0 6 top {0.0 0.0 0.0}
+mol clipplane color  0 6 top {0.5 0.5 0.5 }
+mol clipplane normal 0 6 top {0.0 0.0 1.0}
+mol clipplane status 0 6 top {0}
+mol clipplane center 1 6 top {0.0 0.0 0.0}
+mol clipplane color  1 6 top {0.5 0.5 0.5 }
+mol clipplane normal 1 6 top {0.0 0.0 1.0}
+mol clipplane status 1 6 top {0}
+mol clipplane center 2 6 top {0.0 0.0 0.0}
+mol clipplane color  2 6 top {0.5 0.5 0.5 }
+mol clipplane normal 2 6 top {0.0 0.0 1.0}
+mol clipplane status 2 6 top {0}
+mol clipplane center 3 6 top {0.0 0.0 0.0}
+mol clipplane color  3 6 top {0.5 0.5 0.5 }
+mol clipplane normal 3 6 top {0.0 0.0 1.0}
+mol clipplane status 3 6 top {0}
+mol clipplane center 4 6 top {0.0 0.0 0.0}
+mol clipplane color  4 6 top {0.5 0.5 0.5 }
+mol clipplane normal 4 6 top {0.0 0.0 1.0}
+mol clipplane status 4 6 top {0}
+mol clipplane center 5 6 top {0.0 0.0 0.0}
+mol clipplane color  5 6 top {0.5 0.5 0.5 }
+mol clipplane normal 5 6 top {0.0 0.0 1.0}
+mol clipplane status 5 6 top {0}
+mol representation CPK 1.700000 0.300000 52.000000 12.000000
+mol color ColorID 15
+mol selection {name SC3 and (resname HIS HIE HSE HSD HID HSP HIP PHE TYR TRP)}
+mol material AOChalky
+mol addrep top
+mol selupdate 7 top 0
+mol colupdate 7 top 0
+mol scaleminmax top 7 0.000000 0.000000
+mol smoothrep top 7 0
+mol drawframes top 7 {now}
+mol clipplane center 0 7 top {0.0 0.0 0.0}
+mol clipplane color  0 7 top {0.5 0.5 0.5 }
+mol clipplane normal 0 7 top {0.0 0.0 1.0}
+mol clipplane status 0 7 top {0}
+mol clipplane center 1 7 top {0.0 0.0 0.0}
+mol clipplane color  1 7 top {0.5 0.5 0.5 }
+mol clipplane normal 1 7 top {0.0 0.0 1.0}
+mol clipplane status 1 7 top {0}
+mol clipplane center 2 7 top {0.0 0.0 0.0}
+mol clipplane color  2 7 top {0.5 0.5 0.5 }
+mol clipplane normal 2 7 top {0.0 0.0 1.0}
+mol clipplane status 2 7 top {0}
+mol clipplane center 3 7 top {0.0 0.0 0.0}
+mol clipplane color  3 7 top {0.5 0.5 0.5 }
+mol clipplane normal 3 7 top {0.0 0.0 1.0}
+mol clipplane status 3 7 top {0}
+mol clipplane center 4 7 top {0.0 0.0 0.0}
+mol clipplane color  4 7 top {0.5 0.5 0.5 }
+mol clipplane normal 4 7 top {0.0 0.0 1.0}
+mol clipplane status 4 7 top {0}
+mol clipplane center 5 7 top {0.0 0.0 0.0}
+mol clipplane color  5 7 top {0.5 0.5 0.5 }
+mol clipplane normal 5 7 top {0.0 0.0 1.0}
+mol clipplane status 5 7 top {0}
+mol representation CPK 1.700000 0.300000 52.000000 12.000000
+mol color ColorID 15
+mol selection {name SC4 and (resname TYR TRP)}
+mol material AOChalky
+mol addrep top
+mol selupdate 8 top 0
+mol colupdate 8 top 0
+mol scaleminmax top 8 0.000000 0.000000
+mol smoothrep top 8 0
+mol drawframes top 8 {now}
+mol clipplane center 0 8 top {0.0 0.0 0.0}
+mol clipplane color  0 8 top {0.5 0.5 0.5 }
+mol clipplane normal 0 8 top {0.0 0.0 1.0}
+mol clipplane status 0 8 top {0}
+mol clipplane center 1 8 top {0.0 0.0 0.0}
+mol clipplane color  1 8 top {0.5 0.5 0.5 }
+mol clipplane normal 1 8 top {0.0 0.0 1.0}
+mol clipplane status 1 8 top {0}
+mol clipplane center 2 8 top {0.0 0.0 0.0}
+mol clipplane color  2 8 top {0.5 0.5 0.5 }
+mol clipplane normal 2 8 top {0.0 0.0 1.0}
+mol clipplane status 2 8 top {0}
+mol clipplane center 3 8 top {0.0 0.0 0.0}
+mol clipplane color  3 8 top {0.5 0.5 0.5 }
+mol clipplane normal 3 8 top {0.0 0.0 1.0}
+mol clipplane status 3 8 top {0}
+mol clipplane center 4 8 top {0.0 0.0 0.0}
+mol clipplane color  4 8 top {0.5 0.5 0.5 }
+mol clipplane normal 4 8 top {0.0 0.0 1.0}
+mol clipplane status 4 8 top {0}
+mol clipplane center 5 8 top {0.0 0.0 0.0}
+mol clipplane color  5 8 top {0.5 0.5 0.5 }
+mol clipplane normal 5 8 top {0.0 0.0 1.0}
+mol clipplane status 5 8 top {0}
+mol representation CPK 1.700000 0.300000 52.000000 12.000000
+mol color ColorID 15
+mol selection {name SC5 and (resname TRP)}
+mol material AOChalky
+mol addrep top
+mol selupdate 9 top 0
+mol colupdate 9 top 0
+mol scaleminmax top 9 0.000000 0.000000
+mol smoothrep top 9 0
+mol drawframes top 9 {now}
+mol clipplane center 0 9 top {0.0 0.0 0.0}
+mol clipplane color  0 9 top {0.5 0.5 0.5 }
+mol clipplane normal 0 9 top {0.0 0.0 1.0}
+mol clipplane status 0 9 top {0}
+mol clipplane center 1 9 top {0.0 0.0 0.0}
+mol clipplane color  1 9 top {0.5 0.5 0.5 }
+mol clipplane normal 1 9 top {0.0 0.0 1.0}
+mol clipplane status 1 9 top {0}
+mol clipplane center 2 9 top {0.0 0.0 0.0}
+mol clipplane color  2 9 top {0.5 0.5 0.5 }
+mol clipplane normal 2 9 top {0.0 0.0 1.0}
+mol clipplane status 2 9 top {0}
+mol clipplane center 3 9 top {0.0 0.0 0.0}
+mol clipplane color  3 9 top {0.5 0.5 0.5 }
+mol clipplane normal 3 9 top {0.0 0.0 1.0}
+mol clipplane status 3 9 top {0}
+mol clipplane center 4 9 top {0.0 0.0 0.0}
+mol clipplane color  4 9 top {0.5 0.5 0.5 }
+mol clipplane normal 4 9 top {0.0 0.0 1.0}
+mol clipplane status 4 9 top {0}
+mol clipplane center 5 9 top {0.0 0.0 0.0}
+mol clipplane color  5 9 top {0.5 0.5 0.5 }
+mol clipplane normal 5 9 top {0.0 0.0 1.0}
+mol clipplane status 5 9 top {0}
+mol representation CPK 1.000000 0.700000 12.000000 52.000000
+mol color ColorID 16
+mol selection {resname ALA CYS SER HIS HIE HSE HSD HID HSP HIP TYR TRP VAL LEU ILE PRO ASN GLN ASP ASPP THR LYS LSN LYN ARG PHE MET HYP ASN GLU GLUP GLH GLY}
+mol material AOChalky
+mol addrep top
+mol selupdate 10 top 0
+mol colupdate 10 top 0
+mol scaleminmax top 10 0.000000 0.000000
+mol smoothrep top 10 0
+mol drawframes top 10 {now}
+mol clipplane center 0 10 top {0.0 0.0 0.0}
+mol clipplane color  0 10 top {0.5 0.5 0.5 }
+mol clipplane normal 0 10 top {0.0 0.0 1.0}
+mol clipplane status 0 10 top {0}
+mol clipplane center 1 10 top {0.0 0.0 0.0}
+mol clipplane color  1 10 top {0.5 0.5 0.5 }
+mol clipplane normal 1 10 top {0.0 0.0 1.0}
+mol clipplane status 1 10 top {0}
+mol clipplane center 2 10 top {0.0 0.0 0.0}
+mol clipplane color  2 10 top {0.5 0.5 0.5 }
+mol clipplane normal 2 10 top {0.0 0.0 1.0}
+mol clipplane status 2 10 top {0}
+mol clipplane center 3 10 top {0.0 0.0 0.0}
+mol clipplane color  3 10 top {0.5 0.5 0.5 }
+mol clipplane normal 3 10 top {0.0 0.0 1.0}
+mol clipplane status 3 10 top {0}
+mol clipplane center 4 10 top {0.0 0.0 0.0}
+mol clipplane color  4 10 top {0.5 0.5 0.5 }
+mol clipplane normal 4 10 top {0.0 0.0 1.0}
+mol clipplane status 4 10 top {0}
+mol clipplane center 5 10 top {0.0 0.0 0.0}
+mol clipplane color  5 10 top {0.5 0.5 0.5 }
+mol clipplane normal 5 10 top {0.0 0.0 1.0}
+mol clipplane status 5 10 top {0}
+
 proc vmdrestoremycolors {} {
 color scale colors RWB {1.0 0.0 0.0} {1.0 1.0 1.0} {0.0 0.0 1.0}
 color scale colors BWR {0.0 0.0 1.0} {1.0 1.0 1.0} {1.0 0.0 0.0}
@@ -553,17 +724,9 @@ color scale colors CET_R2 {0.0 0.0 0.0} {0.0 0.0 0.0} {0.0 0.0 0.0}
     {color Name {LPA} green}
     {color Name {LPB} green}
     {color Name {B} pink}
-    {color Name {G} cyan}
-    {color Name {D} purple}
-    {color Name {V} lime}
-    {color Name {R} mauve}
     {color Type {LP} green}
     {color Type {DRUD} pink}
     {color Type {B} pink}
-    {color Type {G} cyan}
-    {color Type {D} purple}
-    {color Type {V} lime}
-    {color Type {R} mauve}
     {color Element {X} cyan}
     {color Element {Ac} ochre}
     {color Element {Ag} ochre}
@@ -669,18 +832,11 @@ color scale colors CET_R2 {0.0 0.0 0.0} {0.0 0.0 0.0} {0.0 0.0 0.0}
     {color Element {Y} ochre}
     {color Element {Yb} ochre}
     {color Element {Zr} ochre}
-    {color Resname {DA} silver}
-    {color Resname {DG} green}
-    {color Resname {DT} white}
-    {color Resname {DC} pink}
-    {color Resname {POPC} cyan}
-    {color Resname {CHOL} purple}
     {color Chain {X} blue}
     {color Segname {} blue}
     {color Conformation {all} blue}
     {color Molecule {0} blue}
     {color Molecule {1} red}
-    {color Molecule {eq.gro} red}
     {color Structure {3_10_Helix} blue}
     {color Surface {Grasp} gray}
     {color Labels {Springs} orange}

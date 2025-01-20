@@ -24,24 +24,26 @@ def output_file_append(frame, trajectory, go=False, elastic=False):
         if elastic:
             extra_top = "en.top"
 
-        with open("vis.vmd") as f:
-            lines = f.readlines()
+        for fin in ['vis.vmd', 'proteins.vmd']:
 
-        if isinstance(trajectory, Path):
-            trajectory_line = f"mol addfile {trajectory} type xtc first 0 last -1 step 1 waitfor all molid 1\n"
-        else:
-            trajectory_line = " \n"
+            with open(fin) as f:
+                lines = f.readlines()
 
-        extra = (f"mol new {frame} type gro first 0 last -1 step 1\n"
-                 f"{trajectory_line}"
-                 f"cg_bonds -top {extra_top}\n"
-                 "mol modstyle 0 1 Bonds 0.300000 52.000000\n"
-                 "mol modcolor 0 1 ColorID 16\n"
-                 "mol modmaterial 0 1 AOChalky\n")
+            if isinstance(trajectory, Path):
+                trajectory_line = f"mol addfile {trajectory} type xtc first 0 last -1 step 1 waitfor all molid 1\n"
+            else:
+                trajectory_line = " \n"
 
-        lines_out = lines + [extra]
+            extra = (f"mol new {frame} type gro first 0 last -1 step 1\n"
+                     f"{trajectory_line}"
+                     f"cg_bonds -top {extra_top}\n"
+                     "mol modstyle 0 1 Bonds 0.300000 52.000000\n"
+                     "mol modcolor 0 1 ColorID 16\n"
+                     "mol modmaterial 0 1 AOChalky\n")
 
-        remove("vis.vmd")
+            lines_out = lines + [extra]
 
-        with open("vis.vmd", "w") as fout:
-            fout.writelines(lines_out)
+            remove(fin)
+
+            with open(fin, "w") as fout:
+                fout.writelines(lines_out)
