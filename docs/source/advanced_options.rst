@@ -109,7 +109,7 @@ achieved by providing the structure (``.gro``) file you wish to process to Marti
 
 .. code-block::
 
-    $ martiniglass -p topol.top -s frame.gro
+    $ martiniglass -p topol.top -f frame.gro
 
 will write an index file, ``index.ndx`` for ``frame.gro`` that has a single index group without
 the indices of water beads, in addition to the usual processed topology output of MartiniGlass.
