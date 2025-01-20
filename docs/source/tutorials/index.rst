@@ -30,3 +30,4 @@ they are followed in order.
     multiple_go
     cylinders
     secondary_structure
+    protein_bead_sizes

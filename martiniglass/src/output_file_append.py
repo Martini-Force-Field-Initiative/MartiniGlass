@@ -15,7 +15,7 @@
 from pathlib import Path
 from os import remove
 
-def output_file_append(frame, trajectory, go=False, elastic=False):
+def output_file_append(frame, trajectory, proteins=False, go=False, elastic=False):
 
     if isinstance(frame, Path):
         if go:
@@ -24,7 +24,12 @@ def output_file_append(frame, trajectory, go=False, elastic=False):
         if elastic:
             extra_top = "en.top"
 
-        for fin in ['vis.vmd', 'proteins.vmd']:
+        if proteins:
+            inputs = ['vis.vmd', 'proteins.vmd']
+        else:
+            inputs = ['vis.vmd']
+
+        for fin in inputs:
 
             with open(fin) as f:
                 lines = f.readlines()
