@@ -149,9 +149,10 @@ NB, longer term users of the Martini force field may be familiar with previous i
 conjunction with MartiniGlass.
 
 As described in the :doc:`introduction <introduction>`, the principal script required by VMD to draw
-bonds is ``cg_bonds-v6.tcl``. The ``cg_bonds`` program, once sourced in vmd (see :ref:`<systemvis>`),
-contains a number of additional functions to actually draw bonds between atoms. For the purposes of
-MartiniGlass, the one function that is required is simply ``-top``:
+bonds is ``cg_bonds-v6.tcl``. The ``cg_bonds`` program, once sourced in vmd (see "Visualising your
+system" under :ref:`getting_started`), contains a number of additional functions to actually draw
+bonds between atoms. For the purposes of MartiniGlass, the one function that is required is
+simply ``-top``:
 
 .. code-block::
 
