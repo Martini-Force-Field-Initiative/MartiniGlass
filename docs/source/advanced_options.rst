@@ -204,3 +204,41 @@ this way allows for fine tuning of the visualisation of each component.
 
 This option is also explained in the tutorials for both the :doc:`Go model <tutorials/go_models>`
 and :doc:`elastic networks <tutorials/elastic_networks>`.
+
+
+Viewing with other simulation packages
+--------------------------------------
+
+MartiniGlass is primarily intended to enable the subsequent viewing of Martini systems using the VMD
+software. This may not be the universal visualisation software of choice, but other packages may
+face similar challenges in clearly showing the bonded networks of coarse grained molecules. To help
+support making a start on visualising molecules with other softwares such as Pymol or nglviewer,
+MartiniGlass can be used to write out the bonded networks of molecules using the ``-ext`` (external)
+flag. For example:
+
+.. code-block::
+
+    $ martiniglass -p topol.top -ext
+
+In addition to the standard visualisation topology files intended for VMD, the above command will also
+write a series of text files. The contents of each file is then simply a list of zero-indexed pairs
+indicating the pairs of atoms in the molecule which have a bond between them. For example:
+
+.. code-block::
+
+    0       2
+    2       4
+    4       6
+    6       10
+    10      12
+    12      15
+    15      17
+    17      19
+    19      21
+    21      22
+    ...
+
+Note that the zero indexing differs from the Gromacs format describing bonds, which is 1-indexed. It is
+anticipated that users who wish to use such a list in alternative visualisation software will benefit
+from the zero indexing.
+
