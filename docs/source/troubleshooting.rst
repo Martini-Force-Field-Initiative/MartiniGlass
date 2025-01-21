@@ -12,8 +12,7 @@ If you have an error message along the lines of:
     Maximum of 12 bonds
 
 Then it is likely that the system was not processed by MartiniGlass correctly. For example, the
-``-el`` flag was not included to properly process the elastic network, or the force constant
-defined by ``-ef`` was not the correct one for the system.
+``-el`` or ``-go`` flags may not have been included to properly process the proteins in the system.
 
 The bonds are going everywhere across periodic boundaries
 ---------------------------------------------------------
