@@ -138,14 +138,17 @@ the second loading of a frame and trajectory into VMD:
 
 
 These lines are automatically added with the appropriate file names when the structure (and optionally,
-trajectory) are provided to MartiniGlass:
+trajectory) are provided to MartiniGlass. Note that MartiniGlass has a strict requirement on the file
+format to be read with ``-f``, so the example above of ``1UBQ_cg.pdb`` should be converted to the ``gro``
+format beforehand. The command to write these lines could then read:
 
 .. code-block::
 
     $ martiniglass -p topol.top -f frame.gro -traj trajectory.xtc -vf -en
 
-If only the frame is given, then the line to load the trajectory will be skipped. The trajectory
-may be added using the ``-traj`` flag of MartiniGlass.
+Where ``frame.gro`` and ``trajectory.xtc`` should have the name of your desired input files.
+If only the frame is given, then the line mentioned above to load the trajectory will be skipped. The
+trajectory may be added using the ``-traj`` flag of MartiniGlass.
 
 Subsequently the system can be loaded into VMD as before:
 

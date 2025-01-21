@@ -113,6 +113,8 @@ achieved by providing the structure (``.gro``) file you wish to process to Marti
 
 will write an index file, ``index.ndx`` for ``frame.gro`` that has a single index group without
 the indices of water beads, in addition to the usual processed topology output of MartiniGlass.
+Note that the argument strictly requires a coordinate file in the ``.gro`` format, so any ``pdb``
+files must be converted (e.g. using ``gmx editconf`` in Gromacs) before use.
 
 
 .. _state_files:

@@ -27,7 +27,7 @@ For this tutorial we will use the same ``1UBQ_cg.pdb`` input file and topology a
 
 .. code-block::
 
-    $ gmx editconf -f 1UBQ_cg.pdb -c -d 2 -o frame.out
+    $ gmx editconf -f 1UBQ_cg.pdb -c -d 2 -o frame.gro
 
 In the ``.gro`` format, it is ready to be read by MartiniGlass, along with the options for elastic
 network analysis and cylinder generation file:
