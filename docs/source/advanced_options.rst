@@ -188,7 +188,7 @@ For example:
 
 .. code-block::
 
-    $ martiniglass -p topol.top -f frame.gro -traj.xtc -vf -el
+    $ martiniglass -p topol.top -f frame.gro -traj trajectory.xtc -vf -el
 
 then several extra lines of code will be appended to the ``vis.vmd`` file written out by MartiniGlass.
 The additional lines are designed to facilitate a more streamlined approach towards visualising
