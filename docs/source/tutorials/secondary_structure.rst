@@ -48,7 +48,7 @@ Therefore, the command we need to process with MartiniGlass is:
 
 .. code-block::
 
-    $ martiniglass -p topol.top -el -ef 700 -vf
+    $ martiniglass -p topol.top -el -vf
 
 This will generate the following files describing your system:
 

@@ -34,7 +34,7 @@ network analysis and cylinder generation file:
 
 .. code-block::
 
-    $ martiniglass -p topol.top -f frame.gro -el -ef 700 -cyl
+    $ martiniglass -p topol.top -f frame.gro -el -cyl
 
 Alongside the usual files written as before in the :doc:`elastic network tutorial <elastic_networks>`,
 one further file is written, ``network_cylinders.tcl``.
