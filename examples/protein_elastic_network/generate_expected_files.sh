@@ -13,6 +13,8 @@
 # limitations under the License.
 set -e
 
+wget https://files.rcsb.org/download/1ubq.pdb
+
 grep "^ATOM" 1ubq.pdb > 1UBQ_clean.pdb
 
 martinize2 -f 1UBQ_clean.pdb -o topol.top -x 1UBQ_cg.pdb -elastic
@@ -21,5 +23,5 @@ gmx editconf -f 1UBQ_cg.pdb -c -d 2 -o out.gro
 
 martiniglass -p topol.top -el -vf -f out.gro
 
-vmd 1UBQ_cg.pdb -e vis.vmd
+vmd out.gro -e vis.vmd
 

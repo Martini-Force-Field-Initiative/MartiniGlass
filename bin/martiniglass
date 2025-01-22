@@ -92,6 +92,9 @@ def main():
             output_file_append(args.system, args.trajectory, args.pf, elastic=True)
         if args.go:
             output_file_append(args.system, args.trajectory, args.pf, go=True)
+        if args.cyl:
+            output_file_append(args.system, args.trajectory, args.pf, cylinders=True)
+
 
     print('All done!')
 

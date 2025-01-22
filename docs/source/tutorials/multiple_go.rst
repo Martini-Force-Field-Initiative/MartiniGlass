@@ -1,6 +1,13 @@
 Multiple Go models
 ==================
 
+NOTE: at time of writing, the ``-name`` flag of martinize2 is not available in the version of
+vermouth installed directly via pip. Make sure that Vermouth has been installed using:
+
+.. code-block::
+
+    $ pip install git+https://github.com/marrink-lab/vermouth-martinize/
+
 If you have a system containing several proteins, each of which has been coarse grained with their
 own Go model, then extra care needs to be taken during simulation and visualisation. The exact nature
 and behaviour of the Go model is outside the scope of this tool, but interested readers are referred to
@@ -10,21 +17,60 @@ they be interested in further details of pitfalls of multiple Go models in a sin
 Simulation set up
 -----------------
 
+Martinizing two proteins
+^^^^^^^^^^^^^^^^^^^^^^^^
+
 If multiple proteins are martinized with Go models and intended for the same simulation setup, then care
 must be taken in the preparation of input files. When the ``-go`` flag is used in Martinize2, two additional
 files are written if the Go model is generated successfully: ``go_atomtypes.itp`` and ``go_nbparams.itp``.
 
-For multiple go models, these should first be renamed to indicate which system they're associated with. Secondly,
-these renamed files across all the proteins in the system should be concatenated into two single files
-included in the master topology of the system.
+For multiple go models, these should first be renamed to indicate which system they're associated with
+(otherwise, running martinize2 twice in the same directory will overwrite the files made for the first protein):
+
+.. code-block::
+
+    # martinize the first protein
+    $ martinize2 -f prot0_clean.pdb -x prot0_cg.pdb -o prot0_topol.top -go prot0_contact_map.out -name prot0
+    $ mv go_nbparams.itp prot0_go_nbparams.itp
+    $ mv go_atomtypes.itp prot0_go_atomtypes.itp
+
+    # martinize the second protein
+    $ martinize2 -f prot1_clean.pdb -x prot1_cg.pdb -o prot1_topol.top -go prot1_contact_map.out -name prot1
+    $ mv go_atomtypes.itp prot1_go_atomtypes.itp
+    $ mv go_nbparams.itp prot1_go_nbparams.itp
+
+Once the files are all generated, the ones relevant to the go model should be concatenated together:
+
+.. code-block::
+
+    # concatenate the files together
+    $ cat prot0_go_nbparams.itp prot1_go_nbparams.itp > go_nbparams.itp
+    $ cat prot0_go_atomtypes.itp prot1_go_atomtypes.itp > go_atomtypes.itp
+
+
+
+Generating a structure file
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 After the proteins have been coarse-grained individually and the Go files treated accordingly, an initial
 simulation cell can be assembled using the program of choice. In the tutorial script, ``gmx insert-molecules``
-is used twice over to insert several copies of each into a single simulation cell called ``vis.gro``.
+is used twice over to insert several copies of each into a single simulation cell called ``vis.gro``:
+
+
+.. code-block::
+
+    # make the box with multiple copies of each molecule using gromacs
+    $ gmx insert-molecules -ci prot0_cg.pdb -nmol 5 -box 20 20 20 -o newbox.gro
+    $ gmx insert-molecules -ci prot1_cg.pdb -nmol 3 -f newbox.gro  -o vis.gro
+    $ rm newbox.gro
 
 
 Visualisation
 -------------
+
+
+Running MartiniGlass
+^^^^^^^^^^^^^^^^^^^^
 
 With the input files treated appropriately, MartiniGlass can in fact be run as with any other system. In the
 case of the tutorial files, the following command will generate all the visualisation topologies from the

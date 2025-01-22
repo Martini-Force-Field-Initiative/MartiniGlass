@@ -1,7 +1,7 @@
 Static cylinder networks
 ========================
 
-Occaisionally when Martinize2 generates elastic networks, some atoms require a large number of elastic
+Occasionally when Martinize2 generates elastic networks, some atoms require a large number of elastic
 bonds to keep them in the place of their initial structure. However, when such a structure is loaded
 into vmd, an error message along these lines will be raised:
 
@@ -20,6 +20,9 @@ flag when running MartiniGlass.
 
 Step 1: Running MartiniGlass
 ----------------------------
+
+.. make a folder for this tutorial
+
 
 For this tutorial we will use the same ``1UBQ_cg.pdb`` input file and topology as in the
 :doc:`elastic network tutorial <elastic_networks>`. First the pdb file needs to be converted to the

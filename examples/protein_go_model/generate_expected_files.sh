@@ -14,13 +14,16 @@
 
 set -e
 
+wget https://files.rcsb.org/download/1ubq.pdb
 
 grep "^ATOM" 1ubq.pdb > 1UBQ_clean.pdb
+
+wget https://raw.githubusercontent.com/Martini-Force-Field-Initiative/MartiniGlass/refs/heads/main/examples/protein_go_model/expected_output/contact_map.out
 
 martinize2 -f 1UBQ_clean.pdb -o topol.top -x 1UBQ_cg.pdb -go contact_map.out
 
 gmx editconf -f 1UBQ_cg.pdb -c -d 2 -o out.gro
 
-martiniglass -p topol.top -go -gf go_nbparams.itp -f out.gro
+martiniglass -p topol.top -go -gf go_nbparams.itp -f out.gro -vf
 
-vmd 1UBQ_cg.pdb -e vis.vmd
+vmd out.gro -e vis.vmd

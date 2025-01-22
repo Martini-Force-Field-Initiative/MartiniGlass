@@ -22,4 +22,4 @@ gmx editconf -f 1UBQ_cg.pdb -c -d 2 -o out.gro
 
 martiniglass -p topol.top -el -f 1UBQ_cg.pdb -f out.gro
 
-vmd 1UBQ_cg.pdb -e vis.vmd
+vmd out.gro -e vis.vmd

@@ -17,5 +17,5 @@ martiniglass -p system.top -vf -f mixed.gro
 
 gmx trjconv -f mixed.gro -s mixed.gro -n index.ndx -o vis.gro
 
-vmd vis.gro vis.vmd
+vmd vis.gro -e vis.vmd
 

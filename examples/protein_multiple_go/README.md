@@ -1,6 +1,7 @@
 ## Multiple Go models
 
-Input and output files for the tutorial on visualising go models with MartiniGlass.
+Input and output files for the tutorial on visualising systems containing multiple
+proteins with go models with MartiniGlass.
 
 Using the files in the [input](input) folder, the `generate_expected_files.sh` script should generate
 the files found in the [output](output) folder. The script assumes there are installations of both

@@ -1,11 +1,77 @@
 Elastic Networks
-================
+****************
 
-The selection of output files for this tutorial is available from the
+The files (input and expected output) for this tutorial is available from the
 `MartiniGlass examples folder <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/protein_elastic_network>`_.
 
+
+VMD problems
+============
+
+Occasionally when Martinize2 generates elastic networks, some atoms require a large number of elastic
+bonds to keep them in the place of their initial structure. However, when such a structure is loaded
+into vmd, an error message along these lines will be raised:
+
+.. code-block::
+
+    atomsel: setbonds: too many bonds in bondlist: 2 6 27 29 31 33 35 133 135 138 140 142 144 5
+    Maximum of 12 bonds
+
+This error arises because VMD has a limit of showing 12 bonds on a single atom.
+MartiniGlass helps overcome this issue by ensuring that when the user indicates there are proteins
+with elastic networks in their system, the topology files written out will not have more than 12 bonds,
+and bonds which are removed to achieve this are written out to a separate file. This may be useful if
+the user wishes to view the elastic network dynamically changing in a trajectory. This is described more
+in the :ref:`dynamic` section.
+
+Alternatively if visualisation of the precise elastic network is important, MartiniGlass can process
+static structures and topologies together to draw an apparent bonded network with a set of cylinders
+instead. This is indicated by the ``-cyl`` flag when running MartiniGlass, explained further in the
+:ref:`static` section.
+
+.. _dynamic:
+Dynamic Elastic Networks
+========================
+
+.. _quickstart:
+Quickstart
+----------
+
+To process a system containing proteins with elastic networks and visualise it,
+the following command can be used:
+
+.. code-block::
+
+    $ martiniglass -p topol.top -f frame.gro -vf -el
+
+Where ``frame.gro`` should have the name of your desired input structure file.
+
+Subsequently the system can be loaded into VMD as usual:
+
+.. code-block::
+
+    $ vmd frame.gro -e vis.vmd
+
+This command will load the given structure file twice, and apply the two
+visualisation topologies (``vis.top`` and ``en.top`` respectively) to the two systems in VMD.
+
+If a trajectory file is to be visualised along with the static structure, the following commands
+can be used:
+
+.. code-block::
+
+    $ martiniglass -p topol.top -f frame.gro -vf -el -traj trajectory.xtc
+    $ vmd frame.gro trajectory.xtc -e vis.vmd
+
+which will enable dynamic visualisation of elastic network bonds through the course
+of the simulation.
+
+.. _stepbystep:
+Step by step tutorial
+---------------------
+
 Step 1: Martinize your protein
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Create a martini model of a protein following the standard martinize2 protocol:
 
@@ -32,7 +98,7 @@ Without any further additions, ``topol.top`` only contains a single copy of your
 
 
 Step 2: Run MartiniGlass
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The system is now ready to be processed by MartiniGlass. In this case, we have a protein with an elastic network.
 Therefore, the command we need to process with MartiniGlass is:
@@ -63,7 +129,7 @@ the use of the ``-vf`` (Visualisation Files) flag:
 * ``eigen.py``: auxiliary python script required by ``cg_bonds-v6.tcl``
 
 Step 3: Loading your system in VMD
-----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Step 3a: Loading the initial system
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -119,46 +185,88 @@ Applying these will ensure that the elastic network is now visible:
 .. image::
     https://github.com/user-attachments/assets/268e5cb9-fcea-4b5a-921a-40a433b4a91e
 
-Addendum: Loading everything in one go
---------------------------------------
+.. _static:
+Static elastic network
+======================
 
-The above sequence of commands requires several steps of interaction with VMD to visualise a complete
-system. To automate this sequence, several lines can be added to the ``vis.vmd`` file to automate
-the second loading of a frame and trajectory into VMD:
+Quickstart
+----------
 
-.. code-block::
-
-    % mol new frame.gro type gro first 0 last -1 step 1
-    % mol addfile trajectory.xtc type xtc first 0 last -1 step 1 waitfor all molid 1
-
-    % cg_bonds -top en.top
-    % mol modstyle 0 1 Bonds 0.300000 52.000000
-    % mol modcolor 0 1 ColorID 16
-    % mol modmaterial 0 1 AOChalky
-
-
-These lines are automatically added with the appropriate file names when the structure (and optionally,
-trajectory) are provided to MartiniGlass. Note that MartiniGlass has a strict requirement on the file
-format to be read with ``-f``, so the example above of ``1UBQ_cg.pdb`` should be converted to the ``gro``
-format beforehand. The command to write these lines could then read:
+If you have a system already martinized and with a structure file in the ``.gro`` format,
+then the following commands can be used to generate an entire static elastic network and
+load into VMD:
 
 .. code-block::
 
-    $ martiniglass -p topol.top -f frame.gro -traj trajectory.xtc -vf -en
+    $ martiniglass -p topol.top -f frame.gro -el -cyl -vf
+    $ vmd frame.gro -e vis.vmd
 
-Where ``frame.gro`` and ``trajectory.xtc`` should have the name of your desired input files.
-If only the frame is given, then the line mentioned above to load the trajectory will be skipped. The
-trajectory may be added using the ``-traj`` flag of MartiniGlass.
 
-Subsequently the system can be loaded into VMD as before:
+Step by step
+------------
+
+Step 1: Running MartiniGlass
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+For this tutorial we will use the same ``1UBQ_cg.pdb`` input file and topology as in the
+:doc:`dynamic` tutorial. Firstly the system is converted to a coarse grained representation
+as before:
 
 .. code-block::
 
-    $ vmd frame.gro trajectory.xtc -e vis.vmd
-
-This command will load the given structure and trajectory files twice, and apply the two
-visualisation topologies (``vis.top`` and ``en.top`` respectively) to the two systems in VMD. If
-the trajectory file is provided, the elastic bonds will be shown dynamically, changing in length
-as they do throughout the simulation.
+    $ wget https://files.rcsb.org/download/1ubq.pdb
+    $ grep "^ATOM" 1ubq.pdb > 1UBQ_clean.pdb
+    $ martinize2 -f 1UBQ_clean.pdb -o topol.top -x 1UBQ_cg.pdb -elastic
 
 
+Secondly, the pdb file needs to be converted to the
+``.gro`` format (for example using ``gmx editconf``):
+
+.. code-block::
+
+    $ gmx editconf -f 1UBQ_cg.pdb -c -d 2 -o frame.gro
+
+In the ``.gro`` format, it is ready to be read by MartiniGlass, along with the options for elastic
+network analysis and cylinder generation file:
+
+.. code-block::
+
+    $ martiniglass -p topol.top -f frame.gro -el -cyl -vf
+
+Alongside the usual files written as before in the :ref:`dynamic`,
+one further file is written, ``network_cylinders.tcl``.
+
+Step 2: Loading the system into VMD
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+As usual, the system can now be loaded into VMD:
+
+.. code-block::
+
+    $ vmd frame.gro -e vis.vmd
+
+.. image::
+    https://github.com/user-attachments/assets/90541ec1-1f90-4844-994e-6f7aad03519e
+
+
+Step 3: Load the static network
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+With the system loaded in VMD, the static network of drawn cylinders can be simply loaded in through
+the vmd Tk Console:
+
+.. code-block::
+
+    % source network_cylinders.tcl
+
+Which will immediately result in the following image displayed:
+
+.. image::
+    https://github.com/user-attachments/assets/55584d20-0230-429d-8f0b-1b4c61052c00
+
+Although this looks almost identical to the image we saw of the elastic network previously, the system now
+differs in two ways:
+
+1. The entire elastic network is drawn, so even atoms with > 12 bonds attached now have all elastic bonds drawn.
+2. The network is static. If a simulation trajectory was also loaded into the system, the static cylindrical network will stay in the positions it was drawn.

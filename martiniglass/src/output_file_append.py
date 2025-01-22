@@ -15,7 +15,8 @@
 from pathlib import Path
 from os import remove
 
-def output_file_append(frame, trajectory, proteins=False, go=False, elastic=False):
+def output_file_append(frame, trajectory, proteins=False,
+                       go=False, elastic=False, cylinders=False):
 
     if isinstance(frame, Path):
         if go:
@@ -39,12 +40,15 @@ def output_file_append(frame, trajectory, proteins=False, go=False, elastic=Fals
             else:
                 trajectory_line = " \n"
 
-            extra = (f"mol new {frame} type gro first 0 last -1 step 1\n"
-                     f"{trajectory_line}"
-                     f"cg_bonds -top {extra_top}\n"
-                     "mol modstyle 0 1 Bonds 0.300000 52.000000\n"
-                     "mol modcolor 0 1 ColorID 16\n"
-                     "mol modmaterial 0 1 AOChalky\n")
+            if go or elastic:
+                extra = (f"mol new {frame} type gro first 0 last -1 step 1\n"
+                         f"{trajectory_line}"
+                         f"cg_bonds -top {extra_top}\n"
+                         "mol modstyle 0 1 Bonds 0.300000 52.000000\n"
+                         "mol modcolor 0 1 ColorID 16\n"
+                         "mol modmaterial 0 1 AOChalky\n")
+            elif cylinders:
+                extra = "source network_cylinders.tcl"
 
             lines_out = lines + [extra]
 

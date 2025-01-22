@@ -1,6 +1,6 @@
 ## Elastic networks
 
-Input and output files for the tutorial on visualising secondary structure with MartiniGlass.
+Input and output files for the tutorial on visualising elastic networks with MartiniGlass.
 
 Using the files in the [input](input) folder, the `generate_expected_files.sh` script should generate
 the files found in the [output](output) folder. The script assumes there are installations of both

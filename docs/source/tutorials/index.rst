@@ -2,7 +2,8 @@ Tutorials
 =========
 
 These are step by step tutorials to follow to use MartiniGlass practically. It is recommended that
-they are followed in order.
+they are followed in order. The requirements for the tutorials are that you have MartiniGlass
+installed in your Python environment, and that you have a version of Gromacs installed and sourced.
 
 
 
