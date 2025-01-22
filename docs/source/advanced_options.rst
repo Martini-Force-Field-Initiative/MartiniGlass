@@ -95,6 +95,8 @@ will draw bonds between any virtual sites in the system and their constructing a
 will leave the virtual sites disconnected.
 
 
+.. _nowater:
+
 Waterless trajectories
 ----------------------
 

@@ -40,12 +40,13 @@ This generates a number of files as outputs:
 Processing the structure file
 -----------------------------
 
-The index file can be used to make the visualisable structure file:
+The index file can be used to make a structure file :ref:`without water <nowater>` for convenient visualisation.
 
 .. code-block::
 
     $ gmx trjconv -f mixed.gro -s mixed.gro -n index.ndx -o vis.gro
 
+Note that for an index file with only a single index group, no further interaction with ``gmx trjconv`` is necessary.
 
 Viewing in VMD
 --------------
