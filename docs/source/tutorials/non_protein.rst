@@ -40,7 +40,7 @@ This generates a number of files as outputs:
 Processing the structure file
 -----------------------------
 
-The index file can be used to make a structure file :ref:`without water <../nowater>` for convenient visualisation.
+The index file can be used to make a structure file :ref:`nowater` for convenient visualisation.
 
 .. code-block::
 
