@@ -119,7 +119,6 @@ files must be converted (e.g. using ``gmx editconf`` in Gromacs) before use.
 
 
 .. _state_files:
-
 Writing VMD state input files
 -----------------------------
 
