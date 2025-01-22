@@ -96,7 +96,6 @@ will leave the virtual sites disconnected.
 
 
 .. _nowater:
-
 Waterless trajectories
 ----------------------
 
