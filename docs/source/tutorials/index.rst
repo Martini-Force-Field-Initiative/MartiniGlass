@@ -29,6 +29,5 @@ installed in your Python environment, and that you have a version of Gromacs ins
     elastic_networks
     go_models
     multiple_go
-    cylinders
     secondary_structure
     protein_bead_sizes

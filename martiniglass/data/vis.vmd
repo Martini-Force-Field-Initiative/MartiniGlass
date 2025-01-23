@@ -474,8 +474,42 @@ mol clipplane color  5 4 top {0.5 0.5 0.5 }
 mol clipplane normal 5 4 top {0.0 0.0 1.0}
 mol clipplane status 5 4 top {0}
 mol representation Licorice 2.400000 50.000000 50.000000
-mol color ColorID 19
-mol selection {resname POPC DPPC}
+mol color resname
+mol selection {resname POPC DPPC DOPC DOPE DOPG}
+mol material AOChalky
+mol addrep top
+mol selupdate 5 top 0
+mol colupdate 5 top 0
+mol scaleminmax top 5 0.000000 0.000000
+mol smoothrep top 5 0
+mol drawframes top 5 {now}
+mol clipplane center 0 5 top {0.0 0.0 0.0}
+mol clipplane color  0 5 top {0.5 0.5 0.5 }
+mol clipplane normal 0 5 top {0.0 0.0 1.0}
+mol clipplane status 0 5 top {0}
+mol clipplane center 1 5 top {0.0 0.0 0.0}
+mol clipplane color  1 5 top {0.5 0.5 0.5 }
+mol clipplane normal 1 5 top {0.0 0.0 1.0}
+mol clipplane status 1 5 top {0}
+mol clipplane center 2 5 top {0.0 0.0 0.0}
+mol clipplane color  2 5 top {0.5 0.5 0.5 }
+mol clipplane normal 2 5 top {0.0 0.0 1.0}
+mol clipplane status 2 5 top {0}
+mol clipplane center 3 5 top {0.0 0.0 0.0}
+mol clipplane color  3 5 top {0.5 0.5 0.5 }
+mol clipplane normal 3 5 top {0.0 0.0 1.0}
+mol clipplane status 3 5 top {0}
+mol clipplane center 4 5 top {0.0 0.0 0.0}
+mol clipplane color  4 5 top {0.5 0.5 0.5 }
+mol clipplane normal 4 5 top {0.0 0.0 1.0}
+mol clipplane status 4 5 top {0}
+mol clipplane center 5 5 top {0.0 0.0 0.0}
+mol clipplane color  5 5 top {0.5 0.5 0.5 }
+mol clipplane normal 5 5 top {0.0 0.0 1.0}
+mol clipplane status 5 5 top {0}
+mol representation CPK 2.00000 1.3 50.000000 50.000000
+mol color ResID
+mol selection {resname MOTO}
 mol material AOChalky
 mol addrep top
 mol selupdate 5 top 0

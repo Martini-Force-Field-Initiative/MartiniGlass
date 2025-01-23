@@ -58,25 +58,26 @@ is ready to be loaded into VMD:
 
     $ vmd vis.gro -e vis.vmd
 
-Which will load the system along with the default visualisations provided. The motors are not
-included in the default visualisations, but a representation of ``resname MOTO`` will visualise them.
-In the figure below, the lipids have also been coloured by their resname.
+Which will load the system along with the default visualisations provided, and should show
+the system as rendered below.
 
-Note! If by accident the file loaded into vmd is the original ``mixed.gro`` as:
+.. note::
 
-.. code-block::
+    If by accident the file loaded into vmd is the original ``mixed.gro`` as:
 
-    $ vmd mixed.gro -e vis.vmd
+    .. code-block::
 
-then the following error should be expected:
+        $ vmd mixed.gro -e vis.vmd
 
-.. code-block::
+    then the following error should be expected:
 
-    atomsel : setbonds: Need one bondlist for each selected atom
+    .. code-block::
 
-This error arises because the ``vis.top`` file, loaded into VMD by ``vis.vmd``
-does *not* contain an entry for the water molecules in the system.
+        atomsel : setbonds: Need one bondlist for each selected atom
+
+    This error arises because the ``vis.top`` file, loaded into VMD by ``vis.vmd``
+    does *not* contain an entry for the water molecules in the system.
 
 
 .. image::
-    https://github.com/user-attachments/assets/c5966478-1c7c-4abc-9ca6-32018a89de27
+    https://github.com/user-attachments/assets/7e366c7c-11f3-4ef3-9c41-2ff5b4c69dc0

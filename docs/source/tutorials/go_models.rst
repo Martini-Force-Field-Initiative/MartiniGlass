@@ -1,12 +1,46 @@
 Go models
-=========
+****************
+
+Quickstart
+----------
+
+To process a system containing a protein with a Go model and visualise it,
+the following command can be used:
+
+.. code-block::
+
+    $ martiniglass -p topol.top -f frame.gro -vf -go -gf go_nbparams.itp
+
+Where ``frame.gro`` should have the name of your desired input structure file.
+
+Subsequently the system can be loaded into VMD as usual:
+
+.. code-block::
+
+    $ vmd frame.gro -e vis.vmd
+
+This command will load the given structure file twice, and apply the two
+visualisation topologies (``vis.top`` and ``en.top`` respectively) to the two systems in VMD.
+
+If a trajectory file is to be visualised along with the static structure, the following commands
+can be used:
+
+.. code-block::
+
+    $ martiniglass -p topol.top -f frame.gro -vf -el -traj trajectory.xtc
+    $ vmd frame.gro trajectory.xtc -e vis.vmd
+
+which will enable dynamic visualisation of elastic network bonds through the course
+of the simulation.
 
 
 The selection of output files for this tutorial is available from the
 `MartiniGlass examples folder <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/protein_go_model>`_.
 
+Step by step tutorial
+---------------------
 Step 1: Martinize your protein
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Create a martini model of a protein following the standard martinize2 protocol:
 
@@ -40,7 +74,7 @@ For more information on the Go model, see the tutorial in the `Vermouth document
 
 
 Step 2: Run MartiniGlass
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The system is now ready to be processed by MartiniGlass. In this case, we have:
 
@@ -68,7 +102,7 @@ the use of the ``-vf`` (Visualisation Files) flag:
 * ``eigen.py``: auxiliary python script required by ``cg_bonds-v6.tcl``
 
 Step 3: Loading your system in VMD
-----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Step 3a: Loading the initial system
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -127,49 +161,6 @@ Although this may look identical to the elastic network shown previously, the co
 not the same. Additionally because of the way the Go contact map calculation works, the Go network
 model will never face the same issue of having atoms with > 12 bonds, and having to write
 auxiliary visualisation file to see the entire network.
-
-
-
-Addendum: Loading everything in one go
---------------------------------------
-
-The above sequence of commands requires several steps of interaction with VMD to visualise a complete
-system. To automate this sequence, several lines can be added to the ``vis.vmd`` file to automate
-the second loading of a frame and trajectory into VMD:
-
-.. code-block::
-
-    % mol new frame.gro type gro first 0 last -1 step 1
-    % mol addfile trajectory.xtc type xtc first 0 last -1 step 1 waitfor all molid 1
-
-    % cg_bonds -top go.top
-    % mol modstyle 0 1 Bonds 0.300000 52.000000
-    % mol modcolor 0 1 ColorID 16
-    % mol modmaterial 0 1 AOChalky
-
-
-These lines are automatically added with the appropriate file names when the structure (and optionally,
-trajectory) are provided to MartiniGlass. Note that MartiniGlass has a strict requirement on the file
-format to be read with ``-f``, so the example above of ``1UBQ_cg.pdb`` should be converted to the ``gro``
-format beforehand. The command to write these lines could then read:
-
-.. code-block::
-
-    $ martiniglass -p topol.top -f frame.gro -vf -go -gf go_nbparams.itp
-
-Where ``frame.gro`` and ``trajectory.xtc`` should have the name of your desired input files.
-If only the frame is given, then the line mentioned above to load the trajectory will be skipped. The
-trajectory may be added using the ``-traj`` flag of MartiniGlass.
-
-Subsequently the system can be loaded into VMD as before:
-
-.. code-block::
-
-    $ vmd frame.gro -e vis.vmd
-
-This command will load the given structure file twice, and apply the two visualisation topologies
-(``vis.top`` and ``go.top`` respectively) to the two systems in VMD.
-
 
 
 
