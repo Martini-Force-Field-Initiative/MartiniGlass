@@ -1,4 +1,4 @@
-suggested commands for viewing you molecule with cg_secondary_structure.tcl:
+suggested commands for viewing you molecule with cg_bonds-v6.tcl:
 cg_helix {{22 34} {37 40} {56 59}} -hlxcolor "purple" -hlxfilled yes -hlxrad 3 -hlxmethod cylinder -hlxmat "AOChalky" -hlxres 50
 cg_sheet {{1 7} {11 16} {40 45} {65 71}} -shtfilled "yes" -shtmat "AOChalky" -shtres 50 -shtcolor "red" -shtmethod flatarrow -shtarrwidth 5 -shtheadsize 10 -shtarrthick 3 -shtsides "sharp"
 
