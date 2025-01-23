@@ -14,11 +14,17 @@ Thanks to [Jan Stevens](https://github.com/jan-stevens) for `vis.vmd`
 
 If the solution here isn't working for you, please open an issue!
 
+## Documentation
+
+Documentation for MartiniGlass is available on the [readthedocs](https://martiniglass.readthedocs.io/en/latest) site.
+The documentation covers multiple use cases and runs through the tutorials in the [examples](examples) folder
+step by step.
+
 ## Installation
 
 ```commandline
 python3 -m venv venv && source venv/bin/activate # Not required, but often convenient.
-pip install martiniglass
+pip install git+https://github.com/Martini-Force-Field-Initiative/MartiniGlass
 ```
 
 ## Usage
