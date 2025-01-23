@@ -11,15 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 set -e
+
+wget https://files.rcsb.org/download/1ubq.pdb
 
 grep "^ATOM" 1ubq.pdb > 1UBQ_clean.pdb
 
-martinize2 -f 1UBQ_clean.pdb -x cg.pdb -o topol.top -elastic -dssp
+martinize2 -f 1UBQ_clean.pdb -x 1UBQ_cg.pdb -o topol.top -elastic -dssp
 
 gmx editconf -f 1UBQ_cg.pdb -c -d 2 -o out.gro
 
-martiniglass -p topol.top -el -f 1UBQ_cg.pdb -f out.gro
+martiniglass -p topol.top -el -f 1UBQ_cg.pdb -f out.gro -vf
 
 vmd out.gro -e vis.vmd

@@ -21,7 +21,7 @@ martinize2 -f 1UBQ_clean.pdb -o topol.top -x 1UBQ_cg.pdb -elastic
 
 gmx editconf -f 1UBQ_cg.pdb -c -d 2 -o out.gro
 
-martiniglass -p topol.top -f frame.gro -el -cyl -vf
+martiniglass -p topol.top -f out.gro -cyl -vf -el
 
 vmd out.gro -e vis.vmd
 

@@ -1,12 +1,15 @@
 Multiple Go models
 ==================
 
-NOTE: at time of writing, the ``-name`` flag of martinize2 is not available in the version of
-vermouth installed directly via pip. Make sure that Vermouth has been installed using:
 
-.. code-block::
+.. note::
+    At time of writing, the ``-name`` flag of martinize2 necessary for this tutorial
+    is not available in the version of vermouth installed directly via pip. Make sure
+    that Vermouth has been installed using:
 
-    $ pip install git+https://github.com/marrink-lab/vermouth-martinize/
+    .. code-block::
+
+        $ pip install git+https://github.com/marrink-lab/vermouth-martinize/
 
 If you have a system containing several proteins, each of which has been coarse grained with their
 own Go model, then extra care needs to be taken during simulation and visualisation. The exact nature

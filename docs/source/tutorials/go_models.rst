@@ -1,6 +1,16 @@
 Go models
 ****************
 
+
+Example from step by step tutorial: Martini model of protein 1UBQ in blue with the nonbonded Go
+interactions between backbone beads illustrated in black.
+
+.. image::
+    https://github.com/user-attachments/assets/5c116782-46cd-437c-a964-fa18f7225f06
+
+
+
+
 Quickstart
 ----------
 
@@ -34,11 +44,15 @@ which will enable dynamic visualisation of elastic network bonds through the cou
 of the simulation.
 
 
+Step by step tutorial
+---------------------
+
 The selection of output files for this tutorial is available from the
 `MartiniGlass examples folder <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/protein_go_model>`_.
 
-Step by step tutorial
----------------------
+The expected output can be generated in one go using the ``generate_expected_files.sh`` script run inside
+the input folder.
+
 Step 1: Martinize your protein
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -78,8 +92,7 @@ Step 2: Run MartiniGlass
 
 The system is now ready to be processed by MartiniGlass. In this case, we have:
 
-* a protein with an elastic network
-* the strength of the elastic network of the protein is 700 kJ/mol/nm^2.
+* a protein with a go model
 
 Therefore, the command we need to process with MartiniGlass is:
 

@@ -1,9 +1,12 @@
 Elastic Networks
 ****************
 
-The files (input and expected output) for this tutorial is available from the
-`MartiniGlass examples folder <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/protein_elastic_network>`_.
+Example from step by step tutorial: Martini model of protein 1UBQ in blue with the harmonic bonds
+of the elastic network between backbone beads illustrated in black.
 
+
+.. image::
+    https://github.com/user-attachments/assets/a9778c02-524d-4834-9ce2-8bc8db9a333a
 
 VMD problems
 ============
@@ -69,6 +72,12 @@ of the simulation.
 .. _stepbystep:
 Step by step tutorial
 ---------------------
+
+The files (input and expected output) for this tutorial is available from the
+`MartiniGlass examples folder <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/protein_elastic_network>`_.
+
+The expected output can be generated in one go using the ``generate_expected_files.sh`` script run inside
+the input folder.
 
 Step 1: Martinize your protein
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

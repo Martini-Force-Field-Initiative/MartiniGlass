@@ -62,6 +62,9 @@ def main():
         raise ValueError("If you want a cylinder drawing tcl file"
                          " you must also give the coordinate file")
 
+    if args.cyl:
+        args.elastic = True
+
     ff, topol_lines, system_defines = system_reading(args.topology)
 
     written_mols, mol_bonds, mol_lens = molecule_editor(ff, topol_lines,
@@ -88,13 +91,14 @@ def main():
                     continue
                 shutil.copy(os.path.join(DATA_PATH, file),
                             os.path.join(os.getcwd(), file))
+
         if args.elastic:
-            output_file_append(args.system, args.trajectory, args.pf, elastic=True)
+            if args.cyl:
+                output_file_append(args.system, args.trajectory, args.pf, cylinders=True)
+            else:
+                output_file_append(args.system, args.trajectory, args.pf, elastic=True)
         if args.go:
             output_file_append(args.system, args.trajectory, args.pf, go=True)
-        if args.cyl:
-            output_file_append(args.system, args.trajectory, args.pf, cylinders=True)
-
 
     print('All done!')
 
