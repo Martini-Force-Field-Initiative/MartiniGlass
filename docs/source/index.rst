@@ -1,5 +1,5 @@
 Welcome to the documentation for MartiniGlass!
-==============================================
+**********************************************
 
 **MartiniGlass** is a Python library for aiding with the visualisation
 of simulations performed with the `Martini <https://cgmartini.nl/>`_ coarse grained force field
@@ -28,7 +28,7 @@ how to get started.
    This project is under active development.
 
 Contents
---------
+========
 
 .. toctree::
     :maxdepth: 1

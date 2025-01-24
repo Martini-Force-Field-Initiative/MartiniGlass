@@ -1,13 +1,13 @@
 Secondary Structure
-===================
-
+*******************
 
 The selection of output files for this tutorial is available from the
 `MartiniGlass examples folder <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/protein_secondary structure>`_.
 
 
 Step 1: Martinize your protein
-------------------------------
+==============================
+
 .. note::
     Note that to run the command below as is, `MDTraj <https://www.mdtraj.org/1.9.8.dev0/index.html>`_
     must be installed as a dependency of vermouth for the secondary structure to be properly assigned.
@@ -37,7 +37,7 @@ Without any further additions, ``topol.top`` only contains a single copy of your
 
 
 Step 2: Run MartiniGlass
-------------------------
+========================
 
 The system is now ready to be processed by MartiniGlass. In this case, we have:
 
@@ -76,10 +76,10 @@ The last of these files is particularly important for visualising secondary stru
 geometric objects to indicate helices and sheets are correctly oriented.
 
 Step 3: Loading your system in VMD
-----------------------------------
+====================================
 
 Step 3a: Loading the initial system
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------------
 
 To fully view an elastic network in VMD using the files provided, the system needs to be loaded twice in VMD.
 
@@ -107,7 +107,7 @@ At this point, the user has one of two options to render secondary structure, wh
 ``molecule_0_cgsecstruct.txt`` file written by MartiniGlass
 
 Step 3b: Rendering secondary structure with objects
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------------------
 
 Rendering secondary structure as objects will insert cylinders where there are helices, and arrows where there
 are sheets. The commands to draw these objects are the first commands described in the text file:
@@ -133,7 +133,7 @@ These steps should then result in the input structure now looking as so:
 
 
 Step 3c: Rendering secondary structure with colour
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------------------
 
 If you have just completed the previous step, the way to clear the geometry objects after drawing is using the
 ``cg_dag`` (delete all graphics) command in the VMD Tk Console.

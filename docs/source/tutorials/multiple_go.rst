@@ -1,5 +1,5 @@
 Multiple Go models
-==================
+******************
 
 
 .. note::
@@ -18,10 +18,10 @@ the excellent work of `Korshunova et al. <https://pubs.acs.org/doi/10.1021/acs.j
 they be interested in further details of pitfalls of multiple Go models in a single system.
 
 Simulation set up
------------------
+=================
 
 Martinizing two proteins
-^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------
 
 If multiple proteins are martinized with Go models and intended for the same simulation setup, then care
 must be taken in the preparation of input files. When the ``-go`` flag is used in Martinize2, two additional
@@ -53,7 +53,7 @@ Once the files are all generated, the ones relevant to the go model should be co
 
 
 Generating a structure file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------
 
 After the proteins have been coarse-grained individually and the Go files treated accordingly, an initial
 simulation cell can be assembled using the program of choice. In the tutorial script, ``gmx insert-molecules``
@@ -69,11 +69,11 @@ is used twice over to insert several copies of each into a single simulation cel
 
 
 Visualisation
--------------
+=============
 
 
 Running MartiniGlass
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 With the input files treated appropriately, MartiniGlass can in fact be run as with any other system. In the
 case of the tutorial files, the following command will generate all the visualisation topologies from the

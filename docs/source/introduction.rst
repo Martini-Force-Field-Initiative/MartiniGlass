@@ -1,10 +1,10 @@
 Usage
-=====
+*****
 
 .. _install:
 
 Installation
-------------
+============
 
 To use MartiniGlass, first install it using pip:
 
@@ -15,10 +15,10 @@ To use MartiniGlass, first install it using pip:
 .. _getting_started:
 
 Getting started
----------------
+===============
 
 Using MartiniGlass
-^^^^^^^^^^^^^^^^^^
+------------------
 
 As a starter, all MartiniGlass requires to process your system is a gromacs topology file in the
 ``.top`` format.
@@ -42,9 +42,9 @@ If your system requires no further description in MartiniGlass, you should expec
 2)  A file called ``vis.top``, corresponding to the input ``topol.top``, which now includes the new
     set of ``.itp`` files.
 
-
+.. _visualising_your_system:
 Visualising your system
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 Once MartiniGlass has processed your system, you should be ready to load it into VMD.
 Load your structure and trajectory as with any other:

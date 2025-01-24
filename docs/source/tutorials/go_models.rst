@@ -12,7 +12,7 @@ interactions between backbone beads illustrated in black.
 
 
 Quickstart
-----------
+==========
 
 To process a system containing a protein with a Go model and visualise it,
 the following command can be used:
@@ -45,7 +45,7 @@ of the simulation.
 
 
 Step by step tutorial
----------------------
+=====================
 
 The selection of output files for this tutorial is available from the
 `MartiniGlass examples folder <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/protein_go_model>`_.
@@ -54,7 +54,7 @@ The expected output can be generated in one go using the ``generate_expected_fil
 the input folder.
 
 Step 1: Martinize your protein
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------
 
 Create a martini model of a protein following the standard martinize2 protocol:
 
@@ -88,7 +88,7 @@ For more information on the Go model, see the tutorial in the `Vermouth document
 
 
 Step 2: Run MartiniGlass
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------
 
 The system is now ready to be processed by MartiniGlass. In this case, we have:
 
@@ -115,7 +115,7 @@ the use of the ``-vf`` (Visualisation Files) flag:
 * ``eigen.py``: auxiliary python script required by ``cg_bonds-v6.tcl``
 
 Step 3: Loading your system in VMD
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------
 
 Step 3a: Loading the initial system
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

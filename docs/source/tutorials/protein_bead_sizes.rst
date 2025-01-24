@@ -1,5 +1,5 @@
 Protein bead sizes
-==================
+******************
 
 One feature of the Martini 3 force field is the multiple so-called 'bead sizes' available with which
 to construct molecules. The tiny, small, and regular sizes of beads are designed to represent different
@@ -20,7 +20,7 @@ methionines at the bottom have a single regular bead.
     https://github.com/user-attachments/assets/cf160541-3d13-4b70-ad36-36cf28c75aa7
 
 Visualising proteins with appropriate bead sizes
-------------------------------------------------
+================================================
 
 To produce a VMD state file to view proteins with the above state, the ``-pf`` ("protein file")
 flag can be used in addition to the ``-vf`` flag. For example:

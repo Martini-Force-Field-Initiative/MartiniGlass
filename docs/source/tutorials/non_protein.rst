@@ -1,6 +1,5 @@
 Non protein systems
-=========
-
+*******************
 
 The selection of output files for this tutorial is available from the
 `MartiniGlass examples folder <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/non_protein>`_.
@@ -18,7 +17,7 @@ copies of a synthetic molecule, a molecular motor as described by
 `Vainikka and Marrink <https://pubs.acs.org/doi/10.1021/acs.jctc.2c00796>`_.
 
 Running MartiniGlass
---------------------
+====================
 
 With no proteins to take care of in this system, MartiniGlass only strictly requires the ``-p``
 flag to specify the input topology. However, because visualising the water is not of interest,
@@ -38,7 +37,7 @@ This generates a number of files as outputs:
 
 
 Processing the structure file
------------------------------
+=============================
 
 The index file can be used to make a structure file :ref:`without water<nowater>` for convenient visualisation.
 
@@ -49,7 +48,7 @@ The index file can be used to make a structure file :ref:`without water<nowater>
 Note that for an index file with only a single index group, no further interaction with ``gmx trjconv`` is necessary.
 
 Viewing in VMD
---------------
+==============
 
 With the topology processed, and a water-less structure file generated for viewing, the system
 is ready to be loaded into VMD:

@@ -1,8 +1,8 @@
 Troubleshooting
-===============
+***************
 
 The bonds stopped loading
--------------------------
+=========================
 
 If you have an error message along the lines of:
 
@@ -15,14 +15,14 @@ Then it is likely that the system was not processed by MartiniGlass correctly. F
 ``-el`` or ``-go`` flags may not have been included to properly process the proteins in the system.
 
 The bonds are going everywhere across periodic boundaries
----------------------------------------------------------
+=========================================================
 
 This probably means that the molecules in your system are not pbc complete. If you process your
 trajectory using ``gmx trjconv`` including the ``-pbc`` flag, then that should solve the issue.
 
 
 I did trajectory processing but my molecule doesn't look whole?
----------------------------------------------------------------
+===============================================================
 
 If a molecule still doesn't appear whole after trajectory processing, then it is likely not
 connected in the way that is expected. This is an issue when, for example, using Go Martini with a
@@ -30,7 +30,7 @@ multimeric protein, where the quaternary structure of the protein is retained wi
 Gromacs doesn't consider such a system as "bonded", so further processing may be required.
 
 My system loads but I get an error!
------------------------------------
+===================================
 
 if you get the following error:
 
