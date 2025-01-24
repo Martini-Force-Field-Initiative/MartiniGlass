@@ -1,6 +1,9 @@
 Welcome to the documentation for MartiniGlass!
 **********************************************
 
+.. image::
+    https://github.com/user-attachments/assets/7de8a35f-c808-493c-b412-1674d2c0ed74
+
 **MartiniGlass** is a Python library for aiding with the visualisation
 of simulations performed with the `Martini <https://cgmartini.nl/>`_ coarse grained force field
 using `VMD <https://www.ks.uiuc.edu/Research/vmd/>`_.
