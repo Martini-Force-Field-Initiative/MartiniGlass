@@ -238,7 +238,8 @@ indicating the pairs of atoms in the molecule which have a bond between them. Fo
     21      22
     ...
 
-Note that the zero indexing differs from the Gromacs format describing bonds, which is 1-indexed. It is
-anticipated that users who wish to use such a list in alternative visualisation software will benefit
-from the zero indexing.
+.. note::
+    The zero indexing in the external bonds file differs from the Gromacs format describing bonds, which
+    is 1-indexed. It is anticipated that users who wish to use such a list in alternative visualisation
+    software will benefit from the zero indexing.
 

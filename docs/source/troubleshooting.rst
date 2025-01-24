@@ -17,7 +17,13 @@ Then it is likely that the system was not processed by MartiniGlass correctly. F
 The bonds are going everywhere across periodic boundaries
 =========================================================
 
-This probably means that the molecules in your system are not pbc complete. If you process your
+
+If you've loaded your system in VMD and it looks a bit like this:
+
+.. image::
+    https://github.com/user-attachments/assets/55e15060-f67f-4951-a613-9764a0fdca62
+
+then probably, the molecules in your system are not pbc complete. If you process your
 trajectory using ``gmx trjconv`` including the ``-pbc`` flag, then that should solve the issue.
 
 
@@ -25,9 +31,12 @@ I did trajectory processing but my molecule doesn't look whole?
 ===============================================================
 
 If a molecule still doesn't appear whole after trajectory processing, then it is likely not
-connected in the way that is expected. This is an issue when, for example, using Go Martini with a
-multimeric protein, where the quaternary structure of the protein is retained with the Go network.
-Gromacs doesn't consider such a system as "bonded", so further processing may be required.
+connected in the way that is expected. This is an issue when for example, Go Martini is
+applied to a multimeric protein. The quaternary structure of the protein is retained with the
+Go network. Gromacs doesn't consider such a system as "bonded" (because Go interactions
+are technically nonbonded), so further processing may be required. Manually editing the
+visualisation topology with fake bonds between monomers and reprocessing the trajectory
+should solve this problem.
 
 My system loads but I get an error!
 ===================================
