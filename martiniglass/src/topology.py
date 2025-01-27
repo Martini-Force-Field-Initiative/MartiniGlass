@@ -25,10 +25,7 @@ def input_topol_reader(file):
         sys = False
         for line in f.readlines():
             if '#include' in line:
-                if 'go' not in line:
-                    inclusions.append(line.split('"')[1])
-                else:
-                    go.append(line.split('"')[1])
+                inclusions.append(line.split('"')[1])
             if mols:
                 if (line.strip()[0] != ';') and (len(line.split()) > 0):
                     molecules.append({'name': line.split()[0],
@@ -50,8 +47,6 @@ def input_topol_reader(file):
                    'system': system,
                    'molecules': molecules}
 
-    if len(go) > 0:
-        topol_lines['go'] = go
     return topol_lines
 
 
@@ -77,9 +72,6 @@ def topol_writing(topol_lines, written_mols, ext='vis', w_include=None):
     # this will write everything and is gross but it should work
     # because everything will be included
     new_topol_head = []
-    # make a new header for the .top file to write the absolute paths
-    # for i in topol_lines['core_itps']:
-    #     new_topol_head.append(f'#include "{os.path.abspath(i)}"\n')
     # get the new vis files to write for the topology header
     for i in written_mols:
         new_topol_head.append(f'#include "{os.path.abspath(i)}"\n')
