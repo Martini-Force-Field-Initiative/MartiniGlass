@@ -14,6 +14,8 @@
 
 set -e
 
+wget https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/martini.itp
+
 # martinize the first protein
 martinize2 -f prot0_clean.pdb -x prot0_cg.pdb -o prot0_topol.top -go prot0_contact_map.out -name prot0
 mv go_nbparams.itp prot0_go_nbparams.itp

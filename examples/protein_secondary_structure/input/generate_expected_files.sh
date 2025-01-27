@@ -13,6 +13,8 @@
 # limitations under the License.
 set -e
 
+wget https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/martini.itp
+
 wget https://files.rcsb.org/download/1ubq.pdb
 
 grep "^ATOM" 1ubq.pdb > 1UBQ_clean.pdb
