@@ -36,8 +36,9 @@ martiniglass -p topol.top
 ```
 
 But if you have proteins with complex tertiary structure networks that you also want to see, you might need to give 
-some extra options. More comprehensive documentation is available at the [wiki](https://github.com/Martini-Force-Field-Initiative/MartiniGlass/wiki). If you think something is broken 
-or have a feature request, please open an [issue](https://github.com/Martini-Force-Field-Initiative/MartiniGlass/issues).
+some extra options. More comprehensive documentation and tutorials are available on the
+[readthedocs](https://martiniglass.readthedocs.io/en/latest) site. If you think something is broken or have a
+feature request, please open an [issue](https://github.com/Martini-Force-Field-Initiative/MartiniGlass/issues).
 
 
 ## Gallery 
