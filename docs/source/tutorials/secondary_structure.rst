@@ -2,7 +2,7 @@ Secondary Structure
 *******************
 
 The selection of output files for this tutorial is available from the
-`MartiniGlass examples folder <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/protein_secondary structure>`_.
+`MartiniGlass examples folder <https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/protein_secondary_structure>`_.
 
 
 Step 1: Martinize your protein
