@@ -1,2 +1,4 @@
 vis_tests
 *.idea
+/JOSS/
+/dist/

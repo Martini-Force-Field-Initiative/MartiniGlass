@@ -35,3 +35,5 @@ from .src.molecule_editing import molecule_editor
 from .src.topology import topol_writing
 from .src.cylinders_tcl import file_write as cylinders
 from .src.output_file_append import output_file_append
+
+from martiniglass.martiniglass import main
