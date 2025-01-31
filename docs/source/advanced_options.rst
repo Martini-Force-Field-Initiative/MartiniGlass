@@ -15,7 +15,7 @@ backbone beads) is written in the usual visualisation topology files. Second, fi
 protein structure networks are written with an appropriate suffix.
 
 Further fully worked tutorials for protein structure are available in the
-:doc:`tutorials folder <tutorials/index>`.
+:doc:`tutorials section <tutorials/index>`.
 
 Elastic Networks
 ----------------
@@ -34,8 +34,7 @@ into the second set of topology files.
 
 Note that elastic networks may cause additional challenges for visualisation associated with the
 maximum number of bonds per atom that VMD is able to draw. These are discussed further in
-the tutorial for :doc:`elastic networks <tutorials/elastic_networks>` and
-:doc:`static cylinder bonds <tutorials/cylinders>`.
+the tutorial for :doc:`elastic networks <tutorials/elastic_networks>`.
 
 Go models
 ---------
