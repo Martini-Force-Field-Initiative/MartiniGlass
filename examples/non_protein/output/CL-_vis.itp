@@ -1,0 +1,9 @@
+; Visualisation topology for CL-
+; NOT FOR SIMULATIONS
+
+[ moleculetype ]
+CL-_vis 1
+
+[ atoms ]
+1 Qa 1 ION CL- 1 -1.0 
+

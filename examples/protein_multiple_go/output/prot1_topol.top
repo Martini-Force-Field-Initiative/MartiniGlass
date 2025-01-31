@@ -1,0 +1,9 @@
+#define GO_VIRT
+#include "martini.itp"
+#include "prot1.itp"
+
+[ system ]
+Title of the system
+
+[ molecules ]
+prot1    1

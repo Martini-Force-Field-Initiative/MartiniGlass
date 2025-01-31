@@ -66,12 +66,17 @@ def network_writer(ff, molname, bonds, ext, network_type):
 
     if len(all_removed) > 0:
         with open(molname + f'_surplus_{network_type}.txt', 'w') as extra_en:
-            extra_en.writelines(f"{network_type} network bonds removed from {molname}_{network_type}.itp\n"
+            if network_type == 'en':
+                network_type_write = "elastic"
+            extra_en.writelines(f"{network_type_write} network bonds removed from {molname}_{network_type}.itp\n"
                                 "This is for noting in visualisation, not for simulation\n\n"
                                 f"These bonds will be missing if you load {molname}_{network_type}.itp in vmd\n"
                                 "having been present in your simulation. If you're inspecting your\n"
-                                f"{network_type} network because you suspect some simulation error"
-                                f"as a result of how it was constructed, bear this in mind.\n")
+                                f"{network_type_write} network because you suspect some simulation error\n"
+                                f"as a result of how it was constructed, bear this in mind.\n\n"
+                                "This has been done because by default VMD does not draw more than 12 bonds\n"
+                                "per atom in an interactive manner (i.e. the bonds are not rendered as static geometry).\n"
+                                "To view all bond (in a static manner) the bonds can be rendered using the -cyl flag of MartiniGlass.")
 
             extra_en.write('     i      j func b0 kb\n')
 

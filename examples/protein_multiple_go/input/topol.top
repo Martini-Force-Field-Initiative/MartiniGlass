@@ -1,0 +1,10 @@
+#include "martini.itp"
+#include "prot0.itp"
+#include "prot1.itp"
+
+[ system ]
+Title of the system
+
+[ molecules ]
+prot0    5
+prot1    3

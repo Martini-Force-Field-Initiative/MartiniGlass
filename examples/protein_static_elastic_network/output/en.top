@@ -1,0 +1,7 @@
+#include "/grain/chris/visualisation/vis_tests/example_test/protein_static_elastic_network/input/molecule_0_en.itp"
+#include "/grain/chris/visualisation/vis_tests/example_test/protein_static_elastic_network/input/molecule_0_vis.itp"
+[ system ]
+Title of the system
+
+[ molecules ]
+molecule_0_en	1

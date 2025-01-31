@@ -1,0 +1,10 @@
+#include "/grain/chris/visualisation/vis_tests/several_proteins/temp/prot0_go.itp"
+#include "/grain/chris/visualisation/vis_tests/several_proteins/temp/prot0_vis.itp"
+#include "/grain/chris/visualisation/vis_tests/several_proteins/temp/prot1_go.itp"
+#include "/grain/chris/visualisation/vis_tests/several_proteins/temp/prot1_vis.itp"
+[ system ]
+Title of the system
+
+[ molecules ]
+prot0_go	5
+prot1_go	3

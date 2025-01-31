@@ -1,0 +1,9 @@
+; Visualisation topology for NA+
+; NOT FOR SIMULATIONS
+
+[ moleculetype ]
+NA+_vis 1
+
+[ atoms ]
+1 Qd 1 ION NA+ 1 1.0 
+

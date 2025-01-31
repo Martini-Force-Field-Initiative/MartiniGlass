@@ -18,7 +18,7 @@
 
 import argparse
 from argparse import ArgumentDefaultsHelpFormatter
-from martiniglass import system_reading, index_writing, molecule_editor, topol_writing, cylinders
+from martiniglass import system_reading, index_writing, molecule_editor, topol_writing, cylinders, output_file_append
 from martiniglass import DATA_PATH
 import os
 from pathlib import Path
@@ -33,6 +33,9 @@ def main():
                               "Equivalent to an index group of !W in gmx make_ndx. "
                               "Giving this option will automatically exclude W from your output vis.top")
                         )
+    parser.add_argument("-traj", dest="trajectory", type=Path,
+                        help=("Gromacs trajectory file to add to the visualisation state file.")
+                        )
     parser.add_argument("-vs", default=True, action="store_false", dest='virtual_sites',
                         help=("Don't write bonds between virtual sites and their constructing atoms. "
                               " (Bonds are written by default. Specify this flag if you don't want them written.)")
@@ -40,15 +43,14 @@ def main():
     parser.add_argument("-el", default=False, action="store_true", dest='elastic',
                         help="Write elastic network of input proteins to separate files"
                         )
-    parser.add_argument("-ef", default=700, dest='en_force', type=float,
-                        help="Force constant used for elastic network. Default = 700, standard for Martini 3."
-                        )
     parser.add_argument("-go", default=False, action="store_true",
                         help="Go network options")
     parser.add_argument("-gf", type=Path, dest='go_path',
                         help="Nonbonded parameter itp file for your go network")
     parser.add_argument("-vf", default=False, action="store_true",
                         help="Write out associated vmd files (cg_bonds, vis.vmd) in the present directory")
+    parser.add_argument("-pf", default=False, action="store_true",
+                        help="Write out protein vmd file (protein.vmd) for protein visualisation in addition to vis.vmd")
     parser.add_argument("-ext", default=False, action="store_true",
                         help="Write system bonds to text files instead of topology files. Useful for non-VMD visualisation.")
     parser.add_argument("-cyl", default=False, action="store_true",
@@ -60,13 +62,15 @@ def main():
         raise ValueError("If you want a cylinder drawing tcl file"
                          " you must also give the coordinate file")
 
+    if args.cyl:
+        args.elastic = True
+
     ff, topol_lines, system_defines = system_reading(args.topology)
 
-    written_mols, mol_bonds, mol_lens = molecule_editor(ff, topol_lines, system_defines,
+    written_mols, mol_bonds, mol_lens = molecule_editor(ff, topol_lines,
                                                         virtual_sites=args.virtual_sites,
                                                         ext=args.ext,
                                                         elastic=args.elastic,
-                                                        elastic_force=args.en_force,
                                                         go=args.go)
 
     if args.elastic:
@@ -83,8 +87,18 @@ def main():
     if args.vf:
         for file in os.listdir(DATA_PATH):
             if os.path.isfile(os.path.join(DATA_PATH, file)):
+                if file == 'proteins.vmd' and not args.pf:
+                    continue
                 shutil.copy(os.path.join(DATA_PATH, file),
                             os.path.join(os.getcwd(), file))
+
+        if args.elastic:
+            if args.cyl:
+                output_file_append(args.system, args.trajectory, args.pf, cylinders=True)
+            else:
+                output_file_append(args.system, args.trajectory, args.pf, elastic=True)
+        if args.go:
+            output_file_append(args.system, args.trajectory, args.pf, go=True)
 
     print('All done!')
 

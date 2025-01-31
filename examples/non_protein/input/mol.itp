@@ -1,0 +1,93 @@
+;;;;;; MOTOR (RUG)
+
+[ moleculetype ]
+; molname    nrexcl
+  MOTO         1 
+[ atoms ]
+; nr type resnr residue atom cgnr charge mass
+   1  C1  0    MOTO    C1    1    0     26
+   2  C1  0    MOTO    C2    2    0     26
+   3  C1  0    MOTO    C3    3    0     26
+   4  C1  0    MOTO    C4    4    0     26
+   5  C1  0    MOTO    C5    5    0     26
+   6  C1  0    MOTO    C6    6    0     26
+   7  C1  0    MOTO    C7    7    0     24
+   8  C1  0    MOTO    C8    8    0     42
+   9  C1  0    MOTO    C9    9    0     30
+  10  C1  0    MOTO    C10  10    0     32
+  11  C1  0    MOTO    C11  11    0      0
+  12  C1  0    MOTO    C12  12    0     32 
+  13  C1  0    MOTO    C13  13    0     32
+  14  C1  0    MOTO     U   14    0      0
+
+[ bonds ]
+; i   j    funct   length  force.c. 
+  1   7      1     0.245   3500
+  6   7      1     0.250   3500
+
+[ constraints ]
+; i   j    funct   length  force.c. 
+  1   2      1     0.260   3500   
+  1   3      1     0.310   3500
+  1   6      1     0.445   3500
+;  1   7      1     0.245   3500
+  2   3      1     0.260   3500 
+  3   4      1     0.245   3500 
+  4   5      1     0.260   3500 
+  4   6      1     0.310   3500
+  5   6      1     0.260   3500
+;  6   7      1     0.250   3500
+  7   8      1     0.275   3500
+  7   9      1     0.245   3500
+  8   9      1     0.285   3500
+  9  10      1     0.255   3500
+  9  13      1     0.400   3500
+  10 12      1     0.415   3500
+  10 13      1     0.510   3500
+  12 13      1     0.295   3500
+
+
+[ angles ]
+;  ai   aj   ak  funct   angle     fc
+   14   7     9    1      155     150
+   5   14     2    1      140     250
+   1    3     4    1      110     150
+   6    4     3    1      110     150
+   7    9    10    1      165     150
+   5    4     3    1      165     250
+   2    3     4    1      165     250
+   1    7     6    1      130     150
+
+[ dihedrals ]
+; improper
+; i  j  k  l  funct  ref.angle  force_k
+  1  2  6  5    2      180      200
+  4  3  6  1    2     -180      200
+  10 9 12 13    2      175      200
+  4  3  7  1    2      180      200
+  3  6  8  9    2      142      200
+; proper
+; i  j  k  l  funct  ref.angle  force_k  multip.
+  8  9 10  13   1       0        50      1 ; minimum at 180 degrees
+  14 9 11 13    1      155       50      1 ; minimum at -25 degrees
+
+[ virtual_sitesn ]
+; site  funct. from    
+   11     1    9  10 12 13
+   14     1    1  3  4  6
+
+[ exclusions ]
+1 2 3 4 5 6 7 14
+2 3 4 5 6 7 14
+3 4 5 6 7 14
+4 5 6 7 14
+5 6 7 14
+6 7 14
+7 14
+7 8 9 10 11 12 13
+8 9 10 11 12 13
+9 10 11 12 13
+10 11 12 13
+11 12 13
+12 13
+
