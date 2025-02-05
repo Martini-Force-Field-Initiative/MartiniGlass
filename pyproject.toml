@@ -4,8 +4,6 @@ version='1.0.0'
 dependencies = [
     "pbr",
     "vermouth>=0.9.6",
-    "networkx>=3.3.0",
-    "numpy>=1.26.4"
     ]
 keywords = ["molecular dynamics", "martini"]
 authors = [{name = "Christopher Brasnett", email="c.s.brasnett@rug.nl"}]
