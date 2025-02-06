@@ -35,7 +35,7 @@ gmx insert-molecules -ci prot0_cg.pdb -nmol 5 -box 20 20 20 -o newbox.gro
 gmx insert-molecules -ci prot1_cg.pdb -nmol 3 -f newbox.gro  -o vis.gro
 rm newbox.gro
 
-# run martiniglass
+# run martiniglass.py
 martiniglass -p topol.top -go -gf go_nbparams.itp -vf -f vis.gro
 
 # open vmd

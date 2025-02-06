@@ -1,3 +1,0 @@
-networkx>=3.3
-numpy>=1.26.4
-vermouth>=0.10.0

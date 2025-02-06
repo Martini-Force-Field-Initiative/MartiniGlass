@@ -40,7 +40,12 @@ def main():
                         help=("Don't write bonds between virtual sites and their constructing atoms. "
                               " (Bonds are written by default. Specify this flag if you don't want them written.)")
                         )
-    parser.add_argument("-el", default=False, action="store_true", dest='elastic',
+    parser.add_argument("-el", default=False,
+
+
+
+
+                        action="store_true", dest='elastic',
                         help="Write elastic network of input proteins to separate files"
                         )
     parser.add_argument("-go", default=False, action="store_true",
@@ -48,9 +53,10 @@ def main():
     parser.add_argument("-gf", type=Path, dest='go_path',
                         help="Nonbonded parameter itp file for your go network")
     parser.add_argument("-vf", default=False, action="store_true",
-                        help="Write out associated vmd files (cg_bonds, vis.vmd) in the present directory")
+                        help="Write out associated Visualisation Files (cg_bonds, vis.vmd) in the present directory")
     parser.add_argument("-pf", default=False, action="store_true",
-                        help="Write out protein vmd file (protein.vmd) for protein visualisation in addition to vis.vmd")
+                        help=("Write out the Protein File (protein.vmd) "
+                             "for varying the bead size in proteins in addition to vis.vmd"))
     parser.add_argument("-ext", default=False, action="store_true",
                         help="Write system bonds to text files instead of topology files. Useful for non-VMD visualisation.")
     parser.add_argument("-cyl", default=False, action="store_true",
