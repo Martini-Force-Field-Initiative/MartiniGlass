@@ -5,14 +5,9 @@ visualisation in VMD. Although much of the functionality is focused on proteins,
 focus on being able to visualise protein secondary/tertiary structure networks, MartiniGlass can in fact 
 be used to reconstruct bonded networks of **any** Martini molecule!
 
-Previously, `cg_bonds-vX.tcl` was able to read in Martini system topology information and draw it directly in VMD.
-However, many Martini models now make extensive use of interaction types like virtual sites, which can't be handled
-by the topology reading capabilities of this script directly. Martini_vis handles these and more by rewriting 
-virtual sites as bonded atoms for visualisation purposes.
-
-Thanks to [Jan Stevens](https://github.com/jan-stevens) for `vis.vmd`
-
-If the solution here isn't working for you, please open an issue!
+If you can't view your system as expected, please open an [issue](https://github.com/Martini-Force-Field-Initiative/MartiniGlass/issues) 
+if it is related to the code itself, or a [discussion](https://github.com/Martini-Force-Field-Initiative/MartiniGlass/discussions) for 
+any other issues in the workflow of the code.
 
 ## Documentation
 
@@ -22,21 +17,31 @@ step by step.
 
 ## Installation
 
+MartiniGlass v1.1.0 is available via pip:
+
+```commandline
+python3 -m venv venv && source venv/bin/activate # Not required, but often convenient.
+pip install martiniglass
+```
+
+Alternatively, to benefit from the latest added features, install from the repository source:
+
 ```commandline
 python3 -m venv venv && source venv/bin/activate # Not required, but often convenient.
 pip install git+https://github.com/Martini-Force-Field-Initiative/MartiniGlass
 ```
 
-## Usage
+## Basic Usage
 
-Most likely, you can use MartiniGlass with a simple command:
+Ideally, MartiniGlass can generate all the visualisable topology files for a system with a single command:
 
 ```
 martiniglass -p topol.top
 ```
 
-But if you have proteins with complex tertiary structure networks that you also want to see, you might need to give 
-some extra options. More comprehensive documentation and tutorials are available on the
+
+However, if the system contains proteins with complex tertiary structure networks that are also needed, 
+extra options may be requried. More comprehensive documentation and tutorials are available on the
 [readthedocs](https://martiniglass.readthedocs.io/en/latest) site. If you think something is broken or have a
 feature request, please open an [issue](https://github.com/Martini-Force-Field-Initiative/MartiniGlass/issues).
 
