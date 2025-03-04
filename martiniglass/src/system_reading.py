@@ -16,6 +16,7 @@ from vermouth.gmx import read_itp
 from vermouth.forcefield import ForceField
 from .topology import input_topol_reader
 import re
+from itertools import compress
 
 
 def output_str(pairs):
@@ -93,7 +94,22 @@ def _misc_file_reader(lines):
     if others == lines, None is returned, because the input file doesn't contain anything interesting
     """
     defines = {i.split()[1]: i.split(';')[0].split()[2:5] for i in lines if '#define' in i}
-    others = [line for line in lines if '#define' not in line]
+
+    atomlines = [i for i in lines if '#define' not in i]
+
+    defined_interactions = list(defines.keys())
+    others = []
+    for line in atomlines:
+        check = [i in line.split() for i in defined_interactions]
+        if ((any([i in line.split() for i in defined_interactions]))
+            and ('#define' not in line)):
+            needed = list(compress(defined_interactions, check))
+            atoms = [j for j in line.split() if j!=needed[0]]
+            interaction = [defines[needed[0]]][0]
+            others.append(' '.join(atoms+interaction)+'\n')
+        else:
+            others.append(line)
+
     if others == lines:
         return None
     else:
@@ -109,13 +125,15 @@ def system_reading(topology):
     # get the topology file
     print(f"Reading input {topology}")
     topol_lines = input_topol_reader(topology)
-
     # for each molecule in the system, read in the itp
     d = {}
     for i, j in enumerate(topol_lines['core_itps']):
         with open(j, encoding="utf-8") as f:
-            d[i] = f.readlines()
-
+            lines = f.readlines()
+            if any(["defaults" in k for k in lines]):
+                continue
+            else:
+                d[i] = lines
     # read the molecules into the forcefield
     ff = ForceField('martini3001')
 
@@ -124,7 +142,7 @@ def system_reading(topology):
         try:
             read_itp(d[j], ff)
             secondary_structure_parsing(d[j], list(ff.blocks)[-1])
-        except OSError:
+        except OSError as e1:
             '''
             if we can't read the file into the system directly, we have something that isn't strictly a molecule
             most likely its the force field definition file (eg. martini_v3.0.0.itp) but we can't be sure
@@ -138,8 +156,11 @@ def system_reading(topology):
             else:
                 # this means we've separated things out successfully and can read the actual itp content now
                 # tracking system_defines is useful for when we sort the #TODOs below.
-                for key, value in misc_result[0].items():
-                    system_defines[key] = value
-                read_itp(misc_result[1], ff)
-
+                system_defines = misc_result[0]
+                try:
+                    read_itp(misc_result[1], ff)
+                except OSError as e2:
+                    msg="Have tried to handle #define statements in your itps but there's more to the file that can't be handed. Will exit now."
+                    print(msg)
+                    exit()
     return ff, topol_lines, system_defines

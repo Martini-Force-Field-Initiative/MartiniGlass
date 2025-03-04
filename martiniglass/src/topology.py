@@ -24,7 +24,7 @@ def input_topol_reader(file):
         mols = False
         sys = False
         for line in f.readlines():
-            if '#include' in line:
+            if ('#include' in line) and (';' not in line):
                 inclusions.append(line.split('"')[1])
             if mols:
                 if (line.strip()[0] != ';') and (len(line.split()) > 0):
