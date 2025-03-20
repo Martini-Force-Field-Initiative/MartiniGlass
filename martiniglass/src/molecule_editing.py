@@ -21,7 +21,7 @@ from vermouth.graph_utils import make_residue_graph
 def molecule_editor(ff, topol_lines,
                     virtual_sites=True, ext=False,
                     elastic=False,
-                    go=False, go_path='', go_file=''):
+                    go=False, go_nb_file=''):
     # iterate over the molecules to make visualisation topologies
     keep = ['bonds', 'constraints', 'pairs', 'virtual_sitesn',
             'virtual_sites2', 'virtual_sites3']
@@ -120,11 +120,6 @@ def molecule_editor(ff, topol_lines,
                 del block.interactions[vs_type]
 
         if go:
-            # len(go_dict)>0:
-            if go_path:
-                go_nb_file = go_file
-            else:
-                go_nb_file = "go_nbparams.itp"
 
             if not isfile(go_nb_file):
                 raise FileNotFoundError("Gō nonbonded itp does not exist. Specify using -gf")

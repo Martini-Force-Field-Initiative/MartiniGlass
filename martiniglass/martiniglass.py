@@ -50,7 +50,7 @@ def main():
                         )
     parser.add_argument("-go", default=False, action="store_true",
                         help="Go network options")
-    parser.add_argument("-gf", type=Path, dest='go_path',
+    parser.add_argument("-gf", type=Path, dest='go_path', default='go_nbparams.itp',
                         help="Nonbonded parameter itp file for your go network")
     parser.add_argument("-vf", default=False, action="store_true",
                         help="Write out associated Visualisation Files (cg_bonds, vis.vmd) in the present directory")
@@ -77,7 +77,8 @@ def main():
                                                         virtual_sites=args.virtual_sites,
                                                         ext=args.ext,
                                                         elastic=args.elastic,
-                                                        go=args.go)
+                                                        go=args.go,
+                                                        go_nb_file=args.go_path)
 
     if args.elastic:
         topol_writing(topol_lines, written_mols, 'en', w_include=args.system)
