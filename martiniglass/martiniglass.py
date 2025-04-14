@@ -41,14 +41,10 @@ def main():
                               " (Bonds are written by default. Specify this flag if you don't want them written.)")
                         )
     parser.add_argument("-el", default=False,
-
-
-
-
                         action="store_true", dest='elastic',
                         help="Write elastic network of input proteins to separate files"
                         )
-    parser.add_argument("-go", default=False, action="store_true",
+    parser.add_argument("-go", default=False, action="store_true", dest='go',
                         help="Go network options")
     parser.add_argument("-gf", type=Path, dest='go_path', default='go_nbparams.itp',
                         help="Nonbonded parameter itp file for your go network")
@@ -108,6 +104,7 @@ def main():
             output_file_append(args.system, args.trajectory, args.pf, go=True)
 
     print('All done!')
+    print("Please cite: Brasnett, C; Marrink, S J; J. Chem. Inf. Model. 2025, 65, 7, 3137–3141; 10.1021/acs.jcim.4c02277")
 
 if __name__ == '__main__':
     main()

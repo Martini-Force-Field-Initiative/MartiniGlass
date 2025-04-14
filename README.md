@@ -31,6 +31,22 @@ python3 -m venv venv && source venv/bin/activate # Not required, but often conve
 pip install git+https://github.com/Martini-Force-Field-Initiative/MartiniGlass
 ```
 
+## Citation
+If you use MartiniGlass to visualise your system in a publication, please cite the following 
+[paper](https://pubs.acs.org/doi/10.1021/acs.jcim.4c02277):
+```
+@article{Brasnett2025MartiniGlass,
+    author = {Brasnett, Christopher and Marrink, Siewert J.},
+    title = {MartiniGlass: a Tool for Enabling Visualization of Coarse-Grained Martini Topologies},
+    journal = {Journal of Chemical Information and Modeling},
+    volume = {65},
+    number = {7},
+    pages = {3137-3141},
+    year = {2025},
+    doi = {10.1021/acs.jcim.4c02277}
+}
+```
+
 ## Basic Usage
 
 Ideally, MartiniGlass can generate all the visualisable topology files for a system with a single command:
