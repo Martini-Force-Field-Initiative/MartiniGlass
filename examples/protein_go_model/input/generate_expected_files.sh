@@ -14,7 +14,7 @@
 
 set -e
 
-wget https://github.com/Martini-Force-Field-Initiative/MartiniGlass/tree/main/examples/martini.itp
+wget https://raw.githubusercontent.com/Martini-Force-Field-Initiative/MartiniGlass/refs/heads/main/examples/martini.itp
 
 wget https://files.rcsb.org/download/1ubq.pdb
 
