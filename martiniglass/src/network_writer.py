@@ -68,6 +68,8 @@ def network_writer(ff, molname, bonds, ext, network_type):
         with open(molname + f'_surplus_{network_type}.txt', 'w') as extra_en:
             if network_type == 'en':
                 network_type_write = "elastic"
+            elif network_type == 'go':
+                network_type_write = "go"
             extra_en.writelines(f"{network_type_write} network bonds removed from {molname}_{network_type}.itp\n"
                                 "This is for noting in visualisation, not for simulation\n\n"
                                 f"These bonds will be missing if you load {molname}_{network_type}.itp in vmd\n"
