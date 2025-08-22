@@ -15,6 +15,7 @@
 from vermouth.gmx import read_itp
 from vermouth.forcefield import ForceField
 from .topology import input_topol_reader
+from os.path import exists
 import re
 
 
@@ -26,6 +27,10 @@ def output_str(pairs):
 
 
 def secondary_structure_parsing(lines, molname):
+
+    # stop if we've already looked at this block
+    if exists(f'{molname}_cgsecstruct.txt'):
+        return
 
     header = []
     # this should ensure we only get the header
@@ -123,7 +128,8 @@ def system_reading(topology):
     for i, j in enumerate(d.keys()):
         try:
             read_itp(d[j], ff)
-            secondary_structure_parsing(d[j], list(ff.blocks)[-1])
+            for molname in ff.blocks.keys():
+                secondary_structure_parsing(d[j], molname)
         except OSError:
             '''
             if we can't read the file into the system directly, we have something that isn't strictly a molecule
