@@ -27,9 +27,12 @@ def input_topol_reader(file):
             if '#include' in line:
                 inclusions.append(line.split('"')[1])
             if mols:
-                if (line.strip()[0] != ';') and (len(line.split()) > 0):
-                    molecules.append({'name': line.split()[0],
-                                      'n_mols': line.split()[1]})
+                if (line.strip() and (line.split()[0]) != ';'):
+                    molecules.append({
+			'name': line.split()[0],
+                        'n_mols': line.split()[1]
+		    })
+
             if 'molecules' in line:
                 mols = True
                 sys = False
