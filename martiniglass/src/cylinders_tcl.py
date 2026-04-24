@@ -38,7 +38,7 @@ def parse_fixed_width_line(line):
 
 
 def get_positions(coord_file):
-    with open(coord_file, 'r') as f:
+    with open(coord_file, 'r', encoding='utf-8') as f:
         lines = [parse_fixed_width_line(i)[4:7] for i in f.readlines()[2:-1]]  # gets the coordinates
     return np.array(lines)
 
@@ -96,5 +96,5 @@ def file_write(coord_file, topology_contents, bonds_dictionary, mol_lens):
                             """
                             )
 
-    with open('network_cylinders.tcl', 'w') as f:
+    with open('network_cylinders.tcl', 'w', encoding='utf-8') as f:
         f.write(textwrap.dedent(msg.format(cylinders=cylinder_string)))

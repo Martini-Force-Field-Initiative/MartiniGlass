@@ -67,7 +67,7 @@ def secondary_structure_parsing(lines, molname):
     sht_col_str = sht_col_str[:-4]
 
     if len(helices) > 2 or len(sheets) > 2:
-        with open(f'{molname}_cgsecstruct.txt', 'w') as f:
+        with open(f'{molname}_cgsecstruct.txt', 'w', encoding='utf-8') as f:
             f.write("suggested commands for viewing you molecule with cg_bonds-v6.tcl:\n")
             f.write(f'cg_helix {output_str(helices)} -hlxcolor "purple" -hlxfilled yes -hlxrad 3 -hlxmethod cylinder -hlxmat "AOChalky" -hlxres 50\n')
             f.write(f'cg_sheet {output_str(sheets)} -shtfilled "yes" -shtmat "AOChalky" -shtres 50 -shtcolor "red" -shtmethod flatarrow -shtarrwidth 5 -shtheadsize 10 -shtarrthick 3 -shtsides "sharp"\n')
@@ -144,8 +144,14 @@ def system_reading(topology):
     # Load all included ITP files.
     d = {}
     for i, path in enumerate(topol_lines['core_itps']):
-        with open(path, encoding="utf-8") as f:
-            d[i] = f.readlines()
+        try:
+            with open(path, encoding="utf-8") as f:
+                d[i] = f.readlines()
+        except FileNotFoundError:
+            raise FileNotFoundError(
+                f"Could not find included file '{path}'. "
+                "Check that all #include paths in your .top file are correct."
+            )
 
     ff = ForceField('martini3001')
     system_defines = {}

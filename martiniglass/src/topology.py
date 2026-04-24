@@ -135,6 +135,6 @@ def topol_writing(topol_lines, written_mols, ext='vis', w_include=None):
     # combine the sections of the vis.top and write it out.
     vis_topol = new_topol_head + topol_lines['system'] + topol_rest_vis
 
-    with open(f'{ext}.top', 'w') as f:
+    with open(f'{ext}.top', 'w', encoding='utf-8') as f:
         f.writelines(vis_topol)
 

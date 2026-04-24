@@ -124,13 +124,17 @@ def molecule_editor(ff, topol_lines,
             if not isfile(go_nb_file):
                 raise FileNotFoundError("Gō nonbonded itp does not exist. Specify using -gf")
 
-            with open(go_nb_file, "r") as f:
+            with open(go_nb_file, "r", encoding='utf-8') as f:
                 nb_lines = f.readlines()
-            nb_lines = [line.split(';')[0].split(' ') for line in nb_lines if '[' not in line]
+            # split() with no argument handles any whitespace run, avoiding the
+            # empty-string tokens that split(' ') produces for multi-space columns.
+            nb_lines = [line.split(';')[0].split() for line in nb_lines if '[' not in line]
             # TODO this causes problems when we're not actually in the correct block that's
             # associated with the go model! ignore the exception for now.
             try:
                 for i in nb_lines:
+                    if len(i) < 2:
+                        continue
                     try:
                         assert i[0] in go_dict
                         assert i[1] in go_dict
@@ -151,12 +155,12 @@ def molecule_editor(ff, topol_lines,
 
             ext_bonds_list = [i.atoms for i in mol_out.interactions['bonds']]
             stout = ''.join([f'{i[0]}\t{i[1]}\n' for i in ext_bonds_list])
-            with open(f'{molname}_bonds.txt', 'w') as bonds_list_out:
+            with open(f'{molname}_bonds.txt', 'w', encoding='utf-8') as bonds_list_out:
                 bonds_list_out.write(stout)
 
         header = [f'Visualisation topology for {molname}', 'NOT FOR SIMULATIONS']
 
-        with open(molname + '_vis.itp', 'w') as fout:
+        with open(molname + '_vis.itp', 'w', encoding='utf-8') as fout:
             write_molecule_itp(mol_out, outfile=fout, header=header)
             written_mols.append(fout.name)
 

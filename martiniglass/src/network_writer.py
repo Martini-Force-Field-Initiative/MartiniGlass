@@ -65,7 +65,7 @@ def network_writer(ff, molname, bonds, ext, network_type):
         ff.blocks[molname].add_interaction('bonds', [bond[0], bond[1]], ['1', '1', '1000'])
 
     if len(all_removed) > 0:
-        with open(molname + f'_surplus_{network_type}.txt', 'w') as extra_en:
+        with open(molname + f'_surplus_{network_type}.txt', 'w', encoding='utf-8') as extra_en:
             if network_type == 'en':
                 network_type_write = "elastic"
             elif network_type == 'go':
@@ -93,12 +93,13 @@ def network_writer(ff, molname, bonds, ext, network_type):
 
         ext_bonds_list = [i.atoms for i in mol_out.interactions['bonds']]
         stout = ''.join([f'{i[0]}\t{i[1]}\n' for i in ext_bonds_list])
-        with open(f'{molname}_{network_type}_bonds.txt', 'w') as bonds_list_out:
+        with open(f'{molname}_{network_type}_bonds.txt', 'w', encoding='utf-8') as bonds_list_out:
             bonds_list_out.write(stout)
 
     header = [f'{network_type} network topology for {molname}', 'NOT FOR SIMULATIONS']
 
-    with open(molname + f'_{network_type}.itp', 'w') as fout:
+    itp_name = molname + f'_{network_type}.itp'
+    with open(itp_name, 'w', encoding='utf-8') as fout:
         write_molecule_itp(mol_out, outfile=fout, header=header)
 
-    return fout.name
+    return itp_name
