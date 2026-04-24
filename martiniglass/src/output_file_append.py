@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from pathlib import Path
-from os import remove
 
 def output_file_append(frame, trajectory, proteins=False,
                        go=False, elastic=False, cylinders=False):
@@ -32,7 +31,7 @@ def output_file_append(frame, trajectory, proteins=False,
 
         for fin in inputs:
 
-            with open(fin) as f:
+            with open(fin, encoding='utf-8') as f:
                 lines = f.readlines()
 
             if isinstance(trajectory, Path):
@@ -52,7 +51,5 @@ def output_file_append(frame, trajectory, proteins=False,
 
             lines_out = lines + [extra]
 
-            remove(fin)
-
-            with open(fin, "w") as fout:
+            with open(fin, "w", encoding='utf-8') as fout:
                 fout.writelines(lines_out)

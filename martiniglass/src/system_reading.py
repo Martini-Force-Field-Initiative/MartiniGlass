@@ -15,15 +15,17 @@
 from vermouth.gmx import read_itp
 from vermouth.forcefield import ForceField
 from .topology import input_topol_reader
+from vermouth.parser_utils import split_comments
 from os.path import exists
 import re
 
 
 def output_str(pairs):
-    op_str = '{'
-    for i in pairs:
-        op_str += f'\u007b{i[0]} {i[1]}\u007d '
-    return op_str[:-1] + '}'
+    """Return a TCL list string '{x0 y0} {x1 y1} ...' for cg_bonds commands."""
+    if not pairs:
+        return '{}'
+    parts = ['{' + str(i[0]) + ' ' + str(i[1]) + '}' for i in pairs]
+    return '{' + ' '.join(parts) + '}'
 
 
 def secondary_structure_parsing(lines, molname):
@@ -47,105 +49,151 @@ def secondary_structure_parsing(lines, molname):
         if line.upper() == line:
             ss_string = line
 
-    helices = [i.span() for i in re.finditer('([H|G|I]{3,})', ss_string)]
-    sheets = [i.span() for i in re.finditer('([B|E]{3,})', ss_string)]
+    # Note: | inside [] is a literal character, not alternation — use [HGI] / [BE]
+    helices = [m.span() for m in re.finditer('[HGI]{3,}', ss_string)]
+    sheets  = [m.span() for m in re.finditer('[BE]{3,}',  ss_string)]
 
-    vmd_excl_str = ''
-    for i in helices+sheets:
-        vmd_excl_str += f'(resid > {i[0]} and resid < {i[1]}) or '
-    vmd_excl_str = vmd_excl_str[:-4]
+    if not (helices or sheets):
+        return
 
-    hlx_col_str = ''
-    for i in helices:
-        hlx_col_str += f'(resid > {i[0]} and resid < {i[1]}) or '
-    hlx_col_str = hlx_col_str[:-4]
+    vmd_excl_str = ' or '.join(
+        f'(resid > {i[0]} and resid < {i[1]})' for i in helices + sheets
+    )
+    hlx_col_str = ' or '.join(
+        f'(resid > {i[0]} and resid < {i[1]})' for i in helices
+    )
+    sht_col_str = ' or '.join(
+        f'(resid > {i[0]} and resid < {i[1]})' for i in sheets
+    )
 
-    sht_col_str = ''
-    for i in sheets:
-        sht_col_str += f'(resid > {i[0]} and resid < {i[1]}) or '
-    sht_col_str = sht_col_str[:-4]
-
-    if len(helices) > 2 or len(sheets) > 2:
-        with open(f'{molname}_cgsecstruct.txt', 'w') as f:
-            f.write("suggested commands for viewing you molecule with cg_bonds-v6.tcl:\n")
+    with open(f'{molname}_cgsecstruct.txt', 'w', encoding='utf-8') as f:
+        f.write("suggested commands for viewing your molecule with cg_bonds-v6.tcl:\n")
+        if helices:
             f.write(f'cg_helix {output_str(helices)} -hlxcolor "purple" -hlxfilled yes -hlxrad 3 -hlxmethod cylinder -hlxmat "AOChalky" -hlxres 50\n')
+        if sheets:
             f.write(f'cg_sheet {output_str(sheets)} -shtfilled "yes" -shtmat "AOChalky" -shtres 50 -shtcolor "red" -shtmethod flatarrow -shtarrwidth 5 -shtheadsize 10 -shtarrthick 3 -shtsides "sharp"\n')
+        if vmd_excl_str:
             f.write('\nAdditionally, use the following command to remove the BB string from your molecule:\n')
             f.write(f'name BB and not ({vmd_excl_str})')
             f.write('\nThese commands will have to be modified to specify molid if you have multiple proteins in your system\n')
+        if hlx_col_str or sht_col_str:
             f.write('\nAlternatively use the following to just colour the backbone:')
-            f.write(f'\nhelices: name BB and ({hlx_col_str})')
-            f.write(f'\nsheets: name BB and ({sht_col_str})')
+            if hlx_col_str:
+                f.write(f'\nhelices: name BB and ({hlx_col_str})')
+            if sht_col_str:
+                f.write(f'\nsheets: name BB and ({sht_col_str})')
 
 
-def _misc_file_reader(lines):
+def _collect_defines(lines):
     """
-    Try to handle miscellaneous files which can't be read into the force field by read_itp
+    Scan *lines* for ``#define`` directives and return a mapping of macro
+    name to the list of replacement tokens.
+
+    Uses ``split_comments`` to strip inline ``;`` comments before
+    matching, so macro-looking text inside comments is not collected.
+    Returns an empty dict if no ``#define`` directives are present.
 
     Parameters
     ----------
-    lines: list
-        list of lines from the input .itp file
-
+    lines: list[str]
 
     Returns
     -------
-    defines: dict
-        dictionary of definition: parameters for bonded terms that have been externally defined
-    others: list
-        lines from an input itp that don't have #define in them
-
-    if others == lines, None is returned, because the input file doesn't contain anything interesting
+    dict[str, list[str]]
     """
-    defines = {i.split()[1]: i.split(';')[0].split()[2:5] for i in lines if '#define' in i}
-    others = [line for line in lines if '#define' not in line]
-    if others == lines:
-        return None
-    else:
-        return defines, others
+    defines = {}
+    for line in lines:
+        data, _ = split_comments(line, ';')
+        if data.startswith('#define'):
+            parts = data.split()
+            if len(parts) >= 3:
+                defines[parts[1]] = parts[2:]
+    return defines
+
+
+def _substitute_defines(ff, defines):
+    """
+    Expand single-token ``#define`` macro parameters in every interaction
+    stored in *ff* using the mapping in *defines*.
+
+    After ``read_itp`` parses a molecule whose interaction lines reference
+    ``#define``d names (e.g. ``b_RIB1_RIB2``), those names are stored
+    verbatim as single-element parameter lists.  This function replaces
+    them with the actual token lists collected from the force-field
+    parameter files.
+
+    Parameters
+    ----------
+    ff: vermouth.forcefield.ForceField
+    defines: dict[str, list[str]]
+    """
+    if not defines:
+        return
+    for block in ff.blocks.values():
+        for interactions in block.interactions.values():
+            for idx, interaction in enumerate(interactions):
+                params = interaction.parameters
+                if len(params) == 1 and params[0] in defines:
+                    interactions[idx] = interaction._replace(
+                        parameters=list(defines[params[0]])
+                    )
 
 
 def system_reading(topology):
-
     """
-    read a .top file's contents into a ForceField
+    Read a .top file's contents into a ForceField.
     """
-
-    # get the topology file
     print(f"Reading input {topology}")
     topol_lines = input_topol_reader(topology)
 
-    # for each molecule in the system, read in the itp
+    # Load all included ITP files.
     d = {}
-    for i, j in enumerate(topol_lines['core_itps']):
-        with open(j, encoding="utf-8") as f:
-            d[i] = f.readlines()
-
-    # read the molecules into the forcefield
-    ff = ForceField('martini3001')
-
-    system_defines = {}
-    for i, j in enumerate(d.keys()):
+    for i, path in enumerate(topol_lines['core_itps']):
         try:
-            read_itp(d[j], ff)
+            with open(path, encoding="utf-8") as f:
+                d[i] = f.readlines()
+        except FileNotFoundError:
+            raise FileNotFoundError(
+                f"Could not find included file '{path}'. "
+                "Check that all #include paths in your .top file are correct."
+            )
+
+    ff = ForceField('martini3001')
+    system_defines = {}
+
+    for i, lines in enumerate(d.values()):
+        try:
+            read_itp(lines, ff)
             for molname in ff.blocks.keys():
-                secondary_structure_parsing(d[j], molname)
+                secondary_structure_parsing(lines, molname)
         except OSError:
-            '''
-            if we can't read the file into the system directly, we have something that isn't strictly a molecule
-            most likely its the force field definition file (eg. martini_v3.0.0.itp) but we can't be sure
-            a common one is something with #defines in for generic molecule bonded terms
-            '''
-            misc_result = _misc_file_reader(d[j])
-            if misc_result is None:
-                # if [ defaults ] is found, then it's martini_v3.0.0.itp or similar. ignore it.
-                if "[ defaults ]" not in [k.strip() for k in d[j]]:
-                    print(f"Error reading {topol_lines['core_itps'][i]}. Will ignore and exclude from output system.")
-            else:
-                # this means we've separated things out successfully and can read the actual itp content now
-                # tracking system_defines is useful for when we sort the #TODOs below.
-                for key, value in misc_result[0].items():
-                    system_defines[key] = value
-                read_itp(misc_result[1], ff)
+            # File isn't a parseable molecule ITP — could be a force-field
+            # definition file ([ defaults ]) or a file of #define macros for
+            # bonded parameters.  Collect any macros and, if molecule content
+            # is present alongside them, try to parse it without the defines.
+            defines = _collect_defines(lines)
+            system_defines.update(defines)
+
+            if not defines:
+                # No macros — probably a force-field file (martini_v3.0.0.itp).
+                if not any('[ defaults ]' in l for l in lines):
+                    print(f"Error reading {topol_lines['core_itps'][i]}."
+                          " Will ignore and exclude from output system.")
+                continue
+
+            # Strip #define lines and attempt to parse any molecule content
+            # that may be present in the same file alongside the defines.
+            non_define_lines = [
+                l for l in lines
+                if not split_comments(l, ';')[0].startswith('#define')
+            ]
+            try:
+                read_itp(non_define_lines, ff)
+            except OSError:
+                pass  # No parseable molecule content — expected for ff parameter files.
+
+    # Substitute #define macro names with their actual parameter values in
+    # every interaction that was read from the molecule ITP files.
+    _substitute_defines(ff, system_defines)
 
     return ff, topol_lines, system_defines
