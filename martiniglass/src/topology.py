@@ -13,41 +13,85 @@
 # limitations under the License.
 
 import os
+from vermouth.parser_utils import split_comments
+
 
 def input_topol_reader(file):
+    """
+    Read a GROMACS .top file and extract include paths, system section, and
+    molecule list.
+
+    Parameters
+    ----------
+    file: str or path-like
+        Path to the .top file.
+
+    Returns
+    -------
+    dict with keys:
+        'core_itps': list[str]
+            Absolute paths of all ``#include``d files, resolved relative to
+            the directory containing ``file``.
+        'system': list[str]
+            Original lines of the ``[ system ]`` section plus the
+            ``[ molecules ]`` header line (used verbatim when writing output).
+        'molecules': list[dict]
+            One ``{'name': str, 'n_mols': str}`` entry per molecule entry in
+            the ``[ molecules ]`` section.
+    """
+    top_dir = os.path.dirname(os.path.abspath(file))
+
     inclusions = []
     molecules = []
     system = []
-    go = []
-    # read the topology file, find the header lines which are not core martini itps
-    with open(file) as f:
-        mols = False
-        sys = False
-        for line in f.readlines():
-            if '#include' in line:
-                inclusions.append(line.split('"')[1])
-            if mols:
-                if (line.strip()[0] != ';') and (len(line.split()) > 0):
-                    molecules.append({'name': line.split()[0],
-                                      'n_mols': line.split()[1]})
-            if 'molecules' in line:
-                mols = True
-                sys = False
-                system.append(line)
-            if 'system' in line:
-                sys = True
-            if sys:
-                system.append(line)
-            if 'moleculetype' in line:
-                msg = ("Your topology file contains [ moleculetype ] directives, which this file parser "
-                       "cannot process. Please split your system into multiple itp files.")
-                raise IOError(msg)
+    current_section = None
 
-    topol_lines = {'core_itps': inclusions,
-                   'system': system,
-                   'molecules': molecules}
+    with open(file, encoding='utf-8') as f:
+        for line in f:
+            # Strip inline ';' comments; keep the original line for verbatim output.
+            data, _ = split_comments(line, ';')
 
-    return topol_lines
+            # --- preprocessor directives -----------------------------------------
+            if data.startswith('#'):
+                if data.startswith('#include'):
+                    parts = data.split('"')
+                    if len(parts) >= 2:
+                        include_path = parts[1]
+                        resolved = os.path.normpath(os.path.join(top_dir, include_path))
+                        inclusions.append(resolved)
+                # All other directives (#define, #ifdef, …) are skipped.
+                continue
+
+            # Skip blank lines (after comment stripping).
+            if not data:
+                continue
+
+            # --- section headers --------------------------------------------------
+            if data.startswith('[') and data.endswith(']'):
+                section_name = data.strip('[ ]').casefold()
+                if section_name == 'moleculetype':
+                    raise IOError(
+                        "Your topology file contains [ moleculetype ] directives, "
+                        "which this file parser cannot process. Please split your "
+                        "system into multiple itp files."
+                    )
+                current_section = section_name
+                # Collect the header line verbatim for sections needed in output.
+                if current_section in ('system', 'molecules'):
+                    system.append(line)
+                continue
+
+            # --- section content --------------------------------------------------
+            if current_section == 'system':
+                system.append(line)
+            elif current_section == 'molecules':
+                parts = data.split()
+                if len(parts) >= 2:
+                    molecules.append({'name': parts[0], 'n_mols': parts[1]})
+
+    return {'core_itps': inclusions,
+            'system': system,
+            'molecules': molecules}
 
 
 def topol_writing(topol_lines, written_mols, ext='vis', w_include=None):
