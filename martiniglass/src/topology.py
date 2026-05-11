@@ -118,7 +118,7 @@ def topol_writing(topol_lines, written_mols, ext='vis', w_include=None):
     new_topol_head = []
     # get the new vis files to write for the topology header
     for i in written_mols:
-        new_topol_head.append(f'#include "{os.path.abspath(i)}"\n')
+        new_topol_head.append(f'#include "./{os.path.basename(i)}"\n')
 
     # correct the [ molecules ] directive of the top file to correct for the new molecule names.
     topol_rest_vis = []

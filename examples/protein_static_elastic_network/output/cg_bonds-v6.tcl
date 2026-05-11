@@ -246,7 +246,7 @@ proc parse_top { molid top topology_type BD CNSTR } {
   upvar $CNSTR constraints
 
   # path to the .top file
-  set path [lreplace [split $top "/"] end end]
+  set topdir [file dirname [file normalize $top]]
   # opens the .top file and read it
   set top [open $top "r"]
   while 1 {
@@ -257,8 +257,8 @@ proc parse_top { molid top topology_type BD CNSTR } {
 
       # reads include files
       if { [string first "#include" $line 0] > -1 } {
-        set itp [string trim [lindex [split $line] 1] "\""]
-        if { [string first "/" $line 0] > -1 } { file_exists "[join $path "/"]/$itp" } else { file_exists $itp }
+        set itp [file normalize [file join $topdir [string trim [lindex [split $line] 1] "\""]]]
+        file_exists $itp
         set bead_numbers [parse_itp $itp $topology_type $bead_numbers bonds constraints]
       }
  
